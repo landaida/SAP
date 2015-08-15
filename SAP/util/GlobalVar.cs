@@ -18,14 +18,13 @@ namespace SAP.util
             if (empresa == null)
             {
                 empresa = new Company();
-                empresa.DbServerType = BoDataServerTypes.dst_MSSQL2008;
-                empresa.Server = "WINSERVER";
-                empresa.CompanyDB = "SBO_SideragroNueva";
-                empresa.UserName = "emerson";
-                empresa.Password = "0104452";
-                empresa.DbUserName = "sa";
-                empresa.DbPassword = "raposa28@09";
-
+                empresa.DbServerType = DBConfig.DBServerType;
+                empresa.Server = DBConfig.Server;
+                empresa.CompanyDB = DBConfig.DBName;
+                empresa.UserName = DBConfig.BOUser;
+                empresa.Password = DBConfig.BOPassword;
+                empresa.DbUserName = DBConfig.DBUser;
+                empresa.DbPassword = DBConfig.DBPassword;
                 res = empresa.Connect();
             }
 

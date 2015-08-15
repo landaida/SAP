@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtFechaDocumento = new System.Windows.Forms.DateTimePicker();
+            this.label7 = new System.Windows.Forms.Label();
             this.txtFechaLanzamiento = new System.Windows.Forms.DateTimePicker();
             this.cmbCliente = new System.Windows.Forms.ComboBox();
             this.txtStatus = new System.Windows.Forms.TextBox();
@@ -40,35 +42,33 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtObservacion = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cmbVendedor = new System.Windows.Forms.ComboBox();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.btnAdicionar = new System.Windows.Forms.Button();
-            this.linesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cotizacionBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel3 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageContenido = new System.Windows.Forms.TabPage();
-            this.tabPageLogistica = new System.Windows.Forms.TabPage();
-            this.btnCancelar = new System.Windows.Forms.Button();
-            this.cmbVendedor = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtObservacion = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtFechaDocumento = new System.Windows.Forms.DateTimePicker();
-            this.label7 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.colItemNro = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPrecioUnitario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPorcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIndicadorDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPageLogistica = new System.Windows.Forms.TabPage();
+            this.linesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.cotizacionBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.linesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cotizacionBindingSource)).BeginInit();
             this.panel3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageContenido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.linesBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cotizacionBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -106,6 +106,23 @@
             this.panel1.Size = new System.Drawing.Size(725, 85);
             this.panel1.TabIndex = 1;
             // 
+            // txtFechaDocumento
+            // 
+            this.txtFechaDocumento.Location = new System.Drawing.Point(436, 35);
+            this.txtFechaDocumento.Name = "txtFechaDocumento";
+            this.txtFechaDocumento.Size = new System.Drawing.Size(149, 20);
+            this.txtFechaDocumento.TabIndex = 9;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(323, 34);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(110, 13);
+            this.label7.TabIndex = 8;
+            this.label7.Text = "Fecha del Documento";
+            // 
             // txtFechaLanzamiento
             // 
             this.txtFechaLanzamiento.Location = new System.Drawing.Point(436, 1);
@@ -115,6 +132,9 @@
             // 
             // cmbCliente
             // 
+            this.cmbCliente.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cmbCliente.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cmbCliente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCliente.FormattingEnabled = true;
             this.cmbCliente.Location = new System.Drawing.Point(59, 38);
             this.cmbCliente.Name = "cmbCliente";
@@ -123,10 +143,13 @@
             // 
             // txtStatus
             // 
+            this.txtStatus.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txtStatus.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtStatus.Location = new System.Drawing.Point(366, 61);
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.Size = new System.Drawing.Size(149, 20);
             this.txtStatus.TabIndex = 5;
+            this.txtStatus.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtStatus_KeyUp);
             // 
             // txtId
             // 
@@ -189,6 +212,51 @@
             this.panel2.Size = new System.Drawing.Size(725, 120);
             this.panel2.TabIndex = 2;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(519, 27);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(66, 13);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Observación";
+            // 
+            // txtObservacion
+            // 
+            this.txtObservacion.Location = new System.Drawing.Point(522, 43);
+            this.txtObservacion.Multiline = true;
+            this.txtObservacion.Name = "txtObservacion";
+            this.txtObservacion.Size = new System.Drawing.Size(194, 68);
+            this.txtObservacion.TabIndex = 4;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(13, 11);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(53, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Vendedor";
+            // 
+            // cmbVendedor
+            // 
+            this.cmbVendedor.FormattingEnabled = true;
+            this.cmbVendedor.Location = new System.Drawing.Point(72, 8);
+            this.cmbVendedor.Name = "cmbVendedor";
+            this.cmbVendedor.Size = new System.Drawing.Size(121, 21);
+            this.cmbVendedor.TabIndex = 2;
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Location = new System.Drawing.Point(94, 88);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
+            this.btnCancelar.TabIndex = 1;
+            this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            // 
             // btnAdicionar
             // 
             this.btnAdicionar.Location = new System.Drawing.Point(13, 88);
@@ -198,15 +266,6 @@
             this.btnAdicionar.Text = "Adicionar";
             this.btnAdicionar.UseVisualStyleBackColor = true;
             this.btnAdicionar.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // linesBindingSource
-            // 
-            this.linesBindingSource.DataMember = "Lines";
-            this.linesBindingSource.DataSource = this.cotizacionBindingSource;
-            // 
-            // cotizacionBindingSource
-            // 
-            this.cotizacionBindingSource.DataSource = typeof(SAP.model.Cotizacion);
             // 
             // panel3
             // 
@@ -238,78 +297,6 @@
             this.tabPageContenido.TabIndex = 0;
             this.tabPageContenido.Text = "Conenido";
             this.tabPageContenido.UseVisualStyleBackColor = true;
-            // 
-            // tabPageLogistica
-            // 
-            this.tabPageLogistica.Location = new System.Drawing.Point(4, 22);
-            this.tabPageLogistica.Name = "tabPageLogistica";
-            this.tabPageLogistica.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLogistica.Size = new System.Drawing.Size(717, 168);
-            this.tabPageLogistica.TabIndex = 1;
-            this.tabPageLogistica.Text = "Logística";
-            this.tabPageLogistica.UseVisualStyleBackColor = true;
-            // 
-            // btnCancelar
-            // 
-            this.btnCancelar.Location = new System.Drawing.Point(94, 88);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 1;
-            this.btnCancelar.Text = "Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = true;
-            // 
-            // cmbVendedor
-            // 
-            this.cmbVendedor.FormattingEnabled = true;
-            this.cmbVendedor.Location = new System.Drawing.Point(72, 8);
-            this.cmbVendedor.Name = "cmbVendedor";
-            this.cmbVendedor.Size = new System.Drawing.Size(121, 21);
-            this.cmbVendedor.TabIndex = 2;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(13, 11);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 13);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Vendedor";
-            // 
-            // txtObservacion
-            // 
-            this.txtObservacion.Location = new System.Drawing.Point(522, 43);
-            this.txtObservacion.Multiline = true;
-            this.txtObservacion.Name = "txtObservacion";
-            this.txtObservacion.Size = new System.Drawing.Size(194, 68);
-            this.txtObservacion.TabIndex = 4;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(519, 27);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(66, 13);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "Observación";
-            // 
-            // txtFechaDocumento
-            // 
-            this.txtFechaDocumento.Location = new System.Drawing.Point(436, 35);
-            this.txtFechaDocumento.Name = "txtFechaDocumento";
-            this.txtFechaDocumento.Size = new System.Drawing.Size(149, 20);
-            this.txtFechaDocumento.TabIndex = 9;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(323, 34);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(110, 13);
-            this.label7.TabIndex = 8;
-            this.label7.Text = "Fecha del Documento";
             // 
             // dataGridView1
             // 
@@ -351,6 +338,25 @@
             this.colIndicadorDescuento.HeaderText = "Indicador de impuestos";
             this.colIndicadorDescuento.Name = "colIndicadorDescuento";
             // 
+            // tabPageLogistica
+            // 
+            this.tabPageLogistica.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLogistica.Name = "tabPageLogistica";
+            this.tabPageLogistica.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageLogistica.Size = new System.Drawing.Size(717, 168);
+            this.tabPageLogistica.TabIndex = 1;
+            this.tabPageLogistica.Text = "Logística";
+            this.tabPageLogistica.UseVisualStyleBackColor = true;
+            // 
+            // linesBindingSource
+            // 
+            this.linesBindingSource.DataMember = "Lines";
+            this.linesBindingSource.DataSource = this.cotizacionBindingSource;
+            // 
+            // cotizacionBindingSource
+            // 
+            this.cotizacionBindingSource.DataSource = typeof(SAP.model.Cotizacion);
+            // 
             // frmCotizacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -366,12 +372,12 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.linesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cotizacionBindingSource)).EndInit();
             this.panel3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPageContenido.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.linesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cotizacionBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

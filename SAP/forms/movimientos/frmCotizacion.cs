@@ -40,6 +40,11 @@ namespace SAP.forms.movimientos
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
 
+            List<String> list = ComboUtil.populateComboBox(this.cmbCliente, "cardCode", "cardName", "ocrd");
+
+            AutoCompleteStringCollection data = new AutoCompleteStringCollection();
+            data.AddRange(list.ToArray());
+            this.txtStatus.AutoCompleteCustomSource = data;
             Cursor.Current = Cursors.WaitCursor;
             empresa = GlobalVar.Empresa;            
             if (empresa.Connected == true)
@@ -76,6 +81,11 @@ namespace SAP.forms.movimientos
         #endregion
 
         private void frmCotizacion_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtStatus_KeyUp(object sender, KeyEventArgs e)
         {
 
         }

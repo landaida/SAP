@@ -63,6 +63,9 @@
     <Compile Include="model\Producto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="util\ComboUtil.cs" />
+    <Compile Include="util\ConexaoFactory.cs" />
+    <Compile Include="util\DBConfig.cs" />
     <Compile Include="util\GlobalVar.cs" />
     <EmbeddedResource Include="forms\movimientos\frmCotizacion.resx">
       <DependentUpon>frmCotizacion.cs</DependentUpon>

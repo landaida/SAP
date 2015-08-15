@@ -10,7 +10,8 @@ namespace SAP.model
     {
         private int id;
         private Double valor;
-        private ICollection<CotizacionLine> lines; 
+        private List<CotizacionLine> lines;
+        private DateTime fecha;
 
         public int Id {
             get { return id; }
@@ -23,10 +24,16 @@ namespace SAP.model
             set { valor = value; }
         }
 
-        public ICollection<CotizacionLine> Lines
+        public List<CotizacionLine> Lines
         {
             get { return lines; }
             set { lines = value; }
+        }
+
+        public DateTime Fecha
+        {
+            get { return fecha; }
+            set { fecha = value; }
         }
     }
 }

@@ -15,56 +15,64 @@ namespace SAP.forms.movimientos
     public partial class frmCotizacion : Form
     {
         #region Declare
-            Documents cotizacion;
-            Company empresa;
-            
+        Documents cotizacion;
+        Company empresa;
+        BusinessPartners cliente;
+        
+        int response = 0;
         #endregion
 
         #region Functions
-            private void bindingControls()
-            {
-                this.txtId.DataBindings.Add("Text", cotizacion, "Comments");
-            
-            }
+        private void bindingControls()
+        {
+            this.txtId.DataBindings.Add("Text", cotizacion, "Comments");
+                 
+        }
         #endregion
         
         #region FunctionsC#
         
-            public frmCotizacion()
-            {
-                InitializeComponent();
+        public frmCotizacion()
+        {
+            InitializeComponent();
             
-                this.StartPosition = FormStartPosition.Manual;
-                this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
-                this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+            this.StartPosition = FormStartPosition.Manual;
+            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
 
-                Cursor.Current = Cursors.WaitCursor;
-                empresa = GlobalVar.Empresa;            
-
-                if (empresa.Connected == true)
-                {                
-                    cotizacion = empresa.GetBusinessObject(BoObjectTypes.oQuotations);
-                    this.bindingControls();                
-                }
-                else
-                {
-                    Console.WriteLine(empresa.GetLastErrorDescription());
-                }
+            Cursor.Current = Cursors.WaitCursor;
+            empresa = GlobalVar.Empresa;            
+            if (empresa.Connected == true)
+            {                
+                cotizacion = empresa.GetBusinessObject(BoObjectTypes.oQuotations);
+                cliente = empresa.GetBusinessObject(BoObjectTypes.oBusinessPartners);
+                cliente.CardCode = "C0003144";
+                cotizacion.CardCode = cliente.CardCode;
+                cotizacion.Lines.ItemCode = "101100";
+                cotizacion.Lines.Quantity = 1;
+                cotizacion.Lines.PriceAfterVAT = 60000;
+                cotizacion.Lines.TaxCode = "IVA_10";
+                this.bindingControls();                
             }
-
-            private void button1_Click(object sender, EventArgs e)
+            else
             {
-                Console.WriteLine(this.cotizacion.Comments);
-                response = cotizacion.Add();
-                if(response == 0)
-                {
-                    
-                }
-                else
-                {
-                    Console.WriteLine(this.empresa.GetLastErrorDescription());
-                }
+                Console.WriteLine(empresa.GetLastErrorDescription());
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine(this.cotizacion.Comments);
+            response = cotizacion.Add();
+            if(response == 0)
+            {
+                    
+            }
+            else
+            {
+                Console.WriteLine(this.empresa.GetLastErrorDescription());
+            }
+        }
         #endregion
 
         private void frmCotizacion_Load(object sender, EventArgs e)

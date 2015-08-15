@@ -33,7 +33,7 @@
             this.panelBottom = new System.Windows.Forms.Panel();
             this.panelMenu = new System.Windows.Forms.Panel();
             this.panelSecondMenu = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.panelStatusBar = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnMenuPrint = new System.Windows.Forms.Button();
@@ -51,7 +51,7 @@
             this.tableLayoutPanel.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.panelSecondMenu.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.panelStatusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuSuperior.SuspendLayout();
             this.SuspendLayout();
@@ -60,7 +60,7 @@
             // 
             this.tableLayoutPanel.ColumnCount = 1;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Controls.Add(this.panel3, 0, 3);
+            this.tableLayoutPanel.Controls.Add(this.panelStatusBar, 0, 3);
             this.tableLayoutPanel.Controls.Add(this.panelBottom, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.panelMenu, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.panelSecondMenu, 0, 1);
@@ -74,7 +74,7 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(895, 341);
             this.tableLayoutPanel.TabIndex = 0;
-            this.tableLayoutPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
+            
             // 
             // panelBottom
             // 
@@ -83,10 +83,10 @@
             this.panelBottom.Name = "panelBottom";
             this.panelBottom.Size = new System.Drawing.Size(889, 220);
             this.panelBottom.TabIndex = 0;
-            this.panelBottom.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // panelMenu
             // 
+            this.panelMenu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelMenu.Controls.Add(this.menuSuperior);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelMenu.Location = new System.Drawing.Point(3, 3);
@@ -96,6 +96,7 @@
             // 
             // panelSecondMenu
             // 
+            this.panelSecondMenu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelSecondMenu.Controls.Add(this.btnMenuPrint);
             this.panelSecondMenu.Controls.Add(this.btonMenuVis);
             this.panelSecondMenu.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -104,17 +105,17 @@
             this.panelSecondMenu.Size = new System.Drawing.Size(889, 39);
             this.panelSecondMenu.TabIndex = 2;
             // 
-            // panel3
+            // panelStatusBar
             // 
-            this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.panelStatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel3.Controls.Add(this.pictureBox1);
-            this.panel3.Controls.Add(this.statusStrip1);
-            this.panel3.Location = new System.Drawing.Point(3, 304);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(889, 34);
-            this.panel3.TabIndex = 6;
+            this.panelStatusBar.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panelStatusBar.Controls.Add(this.pictureBox1);
+            this.panelStatusBar.Controls.Add(this.statusStrip1);
+            this.panelStatusBar.Location = new System.Drawing.Point(3, 304);
+            this.panelStatusBar.Name = "panelStatusBar";
+            this.panelStatusBar.Size = new System.Drawing.Size(889, 34);
+            this.panelStatusBar.TabIndex = 6;
             // 
             // statusStrip1
             // 
@@ -176,7 +177,7 @@
             this.menuSuperior.Location = new System.Drawing.Point(0, 0);
             this.menuSuperior.Name = "menuSuperior";
             this.menuSuperior.Padding = new System.Windows.Forms.Padding(6, 0, 0, 2);
-            this.menuSuperior.Size = new System.Drawing.Size(889, 24);
+            this.menuSuperior.Size = new System.Drawing.Size(887, 22);
             this.menuSuperior.TabIndex = 2;
             this.menuSuperior.Text = "menuStrip1";
             // 
@@ -186,7 +187,7 @@
             this.pedidosToolStripMenuItem});
             this.fileToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(53, 25);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
             this.fileToolStripMenuItem.Text = "Ventas";
             // 
             // pedidosToolStripMenuItem
@@ -194,55 +195,56 @@
             this.pedidosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ordemDeVentaToolStripMenuItem});
             this.pedidosToolStripMenuItem.Name = "pedidosToolStripMenuItem";
-            this.pedidosToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.pedidosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pedidosToolStripMenuItem.Text = "Ventas";
             // 
             // ordemDeVentaToolStripMenuItem
             // 
             this.ordemDeVentaToolStripMenuItem.Name = "ordemDeVentaToolStripMenuItem";
-            this.ordemDeVentaToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.ordemDeVentaToolStripMenuItem.Text = "Orden de Venta";
+            this.ordemDeVentaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ordemDeVentaToolStripMenuItem.Text = "Presupuesto";
+            this.ordemDeVentaToolStripMenuItem.Click += new System.EventHandler(this.ordemDeVentaToolStripMenuItem_Click);
             // 
             // processToolStripMenuItem
             // 
             this.processToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.processToolStripMenuItem.Name = "processToolStripMenuItem";
-            this.processToolStripMenuItem.Size = new System.Drawing.Size(59, 25);
+            this.processToolStripMenuItem.Size = new System.Drawing.Size(59, 22);
             this.processToolStripMenuItem.Text = "Process";
             // 
             // visionToolStripMenuItem
             // 
             this.visionToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.visionToolStripMenuItem.Name = "visionToolStripMenuItem";
-            this.visionToolStripMenuItem.Size = new System.Drawing.Size(51, 25);
+            this.visionToolStripMenuItem.Size = new System.Drawing.Size(51, 22);
             this.visionToolStripMenuItem.Text = "Vision";
             // 
             // datasToolStripMenuItem
             // 
             this.datasToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.datasToolStripMenuItem.Name = "datasToolStripMenuItem";
-            this.datasToolStripMenuItem.Size = new System.Drawing.Size(48, 25);
+            this.datasToolStripMenuItem.Size = new System.Drawing.Size(48, 22);
             this.datasToolStripMenuItem.Text = "Datas";
             // 
             // modulesToolStripMenuItem
             // 
             this.modulesToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.modulesToolStripMenuItem.Name = "modulesToolStripMenuItem";
-            this.modulesToolStripMenuItem.Size = new System.Drawing.Size(65, 25);
+            this.modulesToolStripMenuItem.Size = new System.Drawing.Size(65, 22);
             this.modulesToolStripMenuItem.Text = "Modules";
             // 
             // toolsToolStripMenuItem
             // 
             this.toolsToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 25);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 22);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // sobreToolStripMenuItem
             // 
             this.sobreToolStripMenuItem.ForeColor = System.Drawing.Color.White;
             this.sobreToolStripMenuItem.Name = "sobreToolStripMenuItem";
-            this.sobreToolStripMenuItem.Size = new System.Drawing.Size(52, 25);
+            this.sobreToolStripMenuItem.Size = new System.Drawing.Size(52, 22);
             this.sobreToolStripMenuItem.Text = "About";
             // 
             // frmPrincipal
@@ -259,7 +261,7 @@
             this.panelMenu.ResumeLayout(false);
             this.panelMenu.PerformLayout();
             this.panelSecondMenu.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
+            this.panelStatusBar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuSuperior.ResumeLayout(false);
             this.menuSuperior.PerformLayout();
@@ -275,7 +277,7 @@
         private System.Windows.Forms.Panel panelSecondMenu;
         private System.Windows.Forms.Button btnMenuPrint;
         private System.Windows.Forms.Button btonMenuVis;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panelStatusBar;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.MenuStrip menuSuperior;

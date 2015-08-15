@@ -55,5 +55,10 @@ namespace SAP.forms.movimientos
                 Console.WriteLine(this.cotizacion.Comments);
             }
         #endregion
+
+        private void frmCotizacion_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -17,12 +17,14 @@ namespace SAP.forms.movimientos
         #region Declare
             Documents cotizacion;
             Company empresa;
+            
         #endregion
 
         #region Functions
             private void bindingControls()
             {
-                this.textBox1.DataBindings.Add("Text", cotizacion, "Comments");
+                this.txtId.DataBindings.Add("Text", cotizacion, "Comments");
+            
             }
         #endregion
         
@@ -53,6 +55,15 @@ namespace SAP.forms.movimientos
             private void button1_Click(object sender, EventArgs e)
             {
                 Console.WriteLine(this.cotizacion.Comments);
+                response = cotizacion.Add();
+                if(response == 0)
+                {
+                    
+                }
+                else
+                {
+                    Console.WriteLine(this.empresa.GetLastErrorDescription());
+                }
             }
         #endregion
 

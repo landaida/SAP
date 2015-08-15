@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using SAP.util;
 namespace SAP
 {
     static class Program
@@ -14,6 +14,8 @@ namespace SAP
         [STAThread]
         static void Main()
         {
+            //inicializa a conexao da empresa por primera y unica vez
+            GlobalVar.inicializarEmpresa();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmPrincipal());

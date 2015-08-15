@@ -8,40 +8,52 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SAP.model;
+using SAPbobsCOM;
+using SAP.util;
 namespace SAP.forms.movimientos
 {
     public partial class frmCotizacion : Form
     {
-        public frmCotizacion()
-        {
-            InitializeComponent();
+        #region Declare
+            Documents cotizacion;
+            Company empresa;
+        #endregion
 
-            //Method 1. center at initilization
-            //this.StartPosition = FormStartPosition.CenterScreen;
+        #region Functions
+            private void bindingControls()
+            {
+                this.textBox1.DataBindings.Add("Text", cotizacion, "Comments");
+            }
+        #endregion
+        
+        #region FunctionsC#
+        
+            public frmCotizacion()
+            {
+                InitializeComponent();
+            
+                this.StartPosition = FormStartPosition.Manual;
+                this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+                this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
 
-            //Method 2. The manual way
-            this.StartPosition = FormStartPosition.Manual;
-            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
-            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+                Cursor.Current = Cursors.WaitCursor;
+                empresa = GlobalVar.Empresa;            
 
-            Cotizacion cotizacion = new Cotizacion();
-            cotizacion.Id = 01;
-            cotizacion.Fecha = new DateTime();
+                if (empresa.Connected == true)
+                {                
+                    cotizacion = empresa.GetBusinessObject(BoObjectTypes.oQuotations);
+                    this.bindingControls();                
+                }
+                else
+                {
+                    Console.WriteLine(empresa.GetLastErrorDescription());
+                }
+            }
 
-            ICollection<CotizacionLine> lines = new List<CotizacionLine>();
-
-            CotizacionLine line = new CotizacionLine();
-            line.Id = 1;
-            line.Producto = new Producto();
-            line.Producto.Id = 60;
-            line.Producto.Nombre = "NB ACER ASPIRE";
-            line.Cantidad = 50;
-            line.Descuento = 0;
-            lines.Add(line);
-
-            this.cotizacionBindingSource.Add(cotizacion);
-            this.linesBindingSource.Add(cotizacion.Lines);
-
-        }
+            private void button1_Click(object sender, EventArgs e)
+            {
+                Console.WriteLine(this.cotizacion.Comments);
+            }
+        #endregion
     }
 }

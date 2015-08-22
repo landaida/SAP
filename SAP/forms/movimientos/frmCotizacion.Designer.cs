@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cmbCliente = new SAP.util.SuggestComboBox();
             this.txtFechaDocumento = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.txtFechaLanzamiento = new System.Windows.Forms.DateTimePicker();
@@ -57,9 +57,6 @@
             this.colPorcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIndicadorDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageLogistica = new System.Windows.Forms.TabPage();
-            this.linesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cotizacionBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cmbCliente = new util.SuggestComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -67,8 +64,6 @@
             this.tabControl1.SuspendLayout();
             this.tabPageContenido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.linesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cotizacionBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -105,6 +100,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(725, 85);
             this.panel1.TabIndex = 1;
+            // 
+            // cmbCliente
+            // 
+            this.cmbCliente.FilterRule = null;
+            this.cmbCliente.FormattingEnabled = true;
+            this.cmbCliente.Location = new System.Drawing.Point(59, 33);
+            this.cmbCliente.Name = "cmbCliente";
+            this.cmbCliente.PropertySelector = null;
+            this.cmbCliente.Size = new System.Drawing.Size(121, 21);
+            this.cmbCliente.SuggestBoxHeight = 96;
+            this.cmbCliente.SuggestListOrderRule = null;
+            this.cmbCliente.TabIndex = 10;
             // 
             // txtFechaDocumento
             // 
@@ -336,24 +343,6 @@
             this.tabPageLogistica.Text = "Logística";
             this.tabPageLogistica.UseVisualStyleBackColor = true;
             // 
-            // linesBindingSource
-            // 
-            this.linesBindingSource.DataMember = "Lines";
-            this.linesBindingSource.DataSource = this.cotizacionBindingSource;
-            // 
-            // cmbCliente
-            // 
-            this.cmbCliente.FormattingEnabled = true;
-            this.cmbCliente.Location = new System.Drawing.Point(59, 33);
-            this.cmbCliente.Name = "cmbCliente";
-            this.cmbCliente.Size = new System.Drawing.Size(121, 21);
-            this.cmbCliente.TabIndex = 10;
-
-
-            this.cmbCliente.FilterRule = null;
-            this.cmbCliente.SuggestBoxHeight = 96;
-            this.cmbCliente.SuggestListOrderRule = null;
-            // 
             // frmCotizacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -372,8 +361,6 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPageContenido.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.linesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cotizacionBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -389,8 +376,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.BindingSource cotizacionBindingSource;
-        private System.Windows.Forms.BindingSource linesBindingSource;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnAdicionar;
         private System.Windows.Forms.Panel panel3;

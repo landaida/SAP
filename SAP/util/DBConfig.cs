@@ -19,7 +19,7 @@ namespace SAP.util
         public const String BOUser = "emerson";
         public const String BOPassword = "0104452";
 
-        //public const String Server = "WINSERVER";
-        public const String Server = "cameras.myvnc.com";        
+        public const String Server = "WINSERVER";
+        //public const String Server = "cameras.myvnc.com";        
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SAPbobsCOM;
+using System.Threading;
 
 namespace SAP.util
 {
@@ -26,6 +27,7 @@ namespace SAP.util
                 empresa.DbUserName = DBConfig.DBUser;
                 empresa.DbPassword = DBConfig.DBPassword;
                 res = empresa.Connect();
+                Console.WriteLine("ok createConexion");
             }
 
             if (res != 0)
@@ -46,9 +48,5 @@ namespace SAP.util
             }
         }
 
-        
-
-
-        
     }
 }

@@ -7,12 +7,28 @@ using System.Data.SqlClient;
 namespace SAP.util
 {
     public static class ConexaoFactory
-    {        
-        public static SqlConnection getSQLConection() 
+    {
+        private static SqlConnection connection;
+        
+        public static SqlConnection initSQLConection() 
         {
-            SqlConnection conn = new SqlConnection(@"Data Source="+ DBConfig.Server+ ";Initial Catalog="+DBConfig.DBName+";User ID="+ DBConfig.DBUser+ ";Password="+ DBConfig.DBPassword);
-            conn.Open();           
-            return conn;
+            //SqlConnection conn = new SqlConnection(@"Data Source="+ DBConfig.Server+ ";Initial Catalog="+DBConfig.DBName+";User ID="+ DBConfig.DBUser+ ";Password="+ DBConfig.DBPassword);
+            connection = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=" + DBConfig.DBName + ";User ID=" + DBConfig.DBUser + ";Password=" + DBConfig.DBPassword);
+            connection.Open();
+            Console.WriteLine("ok createConexion");         
+            return connection;
+        }
+
+        public static SqlConnection Connection
+        {
+            get
+            {
+                return connection;
+            }
+            set
+            {
+                connection = value;
+            }
         }
 
     }

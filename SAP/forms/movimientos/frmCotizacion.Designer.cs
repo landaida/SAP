@@ -34,7 +34,6 @@
             this.txtFechaDocumento = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.txtFechaLanzamiento = new System.Windows.Forms.DateTimePicker();
-            this.cmbCliente = new System.Windows.Forms.ComboBox();
             this.txtStatus = new System.Windows.Forms.TextBox();
             this.txtId = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -60,6 +59,7 @@
             this.tabPageLogistica = new System.Windows.Forms.TabPage();
             this.linesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cotizacionBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.cmbCliente = new util.SuggestComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -90,10 +90,10 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cmbCliente);
             this.panel1.Controls.Add(this.txtFechaDocumento);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.txtFechaLanzamiento);
-            this.panel1.Controls.Add(this.cmbCliente);
             this.panel1.Controls.Add(this.txtStatus);
             this.panel1.Controls.Add(this.txtId);
             this.panel1.Controls.Add(this.label4);
@@ -130,17 +130,6 @@
             this.txtFechaLanzamiento.Size = new System.Drawing.Size(149, 20);
             this.txtFechaLanzamiento.TabIndex = 7;
             // 
-            // cmbCliente
-            // 
-            this.cmbCliente.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cmbCliente.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cmbCliente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbCliente.FormattingEnabled = true;
-            this.cmbCliente.Location = new System.Drawing.Point(59, 38);
-            this.cmbCliente.Name = "cmbCliente";
-            this.cmbCliente.Size = new System.Drawing.Size(121, 21);
-            this.cmbCliente.TabIndex = 6;
-            // 
             // txtStatus
             // 
             this.txtStatus.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
@@ -149,7 +138,6 @@
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.Size = new System.Drawing.Size(149, 20);
             this.txtStatus.TabIndex = 5;
-            this.txtStatus.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtStatus_KeyUp);
             // 
             // txtId
             // 
@@ -353,9 +341,18 @@
             this.linesBindingSource.DataMember = "Lines";
             this.linesBindingSource.DataSource = this.cotizacionBindingSource;
             // 
-            // cotizacionBindingSource
+            // cmbCliente
             // 
-            this.cotizacionBindingSource.DataSource = typeof(SAP.model.Cotizacion);
+            this.cmbCliente.FormattingEnabled = true;
+            this.cmbCliente.Location = new System.Drawing.Point(59, 33);
+            this.cmbCliente.Name = "cmbCliente";
+            this.cmbCliente.Size = new System.Drawing.Size(121, 21);
+            this.cmbCliente.TabIndex = 10;
+
+
+            this.cmbCliente.FilterRule = null;
+            this.cmbCliente.SuggestBoxHeight = 96;
+            this.cmbCliente.SuggestListOrderRule = null;
             // 
             // frmCotizacion
             // 
@@ -366,7 +363,6 @@
             this.Name = "frmCotizacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Presupuesto";
-            this.Load += new System.EventHandler(this.frmCotizacion_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -387,7 +383,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DateTimePicker txtFechaLanzamiento;
-        private System.Windows.Forms.ComboBox cmbCliente;
         private System.Windows.Forms.TextBox txtStatus;
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.Label label4;
@@ -415,5 +410,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colPrecioUnitario;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPorcentajeDescuento;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndicadorDescuento;
+        private SAP.util.SuggestComboBox cmbCliente;
     }
 }

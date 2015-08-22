@@ -58,6 +58,7 @@
     <Compile Include="frmPrincipal.Designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="model\Cliente.cs" />
     <Compile Include="model\Cotizacion.cs" />
     <Compile Include="model\CotizacionLine.cs" />
     <Compile Include="model\Producto.cs" />
@@ -67,6 +68,9 @@
     <Compile Include="util\ConexaoFactory.cs" />
     <Compile Include="util\DBConfig.cs" />
     <Compile Include="util\GlobalVar.cs" />
+    <Compile Include="util\SuggestComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="forms\movimientos\frmCotizacion.resx">
       <DependentUpon>frmCotizacion.cs</DependentUpon>
     </EmbeddedResource>

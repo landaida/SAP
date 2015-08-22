@@ -11,32 +11,25 @@ namespace SAP.util
 {
     public static class ComboUtil
     {
-        public static List<String> populateComboBox(ComboBox cmb, String valueMember, String displayMember, String tableName)
+        public static void populateComboBox(ComboBox cmb, String valueMember, String displayMember, String tableName)
         {
-            SqlConnection conn = ConexaoFactory.getSQLConection();
+            SqlConnection conn = ConexaoFactory.Connection;
             SqlCommand sc = new SqlCommand("select "+valueMember+","+displayMember+" from ["+tableName+"]", conn);
             SqlDataReader reader;
 
             reader = sc.ExecuteReader();
-            DataTable dt = new DataTable();
-            dt.Columns.Add(valueMember, typeof(string));
-            dt.Columns.Add(displayMember, typeof(string));
-            dt.Load(reader);
 
-            List<String> result = new List<string>();
+            List<string> result = new List<string>();
 
-            foreach (DataRow row in dt.Rows) // Loop over the rows.
+            while (reader.Read())
             {
-                result.Add(row[0].ToString()+"-"+ row[1].ToString());
+                result.Add(reader[displayMember].ToString());
             }
+            reader.Close();
+            
+            cmb.DataSource = result.ToArray();
 
-            cmb.ValueMember = valueMember;
-            cmb.DisplayMember = displayMember;
-            cmb.DataSource = dt;
-
-            conn.Close();
-
-            return result;
+            //conn.Close();
         }
 
       

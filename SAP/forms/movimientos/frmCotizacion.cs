@@ -16,8 +16,10 @@ namespace SAP.forms.movimientos
     {
         #region Declare
         Documents cotizacion;
+        List<CotizacionLine> lines = new List<CotizacionLine>();
         Company empresa;
         BusinessPartners cliente;
+        List<Producto> productos;
         
         int response = 0;
         #endregion
@@ -25,10 +27,8 @@ namespace SAP.forms.movimientos
         #region Functions
         private void bindingControls()
         {
-            this.txtId.DataBindings.Add("Text", cotizacion, "Comments");
-                 
+            this.txtId.DataBindings.Add("Text", cotizacion, "Comments");            
         }
-
         private void instanciarOjectosSAP()
         {
             Cursor.Current = Cursors.WaitCursor;
@@ -52,21 +52,59 @@ namespace SAP.forms.movimientos
         }
         private void inicializarObjetos()
         {
-            ComboUtil.populateComboBox(this.cmbCliente, "cardCode", "cardName", "ocrd");
+            this.StartPosition = FormStartPosition.Manual;
+            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
 
-            this.cmbCliente.SelectedIndex = -1;
-            // assume you bind a list of persons to the ComboBox with 'Name' as DisplayMember:
-            this.cmbCliente.DataSource = this.cmbCliente.Items.Cast<string>().Select(i => new Cliente { CardName = i }).ToList();
-            this.cmbCliente.DisplayMember = "CardName";
-            // then you have to set the PropertySelector like this:
-            this.cmbCliente.PropertySelector = collection => collection.Cast<Cliente>().Select(p => p.CardName);
-            // filter rule can be customized: e.g. a StartsWith search:            
-            //suggestComboBox1.FilterRule = (item, text) => item.StartsWith(text.Trim(), StringComparison.CurrentCultureIgnoreCase);
+            ComboUtil.populateComboBox(this.cmbCliente, "cardCode", "cardName", "ocrd", typeof(Cliente));
 
-            // ordering rule can also be customized: e.g. order by the surname:
-            //this.cmbCliente.SuggestListOrderRule = s => s.Split(' ')[0];
+            //Cria uma lista de productos, isso facilitara na hora de carregar o combo de produtos en cada line do quotation
+            productos = Util.getGenericList<Producto>("itemCode", "itemName", "oitm").ToList<Producto>();
+            this.colItemNro.DataPropertyName = "Id";
+            this.colDescripcion.DataPropertyName = "Producto.ItemName";
+            this.colCantidad.DataPropertyName = "Cantidad";
+            this.colPrecioUnitario.DataPropertyName = "PrecioUnitario";
+            this.colPorcentajeDescuento.DataPropertyName = "Descuento";
+            this.colIndicadorImpuesto.DataPropertyName = "IndicadorImpuesto";
 
-            
+
+            this.addLine();
+            this.dgvLines.AutoGenerateColumns = false;
+            this.dgvLines.DataSource = lines;
+
+
+            if (colDescripcion.Items.Count == 0)
+            {
+                ComboUtil.confgComboBox(colDescripcion, "ItemCode", "ItemName", productos);
+            }
+        }
+        private bool lineIsValid(int index)
+        {
+            bool retorno = false;
+            DataGridViewCellCollection cells = this.dgvLines.Rows[index].Cells;
+            if (cells[colItemNro.Name].Value != null && 
+                cells[colDescripcion.Name].Value != null && 
+                cells[colCantidad.Name].Value != null && (Double)cells[colCantidad.Name].Value > 0 &&
+                cells[colPrecioUnitario.Name].Value != null && (Double)cells[colPrecioUnitario.Name].Value > 0)
+            {                
+                retorno = true;
+            }
+            return retorno;
+        }
+
+        private void addLine()
+        {
+            this.dgvLines.EndEdit();        
+            //resuelve error de no poder add line
+            this.dgvLines.DataSource = null;
+
+            this.lines.Add(new CotizacionLine());
+            this.dgvLines.AutoGenerateColumns = false;
+            this.dgvLines.DataSource = lines;
+            this.dgvLines.CurrentCell = this.dgvLines[lines.Count - 1, 0];
+            //this.dgvLines.Rows[lines.Count - 1].Selected = true;
+
+            this.dgvLines.Refresh();
         }
         #endregion
         
@@ -76,12 +114,11 @@ namespace SAP.forms.movimientos
         {
             InitializeComponent();
             Task task = new Task(() => this.instanciarOjectosSAP());
-            task.Start();            
+            task.Start();
+        }
 
-            this.StartPosition = FormStartPosition.Manual;
-            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
-            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
-
+        private void frmCotizacion_Load(object sender, EventArgs e)
+        {
             this.inicializarObjetos();
         }
 
@@ -98,9 +135,47 @@ namespace SAP.forms.movimientos
                 Console.WriteLine(this.empresa.GetLastErrorDescription());
             }
         }
+
+        private void dgvLines_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == colDescripcion.Index)
+            {
+                this.lines[e.RowIndex].Producto = productos.Find(x => x.ItemCode.Equals(dgvLines.Rows[e.RowIndex].Cells[colDescripcion.Name].Value));
+                this.lines[e.RowIndex].Id = Int32.Parse(this.lines[e.RowIndex].Producto.ItemCode);
+                this.lines[e.RowIndex].Cantidad = 1;
+                this.dgvLines.Refresh();
+            }
+        }
+
         #endregion
 
+        private void dgvLines_KeyUp(object sender, KeyEventArgs e)
+        {
+            bool addLine = false;
+            switch (e.KeyCode){
+                case Keys.Enter:
+                    addLine = true;
+                    break;
+                case Keys.Down:
+                    addLine = true;
+                    break;
+            }
+                
+            if (addLine && this.lines.Count - 1 == this.dgvLines.CurrentRow.Index && 
+                this.lineIsValid(this.dgvLines.CurrentRow.Index))
+            {
+                this.addLine();
+            }
+        }
 
+        private void btnAddLine_Click(object sender, EventArgs e)
+        {
+            
+        }
 
+        private void dgvLines_RowValidated(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

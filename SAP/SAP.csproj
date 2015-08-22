@@ -71,6 +71,7 @@
     <Compile Include="util\SuggestComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="util\Util.cs" />
     <EmbeddedResource Include="forms\movimientos\frmCotizacion.resx">
       <DependentUpon>frmCotizacion.cs</DependentUpon>
     </EmbeddedResource>

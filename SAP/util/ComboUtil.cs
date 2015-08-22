@@ -7,31 +7,42 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Windows.Forms;
 using System.Reflection;
+using SAP.model;
 namespace SAP.util
 {
     public static class ComboUtil
     {
-        public static void populateComboBox(ComboBox cmb, String valueMember, String displayMember, String tableName)
+        public static void populateComboBox(ComboBox cmb, String valueMember, String displayMember, String tableName, Type type)
         {
-            SqlConnection conn = ConexaoFactory.Connection;
-            SqlCommand sc = new SqlCommand("select "+valueMember+","+displayMember+" from ["+tableName+"]", conn);
-            SqlDataReader reader;
-
-            reader = sc.ExecuteReader();
-
-            List<string> result = new List<string>();
-
-            while (reader.Read())
+            if(typeof(Cliente) == type)
             {
-                result.Add(reader[displayMember].ToString());
+                List<Cliente> lista = Util.getGenericList<Cliente>(valueMember, displayMember, tableName).ToList<Cliente>();
+                cmb.DataSource = lista;
+                
+            } else if (typeof(Producto) == type)
+            {
+                List<Producto> lista = Util.getGenericList<Producto>(valueMember, displayMember, tableName).ToList<Producto>();
+                cmb.DataSource = lista;
             }
-            reader.Close();
-            
-            cmb.DataSource = result.ToArray();
+            cmb.DisplayMember = displayMember;
+            cmb.ValueMember = valueMember;
 
-            //conn.Close();
+
         }
 
-      
+        public static void confgComboBox<T>(ComboBox cmb, String valueMember, String displayMember, List<T> lista)
+        {
+            cmb.DataSource = lista;
+            cmb.DisplayMember = displayMember;
+            cmb.ValueMember = valueMember;
+        }
+
+        public static void confgComboBox<T>(DataGridViewComboBoxColumn cmb, String valueMember, String displayMember, List<T> lista)
+        {
+            cmb.DataSource = lista;
+            cmb.DisplayMember = displayMember;
+            cmb.ValueMember = valueMember;
+        }
+
     }
 }

@@ -10,9 +10,18 @@ namespace SAP.model
     {
         private int id;
         private Producto producto;
+        private List<Producto> productos;
         private Double cantidad;
-        private Double valor;
+        private Double precioUnitario;
         private Double descuento;
+        private String indicadorImpuesto = "IVA_10";
+
+        public CotizacionLine(){}
+
+        public CotizacionLine(List<Producto> productos)
+        {
+            this.productos = productos;
+        }
 
         public int Id
         {
@@ -32,16 +41,28 @@ namespace SAP.model
             set { cantidad = value; }
         }
 
-        public Double Valor
+        public Double PrecioUnitario
         {
-            get { return valor; }
-            set { valor = value; }
+            get { return precioUnitario; }
+            set { precioUnitario = value; }
         }
 
         public Double Descuento
         {
             get { return descuento; }
             set { descuento = value; }
+        }
+
+        public String IndicadorImpuesto
+        {
+            get { return indicadorImpuesto; }
+            set { indicadorImpuesto = value; }
+        }
+
+        public List<Producto> Productos
+        {
+            get { return productos; }
+            set { productos = value; }
         }
     }
 }

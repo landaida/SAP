@@ -8,19 +8,20 @@ namespace SAP.model
 {
     class Producto
     {
-        private int id;
-        private String nombre;
+        public Producto()
+        { }
 
-        public int Id
+        public Producto(string itemCode, string itemName)
         {
-            get { return id; }
-            set { id = value; }
+            this.ItemCode = itemCode;
+            this.ItemName = itemName;
         }
+        public string ItemCode { get; set; }
+        public string ItemName { get; set; }
 
-        public String Nombre
+        public override string ToString()
         {
-            get { return nombre; }
-            set { nombre = value; }
+            return ItemName;
         }
     }
 }

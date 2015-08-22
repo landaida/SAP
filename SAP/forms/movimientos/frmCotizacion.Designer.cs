@@ -30,7 +30,7 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.cmbCliente = new SAP.util.SuggestComboBox();
+            this.cmbCliente = new System.Windows.Forms.ComboBox();
             this.txtFechaDocumento = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.txtFechaLanzamiento = new System.Windows.Forms.DateTimePicker();
@@ -50,12 +50,13 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageContenido = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvLines = new System.Windows.Forms.DataGridView();
             this.colItemNro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescripcion = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPrecioUnitario = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPorcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colIndicadorDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIndicadorImpuesto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageLogistica = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -63,7 +64,7 @@
             this.panel3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageContenido.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLines)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -103,14 +104,10 @@
             // 
             // cmbCliente
             // 
-            this.cmbCliente.FilterRule = null;
             this.cmbCliente.FormattingEnabled = true;
             this.cmbCliente.Location = new System.Drawing.Point(59, 33);
             this.cmbCliente.Name = "cmbCliente";
-            this.cmbCliente.PropertySelector = null;
-            this.cmbCliente.Size = new System.Drawing.Size(121, 21);
-            this.cmbCliente.SuggestBoxHeight = 96;
-            this.cmbCliente.SuggestListOrderRule = null;
+            this.cmbCliente.Size = new System.Drawing.Size(176, 21);
             this.cmbCliente.TabIndex = 10;
             // 
             // txtFechaDocumento
@@ -284,7 +281,7 @@
             // 
             // tabPageContenido
             // 
-            this.tabPageContenido.Controls.Add(this.dataGridView1);
+            this.tabPageContenido.Controls.Add(this.dgvLines);
             this.tabPageContenido.Location = new System.Drawing.Point(4, 22);
             this.tabPageContenido.Name = "tabPageContenido";
             this.tabPageContenido.Padding = new System.Windows.Forms.Padding(3);
@@ -293,25 +290,40 @@
             this.tabPageContenido.Text = "Conenido";
             this.tabPageContenido.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dgvLines
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvLines.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLines.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colItemNro,
+            this.colDescripcion,
             this.colCantidad,
             this.colPrecioUnitario,
             this.colPorcentajeDescuento,
-            this.colIndicadorDescuento});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(711, 162);
-            this.dataGridView1.TabIndex = 0;
+            this.colIndicadorImpuesto});
+            this.dgvLines.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvLines.Location = new System.Drawing.Point(3, 3);
+            this.dgvLines.MultiSelect = false;
+            this.dgvLines.Name = "dgvLines";
+            this.dgvLines.Size = new System.Drawing.Size(711, 162);
+            this.dgvLines.TabIndex = 0;
+            this.dgvLines.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLines_CellEndEdit);
+            this.dgvLines.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLines_RowValidated);
+            this.dgvLines.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvLines_KeyUp);
             // 
             // colItemNro
             // 
             this.colItemNro.HeaderText = "N° Item";
             this.colItemNro.Name = "colItemNro";
+            this.colItemNro.Width = 50;
+            // 
+            // colDescripcion
+            // 
+            this.colDescripcion.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.colDescripcion.HeaderText = "Descripción";
+            this.colDescripcion.Name = "colDescripcion";
+            this.colDescripcion.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDescripcion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colDescripcion.Width = 130;
             // 
             // colCantidad
             // 
@@ -328,10 +340,10 @@
             this.colPorcentajeDescuento.HeaderText = "% de descuento";
             this.colPorcentajeDescuento.Name = "colPorcentajeDescuento";
             // 
-            // colIndicadorDescuento
+            // colIndicadorImpuesto
             // 
-            this.colIndicadorDescuento.HeaderText = "Indicador de impuestos";
-            this.colIndicadorDescuento.Name = "colIndicadorDescuento";
+            this.colIndicadorImpuesto.HeaderText = "Indicador de impuestos";
+            this.colIndicadorImpuesto.Name = "colIndicadorImpuesto";
             // 
             // tabPageLogistica
             // 
@@ -352,6 +364,7 @@
             this.Name = "frmCotizacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Presupuesto";
+            this.Load += new System.EventHandler(this.frmCotizacion_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -360,7 +373,7 @@
             this.panel3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPageContenido.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvLines)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -389,12 +402,13 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.DateTimePicker txtFechaDocumento;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvLines;
+        private System.Windows.Forms.ComboBox cmbCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItemNro;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPrecioUnitario;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPorcentajeDescuento;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colIndicadorDescuento;
-        private SAP.util.SuggestComboBox cmbCliente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colIndicadorImpuesto;
     }
 }

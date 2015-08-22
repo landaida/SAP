@@ -8,6 +8,14 @@ namespace SAP.model
 {
     class Cliente
     {
+        public Cliente()
+        {}
+        
+        public Cliente(string cardCode, string cardName)
+        {
+            this.CardCode = cardCode;
+            this.CardName = cardName;
+        }
         public string CardName { get; set; }        
         public string CardCode { get; set; }
     }

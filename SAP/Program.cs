@@ -14,6 +14,7 @@ namespace SAP
         [STAThread]
         static void Main()
         {
+            Util.cursorShow();
             //inicializa a conexao da empresa por primera y unica vez
             Task task = new Task(() => GlobalVar.inicializarEmpresa());
             task.Start();
@@ -23,6 +24,7 @@ namespace SAP
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmPrincipal());
+            Util.cursorHidden();
         }
     }
 }

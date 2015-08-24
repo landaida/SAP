@@ -16,10 +16,11 @@ namespace SAP.util
 
         public const BoDataServerTypes DBServerType = BoDataServerTypes.dst_MSSQL2008;
 
-        public const String BOUser = "emerson";
-        public const String BOPassword = "0104452";
-
-        public const String Server = "WINSERVER";
-        //public const String Server = "cameras.myvnc.com";        
+        //public const String BOUser = "emerson";
+        public const String BOUser = "guilherm";
+        //public const String BOPassword = "0104452";
+        public const String BOPassword = "belgo";        
+        //public const String Server = "WINSERVER";
+        public const String Server = "cameras.myvnc.com";        
     }
 }

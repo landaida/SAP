@@ -15,6 +15,7 @@ namespace SAP.util
 
         public static void inicializarEmpresa()
         {
+            Util.cursorShow();
             int res = 0;
             if (empresa == null)
             {
@@ -27,13 +28,14 @@ namespace SAP.util
                 empresa.DbUserName = DBConfig.DBUser;
                 empresa.DbPassword = DBConfig.DBPassword;
                 res = empresa.Connect();
-                Console.WriteLine("ok createConexion");
+                Console.WriteLine("ok create Conexion with SAP licensing server");
             }
 
             if (res != 0)
             {
                 Console.WriteLine(empresa.GetLastErrorDescription());
             }
+            Util.cursorHidden();
         }
 
         public static Company Empresa

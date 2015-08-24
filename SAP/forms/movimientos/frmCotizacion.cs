@@ -20,6 +20,9 @@ namespace SAP.forms.movimientos
         Company empresa;
         BusinessPartners cliente;
         List<Producto> productos;
+        bool isReady = false;
+
+
         
         int response = 0;
         #endregion
@@ -29,27 +32,31 @@ namespace SAP.forms.movimientos
         {
             this.txtId.DataBindings.Add("Text", cotizacion, "Comments");            
         }
+
         private void instanciarOjectosSAP()
         {
-            Cursor.Current = Cursors.WaitCursor;
+            Util.cursorShow();
             empresa = GlobalVar.Empresa;
             if (empresa.Connected == true)
             {
                 cotizacion = empresa.GetBusinessObject(BoObjectTypes.oQuotations);
                 cliente = empresa.GetBusinessObject(BoObjectTypes.oBusinessPartners);
-                cliente.CardCode = "C0003144";
-                cotizacion.CardCode = cliente.CardCode;
-                cotizacion.Lines.ItemCode = "101100";
-                cotizacion.Lines.Quantity = 1;
-                cotizacion.Lines.PriceAfterVAT = 60000;
-                cotizacion.Lines.TaxCode = "IVA_10";
+                //cliente.CardCode = "C0003144";
+                //cotizacion.CardCode = cliente.CardCode;
+                //cotizacion.Lines.ItemCode = "101100";
+                //cotizacion.Lines.Quantity = 1;
+                //cotizacion.Lines.PriceAfterVAT = 60000;
+                //cotizacion.Lines.TaxCode = "IVA_10";
                 this.bindingControls();
+                this.isReady = true;
             }
             else
             {
                 Console.WriteLine(empresa.GetLastErrorDescription());
             }
+            Util.cursorHidden();
         }
+
         private void inicializarObjetos()
         {
             this.StartPosition = FormStartPosition.Manual;
@@ -57,7 +64,7 @@ namespace SAP.forms.movimientos
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
 
             ComboUtil.populateComboBox(this.cmbCliente, "cardCode", "cardName", "ocrd", typeof(Cliente));
-
+            cmbCliente.SelectedIndex = -1;
             //Cria uma lista de productos, isso facilitara na hora de carregar o combo de produtos en cada line do quotation
             productos = Util.getGenericList<Producto>("itemCode", "itemName", "oitm").ToList<Producto>();
             this.colItemNro.DataPropertyName = "Id";
@@ -78,6 +85,7 @@ namespace SAP.forms.movimientos
                 ComboUtil.confgComboBox(colDescripcion, "ItemCode", "ItemName", productos);
             }
         }
+
         private bool lineIsValid(int index)
         {
             bool retorno = false;
@@ -105,6 +113,32 @@ namespace SAP.forms.movimientos
             //this.dgvLines.Rows[lines.Count - 1].Selected = true;
 
             this.dgvLines.Refresh();
+        }
+        
+        private void getBusinessPartnersInfo()
+        {
+            if (!this.isReady) return;
+            String key = ((Cliente)this.cmbCliente.SelectedValue).CardCode;
+            if (key.Trim().Length > 0)
+            {
+                cliente = empresa.GetBusinessObject(BoObjectTypes.oBusinessPartners);
+                bool retVal = cliente.GetByKey(key);
+                if (!retVal)
+                {
+                    Util.AutoClosingMessageBox.Show(empresa.GetLastErrorDescription(), "Aviso", 3000);
+                }
+            }
+        }
+        
+        private void changePriceForLine()
+        {
+            if (this.lines.Count == 0) return;
+
+            foreach(CotizacionLine line in this.lines)
+            {
+                
+                
+            }
         }
         #endregion
         
@@ -147,12 +181,11 @@ namespace SAP.forms.movimientos
             }
         }
 
-        #endregion
-
         private void dgvLines_KeyUp(object sender, KeyEventArgs e)
         {
             bool addLine = false;
-            switch (e.KeyCode){
+            switch (e.KeyCode)
+            {
                 case Keys.Enter:
                     addLine = true;
                     break;
@@ -160,22 +193,22 @@ namespace SAP.forms.movimientos
                     addLine = true;
                     break;
             }
-                
-            if (addLine && this.lines.Count - 1 == this.dgvLines.CurrentRow.Index && 
+
+            if (addLine && this.lines.Count - 1 == this.dgvLines.CurrentRow.Index &&
                 this.lineIsValid(this.dgvLines.CurrentRow.Index))
             {
                 this.addLine();
             }
         }
 
-        private void btnAddLine_Click(object sender, EventArgs e)
+
+        #endregion
+
+        private void cmbCliente_SelectedValueChanged(object sender, EventArgs e)
         {
             
+            this.getBusinessPartnersInfo();
         }
 
-        private void dgvLines_RowValidated(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
     }
 }

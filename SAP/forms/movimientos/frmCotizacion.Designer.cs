@@ -109,6 +109,7 @@
             this.cmbCliente.Name = "cmbCliente";
             this.cmbCliente.Size = new System.Drawing.Size(176, 21);
             this.cmbCliente.TabIndex = 10;
+            this.cmbCliente.SelectedValueChanged += new System.EventHandler(this.cmbCliente_SelectedValueChanged);
             // 
             // txtFechaDocumento
             // 
@@ -307,7 +308,6 @@
             this.dgvLines.Size = new System.Drawing.Size(711, 162);
             this.dgvLines.TabIndex = 0;
             this.dgvLines.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLines_CellEndEdit);
-            this.dgvLines.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLines_RowValidated);
             this.dgvLines.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvLines_KeyUp);
             // 
             // colItemNro

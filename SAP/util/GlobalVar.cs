@@ -27,13 +27,16 @@ namespace SAP.util
                 empresa.Password = DBConfig.BOPassword;
                 empresa.DbUserName = DBConfig.DBUser;
                 empresa.DbPassword = DBConfig.DBPassword;
-                res = empresa.Connect();
-                Console.WriteLine("ok create Conexion with SAP licensing server");
+                res = empresa.Connect();                
             }
 
             if (res != 0)
             {
                 Console.WriteLine(empresa.GetLastErrorDescription());
+            }
+            else
+            {
+                Console.WriteLine("ok create Conexion with SAP licensing server");
             }
             Util.cursorHidden();
         }

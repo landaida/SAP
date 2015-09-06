@@ -30,7 +30,6 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.cmbCliente = new System.Windows.Forms.ComboBox();
             this.txtFechaDocumento = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.txtFechaLanzamiento = new System.Windows.Forms.DateTimePicker();
@@ -58,6 +57,8 @@
             this.colPorcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIndicadorImpuesto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageLogistica = new System.Windows.Forms.TabPage();
+            this.cmbCliente = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -65,6 +66,8 @@
             this.tabControl1.SuspendLayout();
             this.tabPageContenido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLines)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCliente.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -81,6 +84,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 31.27148F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 68.72852F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 125F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(731, 417);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -101,15 +105,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(725, 85);
             this.panel1.TabIndex = 1;
-            // 
-            // cmbCliente
-            // 
-            this.cmbCliente.FormattingEnabled = true;
-            this.cmbCliente.Location = new System.Drawing.Point(59, 33);
-            this.cmbCliente.Name = "cmbCliente";
-            this.cmbCliente.Size = new System.Drawing.Size(176, 21);
-            this.cmbCliente.TabIndex = 10;
-            this.cmbCliente.SelectedValueChanged += new System.EventHandler(this.cmbCliente_SelectedValueChanged);
             // 
             // txtFechaDocumento
             // 
@@ -355,6 +350,24 @@
             this.tabPageLogistica.Text = "Logística";
             this.tabPageLogistica.UseVisualStyleBackColor = true;
             // 
+            // cmbCliente
+            // 
+            this.cmbCliente.EditValue = " ";
+            this.cmbCliente.Location = new System.Drawing.Point(59, 38);
+            this.cmbCliente.Name = "cmbCliente";
+            this.cmbCliente.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbCliente.Properties.View = this.searchLookUpEdit1View;
+            this.cmbCliente.Size = new System.Drawing.Size(121, 20);
+            this.cmbCliente.TabIndex = 12;
+            // 
+            // searchLookUpEdit1View
+            // 
+            this.searchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.searchLookUpEdit1View.Name = "searchLookUpEdit1View";
+            this.searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.searchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
+            // 
             // frmCotizacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -374,6 +387,8 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPageContenido.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLines)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCliente.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -403,12 +418,13 @@
         private System.Windows.Forms.DateTimePicker txtFechaDocumento;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridView dgvLines;
-        private System.Windows.Forms.ComboBox cmbCliente;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItemNro;
         private System.Windows.Forms.DataGridViewComboBoxColumn colDescripcion;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCantidad;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPrecioUnitario;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPorcentajeDescuento;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndicadorImpuesto;
+        private DevExpress.XtraEditors.SearchLookUpEdit cmbCliente;
+        private DevExpress.XtraGrid.Views.Grid.GridView searchLookUpEdit1View;
     }
 }

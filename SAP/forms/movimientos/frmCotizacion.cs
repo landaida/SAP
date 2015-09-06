@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using SAP.model;
 using SAPbobsCOM;
 using SAP.util;
+using System.Threading;
 namespace SAP.forms.movimientos
 {
     public partial class frmCotizacion : Form
@@ -20,6 +21,7 @@ namespace SAP.forms.movimientos
         Company empresa;
         BusinessPartners cliente;
         List<Producto> productos;
+        List<Cliente> clientes;
         bool isReady = false;
 
 
@@ -63,8 +65,8 @@ namespace SAP.forms.movimientos
             this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
 
-            ComboUtil.populateComboBox(this.cmbCliente, "cardCode", "cardName", "ocrd", typeof(Cliente));
-            cmbCliente.SelectedIndex = -1;
+            ComboUtil.populateSearchLookUpEdit(this.cmbCliente, "CardCode", "CardName", "ocrd", typeof(Cliente));
+            //txtCliente.SelectedIndex = -1;
             //Cria uma lista de productos, isso facilitara na hora de carregar o combo de produtos en cada line do quotation
             productos = Util.getGenericList<Producto>("itemCode", "itemName", "oitm").ToList<Producto>();
             this.colItemNro.DataPropertyName = "Id";
@@ -84,6 +86,14 @@ namespace SAP.forms.movimientos
             {
                 ComboUtil.confgComboBox(colDescripcion, "ItemCode", "ItemName", productos);
             }
+
+            // this.txtCliente.TextChanged += new EventHandler(generics_TextChanged);
+            //this.txtCliente.AutoCompleteMode = AutoCompleteMode.Suggest;
+            //this.txtCliente.AutoCompleteSource = AutoCompleteSource.ListItems;
+            //List<Cliente> results = (from d in this.clientes where d.CardName.ToLower().Contains(filter.ToLower()) select d).ToList();                
+            clientes = Util.getGenericList<Cliente>("cardCode", "cardName", "ocrd").ToList<Cliente>();
+            
+            
         }
 
         private bool lineIsValid(int index)
@@ -118,7 +128,7 @@ namespace SAP.forms.movimientos
         private void getBusinessPartnersInfo()
         {
             if (!this.isReady) return;
-            String key = ((Cliente)this.cmbCliente.SelectedValue).CardCode;
+            String key = "";//((Cliente)this.txtCliente.SelectedValue).CardCode;
             if (key.Trim().Length > 0)
             {
                 cliente = empresa.GetBusinessObject(BoObjectTypes.oBusinessPartners);
@@ -140,10 +150,13 @@ namespace SAP.forms.movimientos
                 
             }
         }
+
+
+
         #endregion
-        
+
         #region FunctionsC#
-        
+
         public frmCotizacion()
         {
             InitializeComponent();
@@ -204,11 +217,19 @@ namespace SAP.forms.movimientos
 
         #endregion
 
-        private void cmbCliente_SelectedValueChanged(object sender, EventArgs e)
+        private void txtCliente_SelectedValueChanged(object sender, EventArgs e)
         {
             
             this.getBusinessPartnersInfo();
         }
 
+        private void txtCliente_KeyDown(object sender, KeyEventArgs e)
+        {            
+            
+        }
+
+       
+
+        
     }
 }

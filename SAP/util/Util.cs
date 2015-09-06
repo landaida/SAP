@@ -87,3 +87,9 @@ namespace SAP.util
         }
     }
 }
+
+public static class ControlExtension
+{
+
+
+}

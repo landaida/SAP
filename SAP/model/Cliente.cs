@@ -18,5 +18,12 @@ namespace SAP.model
         }
         public string CardName { get; set; }        
         public string CardCode { get; set; }
+
+        public override string ToString()
+        {
+            return CardName;
+        }
     }
+
+    
 }

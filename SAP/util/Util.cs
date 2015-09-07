@@ -37,6 +37,15 @@ namespace SAP.util
                 }
                 reader.Close();
                 return result.OfType<T>();
+            } else if (typeof(T) == typeof(Usuario))
+            {
+                List<Usuario> result = new List<Usuario>();
+                while (reader.Read())
+                {
+                    result.Add(new Usuario(reader[valueMember].ToString(), reader[displayMember].ToString()));
+                }
+                reader.Close();
+                return result.OfType<T>();
             }
 
 

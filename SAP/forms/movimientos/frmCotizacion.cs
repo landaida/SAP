@@ -59,22 +59,26 @@ namespace SAP.forms.movimientos
             Util.cursorHidden();
         }
 
-        private void inicializarObjetos()
+        private void centerFormInContainer()
         {
             this.StartPosition = FormStartPosition.Manual;
-            this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
-            this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+            //this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
+            this.Top = (this.ParentForm.ClientRectangle.Size.Height - this.Height) / 2;
+            //this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
+            this.Left = (this.ParentForm.ClientRectangle.Size.Width - this.Width) / 2;
+        }
+
+        private void inicializarObjetos()
+        {
+            centerFormInContainer();
 
             ComboUtil.populateSearchLookUpEdit(this.cmbCliente, "CardCode", "CardName", "ocrd", typeof(Cliente));
-            //txtCliente.SelectedIndex = -1;
+            ComboUtil.populateSearchLookUpEdit(this.cmbVendedor, "UserId", "U_Name", "ousr", typeof(Usuario));
+
             //Cria uma lista de productos, isso facilitara na hora de carregar o combo de produtos en cada line do quotation
             productos = Util.getGenericList<Producto>("itemCode", "itemName", "oitm").ToList<Producto>();
-            this.colItemNro.DataPropertyName = "Id";
-            this.colDescripcion.DataPropertyName = "Producto.ItemName";
-            this.colCantidad.DataPropertyName = "Cantidad";
-            this.colPrecioUnitario.DataPropertyName = "PrecioUnitario";
-            this.colPorcentajeDescuento.DataPropertyName = "Descuento";
-            this.colIndicadorImpuesto.DataPropertyName = "IndicadorImpuesto";
+
+            this.setGridColumnsDataProperty();
 
 
             this.addLine();
@@ -91,9 +95,21 @@ namespace SAP.forms.movimientos
             //this.txtCliente.AutoCompleteMode = AutoCompleteMode.Suggest;
             //this.txtCliente.AutoCompleteSource = AutoCompleteSource.ListItems;
             //List<Cliente> results = (from d in this.clientes where d.CardName.ToLower().Contains(filter.ToLower()) select d).ToList();                
-            clientes = Util.getGenericList<Cliente>("cardCode", "cardName", "ocrd").ToList<Cliente>();
-            
-            
+
+            //clientes = Util.getGenericList<Cliente>("cardCode", "cardName", "ocrd").ToList<Cliente>();
+
+            ComboUtil.populateLookUpEditWhitEnums(cmbStatus, typeof(DocumentStatus));
+            this.cmbStatus.EditValue = DocumentStatus.Abierto;
+        }
+
+        private void setGridColumnsDataProperty()
+        {
+            this.colItemNro.DataPropertyName = "Id";
+            this.colDescripcion.DataPropertyName = "Producto.ItemName";
+            this.colCantidad.DataPropertyName = "Cantidad";
+            this.colPrecioUnitario.DataPropertyName = "PrecioUnitario";
+            this.colPorcentajeDescuento.DataPropertyName = "Descuento";
+            this.colIndicadorImpuesto.DataPropertyName = "IndicadorImpuesto";
         }
 
         private bool lineIsValid(int index)
@@ -128,7 +144,7 @@ namespace SAP.forms.movimientos
         private void getBusinessPartnersInfo()
         {
             if (!this.isReady) return;
-            String key = "";//((Cliente)this.txtCliente.SelectedValue).CardCode;
+            String key = ((Cliente)this.cmbCliente.EditValue).CardCode;
             if (key.Trim().Length > 0)
             {
                 cliente = empresa.GetBusinessObject(BoObjectTypes.oBusinessPartners);

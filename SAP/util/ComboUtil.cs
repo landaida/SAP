@@ -75,6 +75,12 @@ namespace SAP.util
                 //Specify an array of countries as a data source
                 lkup.Properties.DataSource = lista;
             }
+            else if (typeof(Usuario) == type)
+            {
+                List<Usuario> lista = Util.getGenericList<Usuario>(valueMember, displayMember, tableName).ToList<Usuario>();
+                //Specify an array of countries as a data source
+                lkup.Properties.DataSource = lista;
+            }
             //The field whose values are displayed in the edit box
             lkup.Properties.DisplayMember = displayMember;
             //The field whose values match the edit value
@@ -104,6 +110,33 @@ namespace SAP.util
             cmb.DataSource = lista;
             cmb.DisplayMember = displayMember;
             cmb.ValueMember = valueMember;
+        }
+
+        public static void populateLookUpEditWhitEnums(LookUpEdit lkup, Type type)
+        {
+            if (typeof(DocumentStatus) == type)
+            {
+                List<DocumentStatus> lista = new List<DocumentStatus>();
+                foreach (DocumentStatus item in Enum.GetValues(typeof(DocumentStatus)))
+                {
+                    lista.Add(item);
+                }
+                //Specify an array of countries as a data source
+                lkup.Properties.DataSource = lista;
+
+            }
+
+            //The field whose values are displayed in the edit box
+            //lkup.Properties.DisplayMember = displayMember;
+            //The field whose values match the edit value
+            //lkup.Properties.ValueMember = valueMember;
+
+
+            //Unbound column
+            //lkup.Properties.Columns.Add(new LookUpColumnInfo(valueMember, "Id", 20));
+            //Column bound to the existing 'Country' field from the data source
+            //lkup.Properties.Columns.Add(new LookUpColumnInfo(displayMember, "Nombre", 100));
+
         }
 
     }

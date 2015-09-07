@@ -30,10 +30,11 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cmbCliente = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.txtFechaDocumento = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.txtFechaLanzamiento = new System.Windows.Forms.DateTimePicker();
-            this.txtStatus = new System.Windows.Forms.TextBox();
             this.txtId = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -43,7 +44,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtObservacion = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.cmbVendedor = new System.Windows.Forms.ComboBox();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnAdicionar = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -57,17 +57,21 @@
             this.colPorcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIndicadorImpuesto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageLogistica = new System.Windows.Forms.TabPage();
-            this.cmbCliente = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.cmbVendedor = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.cmbStatus = new DevExpress.XtraEditors.LookUpEdit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCliente.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageContenido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLines)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbCliente.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbVendedor.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbStatus.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -90,11 +94,11 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cmbStatus);
             this.panel1.Controls.Add(this.cmbCliente);
             this.panel1.Controls.Add(this.txtFechaDocumento);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.txtFechaLanzamiento);
-            this.panel1.Controls.Add(this.txtStatus);
             this.panel1.Controls.Add(this.txtId);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.label3);
@@ -105,6 +109,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(725, 85);
             this.panel1.TabIndex = 1;
+            // 
+            // cmbCliente
+            // 
+            this.cmbCliente.EditValue = " ";
+            this.cmbCliente.Location = new System.Drawing.Point(59, 38);
+            this.cmbCliente.Name = "cmbCliente";
+            this.cmbCliente.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbCliente.Properties.View = this.searchLookUpEdit1View;
+            this.cmbCliente.Size = new System.Drawing.Size(121, 20);
+            this.cmbCliente.TabIndex = 12;
+            // 
+            // searchLookUpEdit1View
+            // 
+            this.searchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.searchLookUpEdit1View.Name = "searchLookUpEdit1View";
+            this.searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.searchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
             // 
             // txtFechaDocumento
             // 
@@ -129,15 +151,6 @@
             this.txtFechaLanzamiento.Name = "txtFechaLanzamiento";
             this.txtFechaLanzamiento.Size = new System.Drawing.Size(149, 20);
             this.txtFechaLanzamiento.TabIndex = 7;
-            // 
-            // txtStatus
-            // 
-            this.txtStatus.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.txtStatus.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.txtStatus.Location = new System.Drawing.Point(366, 61);
-            this.txtStatus.Name = "txtStatus";
-            this.txtStatus.Size = new System.Drawing.Size(149, 20);
-            this.txtStatus.TabIndex = 5;
             // 
             // txtId
             // 
@@ -188,10 +201,10 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.cmbVendedor);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.txtObservacion);
             this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.cmbVendedor);
             this.panel2.Controls.Add(this.btnCancelar);
             this.panel2.Controls.Add(this.btnAdicionar);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -227,14 +240,6 @@
             this.label5.Size = new System.Drawing.Size(53, 13);
             this.label5.TabIndex = 3;
             this.label5.Text = "Vendedor";
-            // 
-            // cmbVendedor
-            // 
-            this.cmbVendedor.FormattingEnabled = true;
-            this.cmbVendedor.Location = new System.Drawing.Point(72, 8);
-            this.cmbVendedor.Name = "cmbVendedor";
-            this.cmbVendedor.Size = new System.Drawing.Size(121, 21);
-            this.cmbVendedor.TabIndex = 2;
             // 
             // btnCancelar
             // 
@@ -350,23 +355,33 @@
             this.tabPageLogistica.Text = "Logística";
             this.tabPageLogistica.UseVisualStyleBackColor = true;
             // 
-            // cmbCliente
+            // cmbVendedor
             // 
-            this.cmbCliente.EditValue = " ";
-            this.cmbCliente.Location = new System.Drawing.Point(59, 38);
-            this.cmbCliente.Name = "cmbCliente";
-            this.cmbCliente.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.cmbVendedor.EditValue = " ";
+            this.cmbVendedor.Location = new System.Drawing.Point(72, 8);
+            this.cmbVendedor.Name = "cmbVendedor";
+            this.cmbVendedor.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cmbCliente.Properties.View = this.searchLookUpEdit1View;
-            this.cmbCliente.Size = new System.Drawing.Size(121, 20);
-            this.cmbCliente.TabIndex = 12;
+            this.cmbVendedor.Properties.View = this.gridView1;
+            this.cmbVendedor.Size = new System.Drawing.Size(121, 20);
+            this.cmbVendedor.TabIndex = 13;
             // 
-            // searchLookUpEdit1View
+            // gridView1
             // 
-            this.searchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.searchLookUpEdit1View.Name = "searchLookUpEdit1View";
-            this.searchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.searchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
+            this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView1.OptionsView.ShowGroupPanel = false;
+            // 
+            // cmbStatus
+            // 
+            this.cmbStatus.Enabled = false;
+            this.cmbStatus.Location = new System.Drawing.Point(366, 61);
+            this.cmbStatus.Name = "cmbStatus";
+            this.cmbStatus.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbStatus.Size = new System.Drawing.Size(105, 20);
+            this.cmbStatus.TabIndex = 13;
             // 
             // frmCotizacion
             // 
@@ -381,14 +396,17 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCliente.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPageContenido.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLines)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbCliente.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbVendedor.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbStatus.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -398,7 +416,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DateTimePicker txtFechaLanzamiento;
-        private System.Windows.Forms.TextBox txtStatus;
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -413,7 +430,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtObservacion;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cmbVendedor;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.DateTimePicker txtFechaDocumento;
         private System.Windows.Forms.Label label7;
@@ -426,5 +442,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colIndicadorImpuesto;
         private DevExpress.XtraEditors.SearchLookUpEdit cmbCliente;
         private DevExpress.XtraGrid.Views.Grid.GridView searchLookUpEdit1View;
+        private DevExpress.XtraEditors.SearchLookUpEdit cmbVendedor;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraEditors.LookUpEdit cmbStatus;
     }
 }

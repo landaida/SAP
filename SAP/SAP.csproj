@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="model\DocumentStatus.cs" />
     <Compile Include="forms\movimientos\frmCotizacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +69,7 @@
     <Compile Include="frmPrincipal.Designer.cs">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </Compile>
+    <Compile Include="model\Usuario.cs" />
     <Compile Include="model\Cliente.cs" />
     <Compile Include="model\Cotizacion.cs" />
     <Compile Include="model\CotizacionLine.cs" />

@@ -18,11 +18,9 @@ namespace SAP.forms.movimientos
         #region Declare
         Documents cotizacion;
         List<CotizacionLine> lines = new List<CotizacionLine>();
-        Company empresa;
         BusinessPartners cliente;
         List<Producto> productos;
         List<Cliente> clientes;
-        bool isReady = false;
 
 
         
@@ -37,24 +35,22 @@ namespace SAP.forms.movimientos
 
         private void instanciarOjectosSAP()
         {
-            Util.cursorShow();
-            empresa = GlobalVar.Empresa;
-            if (empresa.Connected == true)
+            Util.cursorShow();            
+            if (GlobalVar.Empresa.Connected == true)
             {
-                cotizacion = empresa.GetBusinessObject(BoObjectTypes.oQuotations);
-                cliente = empresa.GetBusinessObject(BoObjectTypes.oBusinessPartners);
+                cotizacion = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
+                cliente = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oBusinessPartners);
                 //cliente.CardCode = "C0003144";
                 //cotizacion.CardCode = cliente.CardCode;
                 //cotizacion.Lines.ItemCode = "101100";
                 //cotizacion.Lines.Quantity = 1;
                 //cotizacion.Lines.PriceAfterVAT = 60000;
-                //cotizacion.Lines.TaxCode = "IVA_10";
+                //cotizacion.Lines.TaxCode = "IVA_10";     
                 this.bindingControls();
-                this.isReady = true;
             }
             else
             {
-                Console.WriteLine(empresa.GetLastErrorDescription());
+                Console.WriteLine(GlobalVar.Empresa.GetLastErrorDescription());
             }
             Util.cursorHidden();
         }
@@ -73,7 +69,7 @@ namespace SAP.forms.movimientos
             centerFormInContainer();
 
             ComboUtil.populateSearchLookUpEdit(this.cmbCliente, "CardCode", "CardName", "ocrd", typeof(Cliente));
-            ComboUtil.populateSearchLookUpEdit(this.cmbVendedor, "UserId", "U_Name", "ousr", typeof(Usuario));
+            ComboUtil.populateSearchLookUpEdit(this.cmbVendedor, "SlpCode", "SlpName", "oslp", typeof(Vendedor));
 
             //Cria uma lista de productos, isso facilitara na hora de carregar o combo de produtos en cada line do quotation
             productos = Util.getGenericList<Producto>("itemCode", "itemName", "oitm").ToList<Producto>();
@@ -142,16 +138,15 @@ namespace SAP.forms.movimientos
         }
         
         private void getBusinessPartnersInfo()
-        {
-            if (!this.isReady) return;
-            String key = ((Cliente)this.cmbCliente.EditValue).CardCode;
+        {            
+            String key = this.cmbCliente.EditValue.ToString();
             if (key.Trim().Length > 0)
             {
-                cliente = empresa.GetBusinessObject(BoObjectTypes.oBusinessPartners);
+                cliente = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oBusinessPartners);
                 bool retVal = cliente.GetByKey(key);
                 if (!retVal)
                 {
-                    Util.AutoClosingMessageBox.Show(empresa.GetLastErrorDescription(), "Aviso", 3000);
+                    Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
                 }
             }
         }
@@ -176,18 +171,17 @@ namespace SAP.forms.movimientos
         public frmCotizacion()
         {
             InitializeComponent();
-            Task task = new Task(() => this.instanciarOjectosSAP());
-            task.Start();
         }
 
         private void frmCotizacion_Load(object sender, EventArgs e)
         {
-            this.inicializarObjetos();
+            this.inicializarObjetos();            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             Console.WriteLine(this.cotizacion.Comments);
+            this.instanciarOjectosSAP();
             response = cotizacion.Add();
             if(response == 0)
             {
@@ -195,7 +189,7 @@ namespace SAP.forms.movimientos
             }
             else
             {
-                Console.WriteLine(this.empresa.GetLastErrorDescription());
+                Console.WriteLine(GlobalVar.Empresa.GetLastErrorDescription());
             }
         }
 
@@ -233,19 +227,14 @@ namespace SAP.forms.movimientos
 
         #endregion
 
-        private void txtCliente_SelectedValueChanged(object sender, EventArgs e)
-        {
-            
-            this.getBusinessPartnersInfo();
-        }
-
         private void txtCliente_KeyDown(object sender, KeyEventArgs e)
         {            
             
         }
 
-       
-
-        
+        private void cmbCliente_EditValueChanged(object sender, EventArgs e)
+        {
+            //this.getBusinessPartnersInfo();
+        }
     }
 }

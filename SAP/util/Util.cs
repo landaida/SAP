@@ -47,6 +47,16 @@ namespace SAP.util
                 reader.Close();
                 return result.OfType<T>();
             }
+            else if (typeof(T) == typeof(Vendedor))
+            {
+                List<Vendedor> result = new List<Vendedor>();
+                while (reader.Read())
+                {
+                    result.Add(new Vendedor(reader[valueMember].ToString(), reader[displayMember].ToString()));
+                }
+                reader.Close();
+                return result.OfType<T>();
+            }
 
 
 

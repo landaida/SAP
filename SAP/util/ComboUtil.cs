@@ -81,6 +81,12 @@ namespace SAP.util
                 //Specify an array of countries as a data source
                 lkup.Properties.DataSource = lista;
             }
+            else if (typeof(Vendedor) == type)
+            {
+                List<Vendedor> lista = Util.getGenericList<Vendedor>(valueMember, displayMember, tableName).ToList<Vendedor>();
+                //Specify an array of countries as a data source
+                lkup.Properties.DataSource = lista;
+            }
             //The field whose values are displayed in the edit box
             lkup.Properties.DisplayMember = displayMember;
             //The field whose values match the edit value

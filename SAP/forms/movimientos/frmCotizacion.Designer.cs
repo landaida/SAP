@@ -30,6 +30,7 @@
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cmbStatus = new DevExpress.XtraEditors.LookUpEdit();
             this.cmbCliente = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.txtFechaDocumento = new System.Windows.Forms.DateTimePicker();
@@ -41,6 +42,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cmbVendedor = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.label6 = new System.Windows.Forms.Label();
             this.txtObservacion = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -57,21 +60,18 @@
             this.colPorcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIndicadorImpuesto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageLogistica = new System.Windows.Forms.TabPage();
-            this.cmbVendedor = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.cmbStatus = new DevExpress.XtraEditors.LookUpEdit();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbStatus.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbCliente.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbVendedor.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.panel3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageContenido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLines)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbVendedor.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbStatus.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -110,6 +110,16 @@
             this.panel1.Size = new System.Drawing.Size(725, 85);
             this.panel1.TabIndex = 1;
             // 
+            // cmbStatus
+            // 
+            this.cmbStatus.Enabled = false;
+            this.cmbStatus.Location = new System.Drawing.Point(366, 61);
+            this.cmbStatus.Name = "cmbStatus";
+            this.cmbStatus.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbStatus.Size = new System.Drawing.Size(105, 20);
+            this.cmbStatus.TabIndex = 13;
+            // 
             // cmbCliente
             // 
             this.cmbCliente.EditValue = " ";
@@ -120,6 +130,7 @@
             this.cmbCliente.Properties.View = this.searchLookUpEdit1View;
             this.cmbCliente.Size = new System.Drawing.Size(121, 20);
             this.cmbCliente.TabIndex = 12;
+            this.cmbCliente.EditValueChanged += new System.EventHandler(this.cmbCliente_EditValueChanged);
             // 
             // searchLookUpEdit1View
             // 
@@ -212,6 +223,24 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(725, 120);
             this.panel2.TabIndex = 2;
+            // 
+            // cmbVendedor
+            // 
+            this.cmbVendedor.EditValue = " ";
+            this.cmbVendedor.Location = new System.Drawing.Point(72, 8);
+            this.cmbVendedor.Name = "cmbVendedor";
+            this.cmbVendedor.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbVendedor.Properties.View = this.gridView1;
+            this.cmbVendedor.Size = new System.Drawing.Size(121, 20);
+            this.cmbVendedor.TabIndex = 13;
+            // 
+            // gridView1
+            // 
+            this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView1.OptionsView.ShowGroupPanel = false;
             // 
             // label6
             // 
@@ -355,34 +384,6 @@
             this.tabPageLogistica.Text = "Logística";
             this.tabPageLogistica.UseVisualStyleBackColor = true;
             // 
-            // cmbVendedor
-            // 
-            this.cmbVendedor.EditValue = " ";
-            this.cmbVendedor.Location = new System.Drawing.Point(72, 8);
-            this.cmbVendedor.Name = "cmbVendedor";
-            this.cmbVendedor.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cmbVendedor.Properties.View = this.gridView1;
-            this.cmbVendedor.Size = new System.Drawing.Size(121, 20);
-            this.cmbVendedor.TabIndex = 13;
-            // 
-            // gridView1
-            // 
-            this.gridView1.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.gridView1.Name = "gridView1";
-            this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.gridView1.OptionsView.ShowGroupPanel = false;
-            // 
-            // cmbStatus
-            // 
-            this.cmbStatus.Enabled = false;
-            this.cmbStatus.Location = new System.Drawing.Point(366, 61);
-            this.cmbStatus.Name = "cmbStatus";
-            this.cmbStatus.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cmbStatus.Size = new System.Drawing.Size(105, 20);
-            this.cmbStatus.TabIndex = 13;
-            // 
             // frmCotizacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -396,17 +397,17 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbStatus.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbCliente.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbVendedor.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPageContenido.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLines)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbVendedor.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbStatus.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }

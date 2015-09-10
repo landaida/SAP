@@ -11,6 +11,7 @@ using SAP.model;
 using SAPbobsCOM;
 using SAP.util;
 using System.Threading;
+using System.ComponentModel;
 namespace SAP.forms.movimientos
 {
     public partial class frmCotizacion : Form
@@ -20,7 +21,7 @@ namespace SAP.forms.movimientos
         List<CotizacionLine> lines = new List<CotizacionLine>();
         BusinessPartners cliente;
         List<Producto> productos;
-        List<Cliente> clientes;
+        BindingList<CotizacionLine> listCotizacion;
 
 
         
@@ -68,24 +69,25 @@ namespace SAP.forms.movimientos
         {
             centerFormInContainer();
 
-            ComboUtil.populateSearchLookUpEdit(this.cmbCliente, "CardCode", "CardName", "ocrd", typeof(Cliente));
-            ComboUtil.populateSearchLookUpEdit(this.cmbVendedor, "SlpCode", "SlpName", "oslp", typeof(Vendedor));
-
             //Cria uma lista de productos, isso facilitara na hora de carregar o combo de produtos en cada line do quotation
             productos = Util.getGenericList<Producto>("itemCode", "itemName", "oitm").ToList<Producto>();
 
-            this.setGridColumnsDataProperty();
 
+            ComboUtil.populateSearchLookUpEdit(this.cmbCliente, "CardCode", "CardName", "ocrd", typeof(Cliente));
+            ComboUtil.populateSearchLookUpEdit(this.cmbVendedor, "SlpCode", "SlpName", "oslp", typeof(Vendedor));
+            ComboUtil.populateSearchLookUpEdit(this.cmbProduto, "ItemCode", "ItemName", productos);
+            
+
+            this.setGridColumnsFieldName();
+
+            listCotizacion = new BindingList<CotizacionLine>();
+            listCotizacion.AllowNew = true;
+            this.gridControl1.DataSource = listCotizacion;
+            gridView2.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
+            //bindingListProducto.AddingNew += this.OnAddingNew;
 
             this.addLine();
-            this.dgvLines.AutoGenerateColumns = false;
-            this.dgvLines.DataSource = lines;
-
-
-            if (colDescripcion.Items.Count == 0)
-            {
-                ComboUtil.confgComboBox(colDescripcion, "ItemCode", "ItemName", productos);
-            }
+            
 
             // this.txtCliente.TextChanged += new EventHandler(generics_TextChanged);
             //this.txtCliente.AutoCompleteMode = AutoCompleteMode.Suggest;
@@ -97,44 +99,37 @@ namespace SAP.forms.movimientos
             ComboUtil.populateLookUpEditWhitEnums(cmbStatus, typeof(DocumentStatus));
             this.cmbStatus.EditValue = DocumentStatus.Abierto;
         }
-
-        private void setGridColumnsDataProperty()
+        private void OnAddingNew(Object o, AddingNewEventArgs e)
         {
-            this.colItemNro.DataPropertyName = "Id";
-            this.colDescripcion.DataPropertyName = "Producto.ItemName";
-            this.colCantidad.DataPropertyName = "Cantidad";
-            this.colPrecioUnitario.DataPropertyName = "PrecioUnitario";
-            this.colPorcentajeDescuento.DataPropertyName = "Descuento";
-            this.colIndicadorImpuesto.DataPropertyName = "IndicadorImpuesto";
+            
+        }
+        private void setGridColumnsFieldName()
+        {
+            this.colItemNro1.FieldName = "Id";
+            this.colDescripcion1.FieldName = "Producto";
+            this.colCantidad1.FieldName = "Cantidad";
+            this.colPrecioUnitario1.FieldName = "PrecioUnitario";
+            this.colPorcentajeDescuento1.FieldName = "Descuento";
+            this.colIndicadorImpuesto1.FieldName = "IndicadorImpuesto";
         }
 
-        private bool lineIsValid(int index)
-        {
-            bool retorno = false;
-            DataGridViewCellCollection cells = this.dgvLines.Rows[index].Cells;
-            if (cells[colItemNro.Name].Value != null && 
-                cells[colDescripcion.Name].Value != null && 
-                cells[colCantidad.Name].Value != null && (Double)cells[colCantidad.Name].Value > 0 &&
-                cells[colPrecioUnitario.Name].Value != null && (Double)cells[colPrecioUnitario.Name].Value > 0)
-            {                
-                retorno = true;
-            }
-            return retorno;
-        }
+        //private bool lineIsValid(int index)
+        //{
+        //    bool retorno = false;
+        //    DataGridViewCellCollection cells = this.dgvLines.Rows[index].Cells;
+        //    if (cells[colItemNro1.Name].Value != null && 
+        //        cells[colDescripcion1.Name].Value != null && 
+        //        cells[colCantidad1.Name].Value != null && (Double)cells[colCantidad1.Name].Value > 0 &&
+        //        cells[colPrecioUnitario1.Name].Value != null && (Double)cells[colPrecioUnitario1.Name].Value > 0)
+        //    {                
+        //        retorno = true;
+        //    }
+        //    return retorno;
+        //}
 
         private void addLine()
         {
-            this.dgvLines.EndEdit();        
-            //resuelve error de no poder add line
-            this.dgvLines.DataSource = null;
-
-            this.lines.Add(new CotizacionLine());
-            this.dgvLines.AutoGenerateColumns = false;
-            this.dgvLines.DataSource = lines;
-            this.dgvLines.CurrentCell = this.dgvLines[lines.Count - 1, 0];
-            //this.dgvLines.Rows[lines.Count - 1].Selected = true;
-
-            this.dgvLines.Refresh();
+            this.listCotizacion.Add(new CotizacionLine(600000, 700000));
         }
         
         private void getBusinessPartnersInfo()
@@ -191,39 +186,7 @@ namespace SAP.forms.movimientos
             {
                 Console.WriteLine(GlobalVar.Empresa.GetLastErrorDescription());
             }
-        }
-
-        private void dgvLines_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex == colDescripcion.Index)
-            {
-                this.lines[e.RowIndex].Producto = productos.Find(x => x.ItemCode.Equals(dgvLines.Rows[e.RowIndex].Cells[colDescripcion.Name].Value));
-                this.lines[e.RowIndex].Id = Int32.Parse(this.lines[e.RowIndex].Producto.ItemCode);
-                this.lines[e.RowIndex].Cantidad = 1;
-                this.dgvLines.Refresh();
-            }
-        }
-
-        private void dgvLines_KeyUp(object sender, KeyEventArgs e)
-        {
-            bool addLine = false;
-            switch (e.KeyCode)
-            {
-                case Keys.Enter:
-                    addLine = true;
-                    break;
-                case Keys.Down:
-                    addLine = true;
-                    break;
-            }
-
-            if (addLine && this.lines.Count - 1 == this.dgvLines.CurrentRow.Index &&
-                this.lineIsValid(this.dgvLines.CurrentRow.Index))
-            {
-                this.addLine();
-            }
-        }
-
+        }        
 
         #endregion
 

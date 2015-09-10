@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SAP.forms.movimientos;
+using SAP.util;
 
 namespace SAP
 {
@@ -31,5 +32,16 @@ namespace SAP
             }
 
         #endregion
+
+        private void timerVerificaConexao_Tick(object sender, EventArgs e)
+        {
+            if (GlobalVar.Empresa != null)
+            {
+                this.btnConexao.ImageIndex = 0;
+                this.timerVerificaConexao.Enabled = false;
+                this.btnConexao.ToolTip = "Conectado a SAP";
+            }
+            
+        }
     }
 }

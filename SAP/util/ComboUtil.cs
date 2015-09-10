@@ -10,6 +10,7 @@ using System.Reflection;
 using SAP.model;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
 namespace SAP.util
 {
     public static class ComboUtil
@@ -142,6 +143,25 @@ namespace SAP.util
             //lkup.Properties.Columns.Add(new LookUpColumnInfo(valueMember, "Id", 20));
             //Column bound to the existing 'Country' field from the data source
             //lkup.Properties.Columns.Add(new LookUpColumnInfo(displayMember, "Nombre", 100));
+
+        }
+
+        public static void populateSearchLookUpEdit<T>(RepositoryItemSearchLookUpEdit lkup, String valueMember, String displayMember, List<T> lista)
+        {    
+            //Specify an array of countries as a data source
+            lkup.DataSource = lista;
+            
+            //The field whose values are displayed in the edit box
+            //lkup.DisplayMember = displayMember;
+            //The field whose values match the edit value
+            //lkup.ValueMember = valueMember;
+
+            lkup.PopupFilterMode = PopupFilterMode.Default;
+
+            //Unbound column            
+            //lkup.View.Columns.AddVisible(valueMember, "Id");
+            //Column bound to the existing 'Country' field from the data source            
+            //lkup.View.Columns.AddVisible(displayMember, "Nombre");
 
         }
 

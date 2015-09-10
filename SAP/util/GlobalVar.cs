@@ -11,7 +11,7 @@ namespace SAP.util
     public static class GlobalVar
     {
 
-        public static Company empresa;
+        private static Company empresa;
 
         public static void inicializarEmpresa()
         {

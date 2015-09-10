@@ -52,13 +52,16 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageContenido = new System.Windows.Forms.TabPage();
-            this.dgvLines = new System.Windows.Forms.DataGridView();
-            this.colItemNro = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDescripcion = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colCantidad = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPrecioUnitario = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPorcentajeDescuento = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colIndicadorImpuesto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
+            this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colItemNro1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colDescripcion1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.cmbProduto = new DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit();
+            this.repositoryItemSearchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colCantidad1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colPrecioUnitario1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colPorcentajeDescuento1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colIndicadorImpuesto1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tabPageLogistica = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -71,7 +74,10 @@
             this.panel3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPageContenido.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvLines)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbProduto)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchLookUpEdit1View)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -311,7 +317,7 @@
             // 
             // tabPageContenido
             // 
-            this.tabPageContenido.Controls.Add(this.dgvLines);
+            this.tabPageContenido.Controls.Add(this.gridControl1);
             this.tabPageContenido.Location = new System.Drawing.Point(4, 22);
             this.tabPageContenido.Name = "tabPageContenido";
             this.tabPageContenido.Padding = new System.Windows.Forms.Padding(3);
@@ -320,59 +326,98 @@
             this.tabPageContenido.Text = "Conenido";
             this.tabPageContenido.UseVisualStyleBackColor = true;
             // 
-            // dgvLines
+            // gridControl1
             // 
-            this.dgvLines.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvLines.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colItemNro,
-            this.colDescripcion,
-            this.colCantidad,
-            this.colPrecioUnitario,
-            this.colPorcentajeDescuento,
-            this.colIndicadorImpuesto});
-            this.dgvLines.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvLines.Location = new System.Drawing.Point(3, 3);
-            this.dgvLines.MultiSelect = false;
-            this.dgvLines.Name = "dgvLines";
-            this.dgvLines.Size = new System.Drawing.Size(711, 162);
-            this.dgvLines.TabIndex = 0;
-            this.dgvLines.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLines_CellEndEdit);
-            this.dgvLines.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgvLines_KeyUp);
+            this.gridControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gridControl1.Location = new System.Drawing.Point(3, 3);
+            this.gridControl1.MainView = this.gridView2;
+            this.gridControl1.Name = "gridControl1";
+            this.gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.cmbProduto});
+            this.gridControl1.Size = new System.Drawing.Size(711, 185);
+            this.gridControl1.TabIndex = 1;
+            this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView2});
             // 
-            // colItemNro
+            // gridView2
             // 
-            this.colItemNro.HeaderText = "N° Item";
-            this.colItemNro.Name = "colItemNro";
-            this.colItemNro.Width = 50;
+            this.gridView2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.colItemNro1,
+            this.colDescripcion1,
+            this.colCantidad1,
+            this.colPrecioUnitario1,
+            this.colPorcentajeDescuento1,
+            this.colIndicadorImpuesto1});
+            this.gridView2.GridControl = this.gridControl1;
+            this.gridView2.Name = "gridView2";
+            this.gridView2.OptionsCustomization.AllowGroup = false;
+            this.gridView2.OptionsDetail.EnableMasterViewMode = false;
+            this.gridView2.OptionsView.ShowGroupPanel = false;
             // 
-            // colDescripcion
+            // colItemNro1
             // 
-            this.colDescripcion.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.colDescripcion.HeaderText = "Descripción";
-            this.colDescripcion.Name = "colDescripcion";
-            this.colDescripcion.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colDescripcion.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colDescripcion.Width = 130;
+            this.colItemNro1.Caption = "N° Item";
+            this.colItemNro1.FieldName = "Id";
+            this.colItemNro1.Name = "colItemNro1";
+            this.colItemNro1.Visible = true;
+            this.colItemNro1.VisibleIndex = 0;
             // 
-            // colCantidad
+            // colDescripcion1
             // 
-            this.colCantidad.HeaderText = "Cantidad";
-            this.colCantidad.Name = "colCantidad";
+            this.colDescripcion1.Caption = "Descripción";
+            this.colDescripcion1.ColumnEdit = this.cmbProduto;
+            this.colDescripcion1.FieldName = "Producto";
+            this.colDescripcion1.Name = "colDescripcion1";
+            this.colDescripcion1.Visible = true;
+            this.colDescripcion1.VisibleIndex = 1;
             // 
-            // colPrecioUnitario
+            // cmbProduto
             // 
-            this.colPrecioUnitario.HeaderText = "Precio unitario";
-            this.colPrecioUnitario.Name = "colPrecioUnitario";
+            this.cmbProduto.AutoHeight = false;
+            this.cmbProduto.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbProduto.Name = "cmbProduto";
+            this.cmbProduto.NullText = "";
+            this.cmbProduto.View = this.repositoryItemSearchLookUpEdit1View;
             // 
-            // colPorcentajeDescuento
+            // repositoryItemSearchLookUpEdit1View
             // 
-            this.colPorcentajeDescuento.HeaderText = "% de descuento";
-            this.colPorcentajeDescuento.Name = "colPorcentajeDescuento";
+            this.repositoryItemSearchLookUpEdit1View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.repositoryItemSearchLookUpEdit1View.Name = "repositoryItemSearchLookUpEdit1View";
+            this.repositoryItemSearchLookUpEdit1View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.repositoryItemSearchLookUpEdit1View.OptionsView.ShowGroupPanel = false;
             // 
-            // colIndicadorImpuesto
+            // colCantidad1
             // 
-            this.colIndicadorImpuesto.HeaderText = "Indicador de impuestos";
-            this.colIndicadorImpuesto.Name = "colIndicadorImpuesto";
+            this.colCantidad1.Caption = "Cantidad";
+            this.colCantidad1.FieldName = "Cantidad";
+            this.colCantidad1.Name = "colCantidad1";
+            this.colCantidad1.Visible = true;
+            this.colCantidad1.VisibleIndex = 2;
+            // 
+            // colPrecioUnitario1
+            // 
+            this.colPrecioUnitario1.Caption = "Precio unitario";
+            this.colPrecioUnitario1.FieldName = "PrecioUnitario";
+            this.colPrecioUnitario1.Name = "colPrecioUnitario1";
+            this.colPrecioUnitario1.Visible = true;
+            this.colPrecioUnitario1.VisibleIndex = 3;
+            // 
+            // colPorcentajeDescuento1
+            // 
+            this.colPorcentajeDescuento1.Caption = "% de descuento";
+            this.colPorcentajeDescuento1.FieldName = "Descuento";
+            this.colPorcentajeDescuento1.Name = "colPorcentajeDescuento1";
+            this.colPorcentajeDescuento1.Visible = true;
+            this.colPorcentajeDescuento1.VisibleIndex = 4;
+            // 
+            // colIndicadorImpuesto1
+            // 
+            this.colIndicadorImpuesto1.Caption = "Indicador de impuestos";
+            this.colIndicadorImpuesto1.FieldName = "IndicadorImpuesto";
+            this.colIndicadorImpuesto1.Name = "colIndicadorImpuesto1";
+            this.colIndicadorImpuesto1.Visible = true;
+            this.colIndicadorImpuesto1.VisibleIndex = 5;
             // 
             // tabPageLogistica
             // 
@@ -407,7 +452,10 @@
             this.panel3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPageContenido.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvLines)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbProduto)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchLookUpEdit1View)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -434,17 +482,20 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.DateTimePicker txtFechaDocumento;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.DataGridView dgvLines;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colItemNro;
-        private System.Windows.Forms.DataGridViewComboBoxColumn colDescripcion;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCantidad;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPrecioUnitario;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPorcentajeDescuento;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colIndicadorImpuesto;
         private DevExpress.XtraEditors.SearchLookUpEdit cmbCliente;
         private DevExpress.XtraGrid.Views.Grid.GridView searchLookUpEdit1View;
         private DevExpress.XtraEditors.SearchLookUpEdit cmbVendedor;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraEditors.LookUpEdit cmbStatus;
+        private DevExpress.XtraGrid.GridControl gridControl1;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
+        private DevExpress.XtraGrid.Columns.GridColumn colItemNro1;
+        private DevExpress.XtraGrid.Columns.GridColumn colDescripcion1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit cmbProduto;
+        private DevExpress.XtraGrid.Views.Grid.GridView repositoryItemSearchLookUpEdit1View;
+        private DevExpress.XtraGrid.Columns.GridColumn colCantidad1;
+        private DevExpress.XtraGrid.Columns.GridColumn colPrecioUnitario1;
+        private DevExpress.XtraGrid.Columns.GridColumn colPorcentajeDescuento1;
+        private DevExpress.XtraGrid.Columns.GridColumn colIndicadorImpuesto1;
     }
 }

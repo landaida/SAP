@@ -10,7 +10,6 @@ namespace SAP.model
     {
         private int id;
         private Producto producto;
-        private List<Producto> productos;
         private Double cantidad;
         private Double precioUnitario;
         private Double descuento;
@@ -18,11 +17,11 @@ namespace SAP.model
 
         public CotizacionLine(){}
 
-        public CotizacionLine(List<Producto> productos)
-        {
-            this.productos = productos;
+        public CotizacionLine(Double cantidad, Double precioUnitario) {
+            this.cantidad = cantidad;
+            this.precioUnitario = precioUnitario;
         }
-
+        
         public int Id
         {
             get { return id; }
@@ -57,12 +56,6 @@ namespace SAP.model
         {
             get { return indicadorImpuesto; }
             set { indicadorImpuesto = value; }
-        }
-
-        public List<Producto> Productos
-        {
-            get { return productos; }
-            set { productos = value; }
         }
     }
 }

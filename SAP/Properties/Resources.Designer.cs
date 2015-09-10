@@ -83,6 +83,26 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap trafficlight_green_128 {
+            get {
+                object obj = ResourceManager.GetObject("trafficlight_green_128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap trafficlight_red_128 {
+            get {
+                object obj = ResourceManager.GetObject("trafficlight_red_128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap VisPrint32 {
             get {
                 object obj = ResourceManager.GetObject("VisPrint32", resourceCulture);

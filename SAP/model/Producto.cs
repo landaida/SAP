@@ -18,10 +18,10 @@ namespace SAP.model
         }
         public string ItemCode { get; set; }
         public string ItemName { get; set; }
-
         public override string ToString()
         {
             return ItemName;
         }
+
     }
 }

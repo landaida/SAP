@@ -32,28 +32,6 @@ namespace SAP.forms.movimientos
             this.txtId.DataBindings.Add("Text", ofertaVenta, "Comments");            
         }
 
-        private void instanciarOjectosSAP()
-        {
-            Util.cursorShow();            
-            if (GlobalVar.Empresa.Connected == true)
-            {
-                ofertaVenta = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
-                cliente = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oBusinessPartners);
-                //cliente.CardCode = "C0003144";
-                //cotizacion.CardCode = cliente.CardCode;
-                //cotizacion.Lines.ItemCode = "101100";
-                //cotizacion.Lines.Quantity = 1;
-                //cotizacion.Lines.PriceAfterVAT = 60000;
-                //cotizacion.Lines.TaxCode = "IVA_10";     
-                this.bindingControls();
-            }
-            else
-            {
-                Console.WriteLine(GlobalVar.Empresa.GetLastErrorDescription());
-            }
-            Util.cursorHidden();
-        }
-
         private void centerFormInContainer()
         {
             this.StartPosition = FormStartPosition.Manual;
@@ -74,7 +52,7 @@ namespace SAP.forms.movimientos
             ComboUtil.populateSearchLookUpEdit(this.cmbProduto, "ItemCode", "ItemName", productos);
             
 
-            this.setGridColumnsFieldName();
+            
             this.ofertaVenta = new OfertaVenta();
             BindingList<OfertaVentaLine> listCotizacion = new BindingList<OfertaVentaLine>(this.ofertaVenta.Lines);
             listCotizacion.AllowNew = true;
@@ -94,20 +72,6 @@ namespace SAP.forms.movimientos
 
             ComboUtil.populateLookUpEditWhitEnums(cmbStatus, typeof(DocumentStatus));
             this.cmbStatus.EditValue = DocumentStatus.Abierto;
-        }
-        private void OnAddingNew(Object o, AddingNewEventArgs e)
-        {
-            
-        }
-
-        private void setGridColumnsFieldName()
-        {
-            this.colItemNro1.FieldName = "Id";
-            this.colDescripcion1.FieldName = "Producto";
-            this.colCantidad1.FieldName = "Cantidad";
-            this.colPrecioUnitario1.FieldName = "PrecioUnitario";
-            this.colPorcentajeDescuento1.FieldName = "Descuento";
-            this.colIndicadorImpuesto1.FieldName = "IndicadorImpuesto";
         }
 
         private void addLine()
@@ -179,7 +143,43 @@ namespace SAP.forms.movimientos
 
         private void guardar()
         {
+            if (this.isValidForm())
+            {
+                Util.cursorShow();
+                if (GlobalVar.Empresa.Connected == true)
+                {
+                    this.ofertaVentaDoc = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
+                    
+                    this.ofertaVentaDoc.CardCode = cliente.CardCode;
 
+                    for(int i = 1; i<= this.lines().Count; i++)
+                    {
+                        OfertaVentaLine item = this.lines()[i];
+                        this.ofertaVentaDoc.Lines.ItemCode = item.ProductoId;
+                        this.ofertaVentaDoc.Lines.Quantity = item.Cantidad;
+                        this.ofertaVentaDoc.Lines.PriceAfterVAT = item.PrecioUnitario;
+                        this.ofertaVentaDoc.Lines.TaxCode = item.IndicadorImpuesto; 
+
+                        if (i < this.lines().Count)
+                            this.ofertaVentaDoc.Lines.Add();
+                    }
+                    int response = this.ofertaVentaDoc.Add();
+                    if (response == 0)
+                    {
+                        Util.AutoClosingMessageBox.Show("Oferta de venta generada con éxito.", "Aviso", 3000);
+                    }
+                    else
+                    {
+                        Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
+                    }
+
+                }
+                else
+                {
+                    Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
+                }
+                Util.cursorHidden();
+            }
         }
 
         #endregion
@@ -202,7 +202,7 @@ namespace SAP.forms.movimientos
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
-        {
+        {            
             this.guardar();
         }
 

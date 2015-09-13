@@ -57,9 +57,7 @@ namespace SAP.forms.movimientos
         private void centerFormInContainer()
         {
             this.StartPosition = FormStartPosition.Manual;
-            //this.Top = (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2;
             this.Top = (this.ParentForm.ClientRectangle.Size.Height - this.Height) / 2;
-            //this.Left = (Screen.PrimaryScreen.Bounds.Width - this.Width) / 2;
             this.Left = (this.ParentForm.ClientRectangle.Size.Width - this.Width) / 2;
         }
 
@@ -101,6 +99,7 @@ namespace SAP.forms.movimientos
         {
             
         }
+
         private void setGridColumnsFieldName()
         {
             this.colItemNro1.FieldName = "Id";
@@ -111,23 +110,9 @@ namespace SAP.forms.movimientos
             this.colIndicadorImpuesto1.FieldName = "IndicadorImpuesto";
         }
 
-        //private bool lineIsValid(int index)
-        //{
-        //    bool retorno = false;
-        //    DataGridViewCellCollection cells = this.dgvLines.Rows[index].Cells;
-        //    if (cells[colItemNro1.Name].Value != null && 
-        //        cells[colDescripcion1.Name].Value != null && 
-        //        cells[colCantidad1.Name].Value != null && (Double)cells[colCantidad1.Name].Value > 0 &&
-        //        cells[colPrecioUnitario1.Name].Value != null && (Double)cells[colPrecioUnitario1.Name].Value > 0)
-        //    {                
-        //        retorno = true;
-        //    }
-        //    return retorno;
-        //}
-
         private void addLine()
         {
-            this.ofertaVenta.Lines.Add(new OfertaVentaLine());
+           this.lines().Add(new OfertaVentaLine());
         }
         
         private void getBusinessPartnersInfo()
@@ -137,7 +122,13 @@ namespace SAP.forms.movimientos
             {
                 cliente = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oBusinessPartners);
                 bool retVal = cliente.GetByKey(key);
-                if (!retVal)
+                if (retVal)
+                {
+                    foreach(OfertaVentaLine item in this.lines())
+                    {
+                        item.Descuento = cliente.DiscountPercent;
+                    }
+                }else
                 {
                     Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
                 }
@@ -160,7 +151,36 @@ namespace SAP.forms.movimientos
             return this.ofertaVenta.Lines;
         }
 
+        private bool isValidLines()
+        {
+            bool retorno = false;
+            
+            this.ofertaVenta.Lines = this.lines().Where(p => p.Producto != null && p.Cantidad > 0 && p.PrecioUnitario > 0).ToList();
 
+            if (this.lines().Count > 0)
+                retorno = true;
+
+            return retorno;
+        }
+
+        private bool isValidForm()
+        {
+            bool retorno = false;
+
+            if (this.cmbCliente.EditValue.ToString().Trim().Length <= 0)
+                Util.AutoClosingMessageBox.Show("Seleccione un cliente por favor.", "Aviso", 3000);
+            else if (this.isValidLines())
+                Util.AutoClosingMessageBox.Show("Debe agregar por lo menos un producto.", "Aviso", 3000);
+            else
+                retorno = true;
+
+            return retorno;
+        }
+
+        private void guardar()
+        {
+
+        }
 
         #endregion
 
@@ -176,31 +196,16 @@ namespace SAP.forms.movimientos
             this.inicializarObjetos();            
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //Console.WriteLine(this.ofertaVenta.Comments);
-            this.instanciarOjectosSAP();
-            response = ofertaVentaDoc.Add();
-            if(response == 0)
-            {
-                    
-            }
-            else
-            {
-                Console.WriteLine(GlobalVar.Empresa.GetLastErrorDescription());
-            }
-        }        
-
-        #endregion
-
-        private void txtCliente_KeyDown(object sender, KeyEventArgs e)
-        {            
-            
-        }
-
         private void cmbCliente_EditValueChanged(object sender, EventArgs e)
         {
-            //this.getBusinessPartnersInfo();
+            this.getBusinessPartnersInfo();
         }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            this.guardar();
+        }
+
+        #endregion
     }
 }

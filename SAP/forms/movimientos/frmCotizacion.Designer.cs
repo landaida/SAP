@@ -48,7 +48,7 @@
             this.txtObservacion = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.btnAdicionar = new System.Windows.Forms.Button();
+            this.btnGuardar = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageContenido = new System.Windows.Forms.TabPage();
@@ -63,6 +63,8 @@
             this.colPorcentajeDescuento1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colIndicadorImpuesto1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tabPageLogistica = new System.Windows.Forms.TabPage();
+            this.colPrecioUnitarioGravada = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colTotalGravada = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cmbStatus.Properties)).BeginInit();
@@ -223,7 +225,7 @@
             this.panel2.Controls.Add(this.txtObservacion);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.btnCancelar);
-            this.panel2.Controls.Add(this.btnAdicionar);
+            this.panel2.Controls.Add(this.btnGuardar);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 294);
             this.panel2.Name = "panel2";
@@ -285,15 +287,15 @@
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
             // 
-            // btnAdicionar
+            // btnGuardar
             // 
-            this.btnAdicionar.Location = new System.Drawing.Point(13, 88);
-            this.btnAdicionar.Name = "btnAdicionar";
-            this.btnAdicionar.Size = new System.Drawing.Size(75, 23);
-            this.btnAdicionar.TabIndex = 0;
-            this.btnAdicionar.Text = "Adicionar";
-            this.btnAdicionar.UseVisualStyleBackColor = true;
-            this.btnAdicionar.Click += new System.EventHandler(this.button1_Click);
+            this.btnGuardar.Location = new System.Drawing.Point(13, 88);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(75, 23);
+            this.btnGuardar.TabIndex = 0;
+            this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.UseVisualStyleBackColor = true;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // panel3
             // 
@@ -347,10 +349,15 @@
             this.colCantidad1,
             this.colPrecioUnitario1,
             this.colPorcentajeDescuento1,
-            this.colIndicadorImpuesto1});
+            this.colIndicadorImpuesto1,
+            this.colPrecioUnitarioGravada,
+            this.colTotalGravada});
             this.gridView2.GridControl = this.gridControl1;
             this.gridView2.Name = "gridView2";
+            this.gridView2.OptionsCustomization.AllowColumnMoving = false;
+            this.gridView2.OptionsCustomization.AllowFilter = false;
             this.gridView2.OptionsCustomization.AllowGroup = false;
+            this.gridView2.OptionsCustomization.AllowQuickHideColumns = false;
             this.gridView2.OptionsDetail.EnableMasterViewMode = false;
             this.gridView2.OptionsView.ShowGroupPanel = false;
             // 
@@ -393,15 +400,13 @@
             this.colCantidad1.FieldName = "Cantidad";
             this.colCantidad1.Name = "colCantidad1";
             this.colCantidad1.Visible = true;
-            this.colCantidad1.VisibleIndex = 2;
+            this.colCantidad1.VisibleIndex = 3;
             // 
             // colPrecioUnitario1
             // 
             this.colPrecioUnitario1.Caption = "Precio unitario";
             this.colPrecioUnitario1.FieldName = "PrecioUnitario";
             this.colPrecioUnitario1.Name = "colPrecioUnitario1";
-            this.colPrecioUnitario1.Visible = true;
-            this.colPrecioUnitario1.VisibleIndex = 3;
             // 
             // colPorcentajeDescuento1
             // 
@@ -428,6 +433,23 @@
             this.tabPageLogistica.TabIndex = 1;
             this.tabPageLogistica.Text = "Logística";
             this.tabPageLogistica.UseVisualStyleBackColor = true;
+            // 
+            // colPrecioUnitarioGravada
+            // 
+            this.colPrecioUnitarioGravada.Caption = "Precio";
+            this.colPrecioUnitarioGravada.FieldName = "PrecioUnitarioGravada";
+            this.colPrecioUnitarioGravada.Name = "colPrecioUnitarioGravada";
+            this.colPrecioUnitarioGravada.OptionsColumn.AllowEdit = false;
+            this.colPrecioUnitarioGravada.Visible = true;
+            this.colPrecioUnitarioGravada.VisibleIndex = 2;
+            // 
+            // colTotalGravada
+            // 
+            this.colTotalGravada.Caption = "Total";
+            this.colTotalGravada.FieldName = "TotalGravada";
+            this.colTotalGravada.Name = "colTotalGravada";
+            this.colTotalGravada.Visible = true;
+            this.colTotalGravada.VisibleIndex = 6;
             // 
             // frmCotizacion
             // 
@@ -471,7 +493,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button btnAdicionar;
+        private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPageContenido;
@@ -497,5 +519,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn colPrecioUnitario1;
         private DevExpress.XtraGrid.Columns.GridColumn colPorcentajeDescuento1;
         private DevExpress.XtraGrid.Columns.GridColumn colIndicadorImpuesto1;
+        private DevExpress.XtraGrid.Columns.GridColumn colPrecioUnitarioGravada;
+        private DevExpress.XtraGrid.Columns.GridColumn colTotalGravada;
     }
 }

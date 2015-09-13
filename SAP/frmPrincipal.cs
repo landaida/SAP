@@ -35,7 +35,7 @@ namespace SAP
 
         private void timerVerificaConexao_Tick(object sender, EventArgs e)
         {
-            if (GlobalVar.Empresa != null)
+            if (GlobalVar.Empresa != null && GlobalVar.Empresa.Connected)
             {
                 this.btnConexao.ImageIndex = 0;
                 this.timerVerificaConexao.Enabled = false;

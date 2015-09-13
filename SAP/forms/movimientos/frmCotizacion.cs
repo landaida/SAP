@@ -48,12 +48,12 @@ namespace SAP.forms.movimientos
 
 
             ComboUtil.populateSearchLookUpEdit(this.cmbCliente, "CardCode", "CardName", "ocrd", typeof(Cliente));
-            ComboUtil.populateSearchLookUpEdit(this.cmbVendedor, "SlpCode", "SlpName", "oslp", typeof(Vendedor));
+            ComboUtil.populateSearchLookUpEdit(this.cmbVendedor, "SlpCode", "SlpName", "oslp", typeof(Vendedor), " and active = 'Y' and locked = 'N'");
             ComboUtil.populateSearchLookUpEdit(this.cmbProduto, "ItemCode", "ItemName", productos);
             
 
             
-            this.ofertaVenta = new OfertaVenta();
+            this.ofertaVenta = new OfertaVenta();            
             BindingList<OfertaVentaLine> listCotizacion = new BindingList<OfertaVentaLine>(this.ofertaVenta.Lines);
             listCotizacion.AllowNew = true;
             this.gridControl1.DataSource = listCotizacion;
@@ -76,7 +76,9 @@ namespace SAP.forms.movimientos
 
         private void addLine()
         {
-           this.lines().Add(new OfertaVentaLine());
+            OfertaVentaLine line = new OfertaVentaLine();
+            line.Items = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oItems);
+           this.ofertaVenta.Lines.Add(line);
         }
         
         private void getBusinessPartnersInfo()

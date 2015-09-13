@@ -54,7 +54,7 @@
             this.tabPageContenido = new System.Windows.Forms.TabPage();
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
             this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.colItemNro1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colCodigo = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDescripcion1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.cmbProduto = new DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit();
             this.repositoryItemSearchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -62,9 +62,9 @@
             this.colPrecioUnitario1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPorcentajeDescuento1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colIndicadorImpuesto1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.tabPageLogistica = new System.Windows.Forms.TabPage();
             this.colPrecioUnitarioGravada = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotalGravada = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.tabPageLogistica = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cmbStatus.Properties)).BeginInit();
@@ -97,7 +97,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 68.72852F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 125F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(731, 417);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(731, 544);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -115,7 +115,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(725, 85);
+            this.panel1.Size = new System.Drawing.Size(725, 125);
             this.panel1.TabIndex = 1;
             // 
             // cmbStatus
@@ -227,7 +227,7 @@
             this.panel2.Controls.Add(this.btnCancelar);
             this.panel2.Controls.Add(this.btnGuardar);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 294);
+            this.panel2.Location = new System.Drawing.Point(3, 421);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(725, 120);
             this.panel2.TabIndex = 2;
@@ -301,9 +301,9 @@
             // 
             this.panel3.Controls.Add(this.tabControl1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(3, 94);
+            this.panel3.Location = new System.Drawing.Point(3, 134);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(725, 194);
+            this.panel3.Size = new System.Drawing.Size(725, 281);
             this.panel3.TabIndex = 3;
             // 
             // tabControl1
@@ -314,7 +314,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(725, 194);
+            this.tabControl1.Size = new System.Drawing.Size(725, 281);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPageContenido
@@ -323,7 +323,7 @@
             this.tabPageContenido.Location = new System.Drawing.Point(4, 22);
             this.tabPageContenido.Name = "tabPageContenido";
             this.tabPageContenido.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageContenido.Size = new System.Drawing.Size(717, 168);
+            this.tabPageContenido.Size = new System.Drawing.Size(717, 255);
             this.tabPageContenido.TabIndex = 0;
             this.tabPageContenido.Text = "Conenido";
             this.tabPageContenido.UseVisualStyleBackColor = true;
@@ -344,7 +344,7 @@
             // gridView2
             // 
             this.gridView2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.colItemNro1,
+            this.colCodigo,
             this.colDescripcion1,
             this.colCantidad1,
             this.colPrecioUnitario1,
@@ -361,13 +361,13 @@
             this.gridView2.OptionsDetail.EnableMasterViewMode = false;
             this.gridView2.OptionsView.ShowGroupPanel = false;
             // 
-            // colItemNro1
+            // colCodigo
             // 
-            this.colItemNro1.Caption = "N° Item";
-            this.colItemNro1.FieldName = "Id";
-            this.colItemNro1.Name = "colItemNro1";
-            this.colItemNro1.Visible = true;
-            this.colItemNro1.VisibleIndex = 0;
+            this.colCodigo.Caption = "Código";
+            this.colCodigo.FieldName = "ProductoId";
+            this.colCodigo.Name = "colCodigo";
+            this.colCodigo.Visible = true;
+            this.colCodigo.VisibleIndex = 0;
             // 
             // colDescripcion1
             // 
@@ -424,19 +424,11 @@
             this.colIndicadorImpuesto1.Visible = true;
             this.colIndicadorImpuesto1.VisibleIndex = 5;
             // 
-            // tabPageLogistica
-            // 
-            this.tabPageLogistica.Location = new System.Drawing.Point(4, 22);
-            this.tabPageLogistica.Name = "tabPageLogistica";
-            this.tabPageLogistica.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLogistica.Size = new System.Drawing.Size(717, 168);
-            this.tabPageLogistica.TabIndex = 1;
-            this.tabPageLogistica.Text = "Logística";
-            this.tabPageLogistica.UseVisualStyleBackColor = true;
-            // 
             // colPrecioUnitarioGravada
             // 
             this.colPrecioUnitarioGravada.Caption = "Precio";
+            this.colPrecioUnitarioGravada.DisplayFormat.FormatString = "n2";
+            this.colPrecioUnitarioGravada.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colPrecioUnitarioGravada.FieldName = "PrecioUnitarioGravada";
             this.colPrecioUnitarioGravada.Name = "colPrecioUnitarioGravada";
             this.colPrecioUnitarioGravada.OptionsColumn.AllowEdit = false;
@@ -446,16 +438,28 @@
             // colTotalGravada
             // 
             this.colTotalGravada.Caption = "Total";
+            this.colTotalGravada.DisplayFormat.FormatString = "n2";
+            this.colTotalGravada.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colTotalGravada.FieldName = "TotalGravada";
             this.colTotalGravada.Name = "colTotalGravada";
             this.colTotalGravada.Visible = true;
             this.colTotalGravada.VisibleIndex = 6;
             // 
+            // tabPageLogistica
+            // 
+            this.tabPageLogistica.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLogistica.Name = "tabPageLogistica";
+            this.tabPageLogistica.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageLogistica.Size = new System.Drawing.Size(717, 255);
+            this.tabPageLogistica.TabIndex = 1;
+            this.tabPageLogistica.Text = "Logística";
+            this.tabPageLogistica.UseVisualStyleBackColor = true;
+            // 
             // frmCotizacion
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(731, 417);
+            this.ClientSize = new System.Drawing.Size(731, 544);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "frmCotizacion";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -511,7 +515,7 @@
         private DevExpress.XtraEditors.LookUpEdit cmbStatus;
         private DevExpress.XtraGrid.GridControl gridControl1;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
-        private DevExpress.XtraGrid.Columns.GridColumn colItemNro1;
+        private DevExpress.XtraGrid.Columns.GridColumn colCodigo;
         private DevExpress.XtraGrid.Columns.GridColumn colDescripcion1;
         private DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit cmbProduto;
         private DevExpress.XtraGrid.Views.Grid.GridView repositoryItemSearchLookUpEdit1View;

@@ -21,7 +21,7 @@ namespace SAP.util
         //public const String BOUser = "guilherm";
         public const String BOPassword = "0104452";
         //public const String BOPassword = "belgo";
-        public const String Server = "WINSERVER";
+        public const String Server = "WinServer";
         //public const String Server = "cameras.myvnc.com:30015";
         //public const String Server = "181.40.121.26";
         //public const String Server = "192.168.1.106";

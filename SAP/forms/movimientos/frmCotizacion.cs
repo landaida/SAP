@@ -76,9 +76,7 @@ namespace SAP.forms.movimientos
 
         private void addLine()
         {
-            OfertaVentaLine line = new OfertaVentaLine();
-            line.Items = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oItems);
-           this.ofertaVenta.Lines.Add(line);
+           this.ofertaVenta.Lines.Add(new OfertaVentaLine());
         }
         
         private void getBusinessPartnersInfo()

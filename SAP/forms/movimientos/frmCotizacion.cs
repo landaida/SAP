@@ -11,17 +11,15 @@ using SAP.model;
 using SAPbobsCOM;
 using SAP.util;
 using System.Threading;
-using System.ComponentModel;
 namespace SAP.forms.movimientos
 {
     public partial class frmCotizacion : Form
     {
         #region Declare
-        Documents cotizacion;
-        List<CotizacionLine> lines = new List<CotizacionLine>();
+        Documents ofertaVentaDoc;
         BusinessPartners cliente;
-        List<Producto> productos;
-        BindingList<CotizacionLine> listCotizacion;
+        List<Producto> productos;        
+        OfertaVenta ofertaVenta;
 
 
         
@@ -31,7 +29,7 @@ namespace SAP.forms.movimientos
         #region Functions
         private void bindingControls()
         {
-            this.txtId.DataBindings.Add("Text", cotizacion, "Comments");            
+            this.txtId.DataBindings.Add("Text", ofertaVenta, "Comments");            
         }
 
         private void instanciarOjectosSAP()
@@ -39,7 +37,7 @@ namespace SAP.forms.movimientos
             Util.cursorShow();            
             if (GlobalVar.Empresa.Connected == true)
             {
-                cotizacion = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
+                ofertaVenta = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
                 cliente = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oBusinessPartners);
                 //cliente.CardCode = "C0003144";
                 //cotizacion.CardCode = cliente.CardCode;
@@ -79,8 +77,8 @@ namespace SAP.forms.movimientos
             
 
             this.setGridColumnsFieldName();
-
-            listCotizacion = new BindingList<CotizacionLine>();
+            this.ofertaVenta = new OfertaVenta();
+            BindingList<OfertaVentaLine> listCotizacion = new BindingList<OfertaVentaLine>(this.ofertaVenta.Lines);
             listCotizacion.AllowNew = true;
             this.gridControl1.DataSource = listCotizacion;
             gridView2.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
@@ -129,7 +127,7 @@ namespace SAP.forms.movimientos
 
         private void addLine()
         {
-            this.listCotizacion.Add(new CotizacionLine(600000, 700000));
+            this.ofertaVenta.Lines.Add(new OfertaVentaLine());
         }
         
         private void getBusinessPartnersInfo()
@@ -148,13 +146,18 @@ namespace SAP.forms.movimientos
         
         private void changePriceForLine()
         {
-            if (this.lines.Count == 0) return;
+            if (this.lines().Count == 0) return;
 
-            foreach(CotizacionLine line in this.lines)
+            foreach(OfertaVentaLine line in this.lines())
             {
                 
                 
             }
+        }
+
+        private List<OfertaVentaLine> lines()
+        {
+            return this.ofertaVenta.Lines;
         }
 
 
@@ -175,9 +178,9 @@ namespace SAP.forms.movimientos
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(this.cotizacion.Comments);
+            //Console.WriteLine(this.ofertaVenta.Comments);
             this.instanciarOjectosSAP();
-            response = cotizacion.Add();
+            response = ofertaVentaDoc.Add();
             if(response == 0)
             {
                     

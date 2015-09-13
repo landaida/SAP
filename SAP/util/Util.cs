@@ -11,10 +11,15 @@ namespace SAP.util
 {
     public static class Util
     {
-        public static IEnumerable<T> getGenericList<T>(String valueMember, String displayMember, String tableName)
+        public static IEnumerable<T> getGenericList<T>(String valueMember, String displayMember, String tableName, String where = "")
         {
+            
+            if(where != null && where.Trim().Length != 0)
+            {
+                where = " where 1 = 1 " + where;
+            }
             SqlConnection conn = ConexaoFactory.Connection;
-            SqlCommand sc = new SqlCommand("select " + valueMember + "," + displayMember + " from [" + tableName + "]", conn);
+            SqlCommand sc = new SqlCommand("select " + valueMember + "," + displayMember + " from [" + tableName + "] " + where, conn);
             SqlDataReader reader;
 
             reader = sc.ExecuteReader();

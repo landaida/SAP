@@ -32,10 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.panelStatusBar = new System.Windows.Forms.Panel();
+            this.btnConexao = new DevExpress.XtraEditors.SimpleButton();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.panelBottom = new System.Windows.Forms.Panel();
-            this.btnConexao = new DevExpress.XtraEditors.SimpleButton();
             this.panelMenu = new System.Windows.Forms.Panel();
             this.menuSuperior = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,7 +52,6 @@
             this.btnMenuPrint = new System.Windows.Forms.Button();
             this.btonMenuVis = new System.Windows.Forms.Button();
             this.timerVerificaConexao = new System.Windows.Forms.Timer(this.components);
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel.SuspendLayout();
             this.panelStatusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -92,6 +92,25 @@
             this.panelStatusBar.Size = new System.Drawing.Size(889, 34);
             this.panelStatusBar.TabIndex = 6;
             // 
+            // btnConexao
+            // 
+            this.btnConexao.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
+            this.btnConexao.ImageIndex = 1;
+            this.btnConexao.ImageList = this.imageList1;
+            this.btnConexao.Location = new System.Drawing.Point(-2, -2);
+            this.btnConexao.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.btnConexao.Name = "btnConexao";
+            this.btnConexao.Size = new System.Drawing.Size(28, 34);
+            this.btnConexao.TabIndex = 0;
+            this.btnConexao.ToolTip = "No conectado a SAP";
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "trafficlight_green-128.png");
+            this.imageList1.Images.SetKeyName(1, "trafficlight_red-128.png");
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -121,18 +140,6 @@
             this.panelBottom.Name = "panelBottom";
             this.panelBottom.Size = new System.Drawing.Size(889, 220);
             this.panelBottom.TabIndex = 0;
-            // 
-            // btnConexao
-            // 
-            this.btnConexao.ButtonStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
-            this.btnConexao.ImageIndex = 1;
-            this.btnConexao.ImageList = this.imageList1;
-            this.btnConexao.Location = new System.Drawing.Point(-2, -2);
-            this.btnConexao.LookAndFeel.UseDefaultLookAndFeel = false;
-            this.btnConexao.Name = "btnConexao";
-            this.btnConexao.Size = new System.Drawing.Size(28, 34);
-            this.btnConexao.TabIndex = 0;
-            this.btnConexao.ToolTip = "No conectado a SAP";
             // 
             // panelMenu
             // 
@@ -177,14 +184,14 @@
             this.pedidosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ordemDeVentaToolStripMenuItem});
             this.pedidosToolStripMenuItem.Name = "pedidosToolStripMenuItem";
-            this.pedidosToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.pedidosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pedidosToolStripMenuItem.Text = "Ventas";
             // 
             // ordemDeVentaToolStripMenuItem
             // 
             this.ordemDeVentaToolStripMenuItem.Name = "ordemDeVentaToolStripMenuItem";
-            this.ordemDeVentaToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
-            this.ordemDeVentaToolStripMenuItem.Text = "Presupuesto";
+            this.ordemDeVentaToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.ordemDeVentaToolStripMenuItem.Text = "Oferta de ventas";
             this.ordemDeVentaToolStripMenuItem.Click += new System.EventHandler(this.ordemDeVentaToolStripMenuItem_Click);
             // 
             // processToolStripMenuItem
@@ -266,13 +273,6 @@
             this.timerVerificaConexao.Enabled = true;
             this.timerVerificaConexao.Interval = 1000;
             this.timerVerificaConexao.Tick += new System.EventHandler(this.timerVerificaConexao_Tick);
-            // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "trafficlight_green-128.png");
-            this.imageList1.Images.SetKeyName(1, "trafficlight_red-128.png");
             // 
             // frmPrincipal
             // 

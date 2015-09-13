@@ -72,15 +72,18 @@
     <Compile Include="model\Vendedor.cs" />
     <Compile Include="model\Usuario.cs" />
     <Compile Include="model\Cliente.cs" />
-    <Compile Include="model\Cotizacion.cs" />
-    <Compile Include="model\CotizacionLine.cs" />
+    <Compile Include="model\OfertaVenta.cs" />
+    <Compile Include="model\OfertaVentaLine.cs" />
     <Compile Include="model\Producto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="util\ComboUtil.cs" />
     <Compile Include="util\ConexaoFactory.cs" />
     <Compile Include="util\DBConfig.cs" />
+    <Compile Include="util\EqualsBuilder.cs" />
     <Compile Include="util\GlobalVar.cs" />
+    <Compile Include="util\HashCodeBuilder.cs" />
+    <Compile Include="util\ToStringBuilder.cs" />
     <Compile Include="util\Util.cs" />
     <EmbeddedResource Include="forms\movimientos\frmCotizacion.resx">
       <DependentUpon>frmCotizacion.cs</DependentUpon>
@@ -88,7 +91,6 @@
     <EmbeddedResource Include="frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

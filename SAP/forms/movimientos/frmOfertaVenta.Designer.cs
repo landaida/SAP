@@ -1,6 +1,6 @@
 ﻿namespace SAP.forms.movimientos
 {
-    partial class frmCotizacion
+    partial class frmOfertaVenta
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cmbStatus = new DevExpress.XtraEditors.LookUpEdit();
@@ -42,6 +43,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtTotal = new System.Windows.Forms.TextBox();
+            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
+            this.txtImpuesto = new System.Windows.Forms.TextBox();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
+            this.txtDescuento = new System.Windows.Forms.TextBox();
+            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+            this.txtTotalGravada = new System.Windows.Forms.TextBox();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.cmbVendedor = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.label6 = new System.Windows.Forms.Label();
@@ -85,7 +94,7 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.panel3, 0, 1);
@@ -95,8 +104,7 @@
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 31.27148F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 68.72852F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 125F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 160F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(731, 544);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
@@ -115,7 +123,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(725, 125);
+            this.panel1.Size = new System.Drawing.Size(725, 114);
             this.panel1.TabIndex = 1;
             // 
             // cmbStatus
@@ -220,6 +228,14 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.txtTotal);
+            this.panel2.Controls.Add(this.labelControl4);
+            this.panel2.Controls.Add(this.txtImpuesto);
+            this.panel2.Controls.Add(this.labelControl3);
+            this.panel2.Controls.Add(this.txtDescuento);
+            this.panel2.Controls.Add(this.labelControl2);
+            this.panel2.Controls.Add(this.txtTotalGravada);
+            this.panel2.Controls.Add(this.labelControl1);
             this.panel2.Controls.Add(this.cmbVendedor);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.txtObservacion);
@@ -227,10 +243,82 @@
             this.panel2.Controls.Add(this.btnCancelar);
             this.panel2.Controls.Add(this.btnGuardar);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 421);
+            this.panel2.Location = new System.Drawing.Point(3, 386);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(725, 120);
+            this.panel2.Size = new System.Drawing.Size(725, 155);
             this.panel2.TabIndex = 2;
+            // 
+            // txtTotal
+            // 
+            this.txtTotal.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txtTotal.Enabled = false;
+            this.txtTotal.Location = new System.Drawing.Point(616, 88);
+            this.txtTotal.Name = "txtTotal";
+            this.txtTotal.Size = new System.Drawing.Size(100, 20);
+            this.txtTotal.TabIndex = 21;
+            // 
+            // labelControl4
+            // 
+            this.labelControl4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelControl4.Location = new System.Drawing.Point(488, 91);
+            this.labelControl4.Name = "labelControl4";
+            this.labelControl4.Size = new System.Drawing.Size(97, 13);
+            this.labelControl4.TabIndex = 20;
+            this.labelControl4.Text = "Total del documento";
+            // 
+            // txtImpuesto
+            // 
+            this.txtImpuesto.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txtImpuesto.Enabled = false;
+            this.txtImpuesto.Location = new System.Drawing.Point(616, 62);
+            this.txtImpuesto.Name = "txtImpuesto";
+            this.txtImpuesto.Size = new System.Drawing.Size(100, 20);
+            this.txtImpuesto.TabIndex = 19;
+            // 
+            // labelControl3
+            // 
+            this.labelControl3.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelControl3.Location = new System.Drawing.Point(488, 65);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(45, 13);
+            this.labelControl3.TabIndex = 18;
+            this.labelControl3.Text = "Impuesto";
+            // 
+            // txtDescuento
+            // 
+            this.txtDescuento.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txtDescuento.Enabled = false;
+            this.txtDescuento.Location = new System.Drawing.Point(616, 34);
+            this.txtDescuento.Name = "txtDescuento";
+            this.txtDescuento.Size = new System.Drawing.Size(100, 20);
+            this.txtDescuento.TabIndex = 17;
+            // 
+            // labelControl2
+            // 
+            this.labelControl2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelControl2.Location = new System.Drawing.Point(488, 34);
+            this.labelControl2.Name = "labelControl2";
+            this.labelControl2.Size = new System.Drawing.Size(51, 13);
+            this.labelControl2.TabIndex = 16;
+            this.labelControl2.Text = "Descuento";
+            // 
+            // txtTotalGravada
+            // 
+            this.txtTotalGravada.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txtTotalGravada.Enabled = false;
+            this.txtTotalGravada.Location = new System.Drawing.Point(616, 8);
+            this.txtTotalGravada.Name = "txtTotalGravada";
+            this.txtTotalGravada.Size = new System.Drawing.Size(100, 20);
+            this.txtTotalGravada.TabIndex = 15;
+            // 
+            // labelControl1
+            // 
+            this.labelControl1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.labelControl1.Location = new System.Drawing.Point(488, 11);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(124, 13);
+            this.labelControl1.TabIndex = 14;
+            this.labelControl1.Text = "Total antes del descuento";
             // 
             // cmbVendedor
             // 
@@ -254,7 +342,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(519, 27);
+            this.label6.Location = new System.Drawing.Point(10, 62);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(66, 13);
             this.label6.TabIndex = 5;
@@ -262,7 +350,7 @@
             // 
             // txtObservacion
             // 
-            this.txtObservacion.Location = new System.Drawing.Point(522, 43);
+            this.txtObservacion.Location = new System.Drawing.Point(13, 78);
             this.txtObservacion.Multiline = true;
             this.txtObservacion.Name = "txtObservacion";
             this.txtObservacion.Size = new System.Drawing.Size(194, 68);
@@ -280,7 +368,8 @@
             // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(94, 88);
+            this.btnCancelar.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnCancelar.Location = new System.Drawing.Point(641, 123);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 1;
@@ -289,7 +378,8 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(13, 88);
+            this.btnGuardar.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.btnGuardar.Location = new System.Drawing.Point(560, 123);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 0;
@@ -301,9 +391,9 @@
             // 
             this.panel3.Controls.Add(this.tabControl1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(3, 134);
+            this.panel3.Location = new System.Drawing.Point(3, 123);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(725, 281);
+            this.panel3.Size = new System.Drawing.Size(725, 257);
             this.panel3.TabIndex = 3;
             // 
             // tabControl1
@@ -314,7 +404,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(725, 281);
+            this.tabControl1.Size = new System.Drawing.Size(725, 257);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPageContenido
@@ -323,7 +413,7 @@
             this.tabPageContenido.Location = new System.Drawing.Point(4, 22);
             this.tabPageContenido.Name = "tabPageContenido";
             this.tabPageContenido.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageContenido.Size = new System.Drawing.Size(717, 255);
+            this.tabPageContenido.Size = new System.Drawing.Size(717, 231);
             this.tabPageContenido.TabIndex = 0;
             this.tabPageContenido.Text = "Conenido";
             this.tabPageContenido.UseVisualStyleBackColor = true;
@@ -331,6 +421,9 @@
             // gridControl1
             // 
             this.gridControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            gridLevelNode2.RelationName = "Level1";
+            this.gridControl1.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
+            gridLevelNode2});
             this.gridControl1.Location = new System.Drawing.Point(3, 3);
             this.gridControl1.MainView = this.gridView2;
             this.gridControl1.Name = "gridControl1";
@@ -450,20 +543,21 @@
             this.tabPageLogistica.Location = new System.Drawing.Point(4, 22);
             this.tabPageLogistica.Name = "tabPageLogistica";
             this.tabPageLogistica.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLogistica.Size = new System.Drawing.Size(717, 255);
+            this.tabPageLogistica.Size = new System.Drawing.Size(717, 231);
             this.tabPageLogistica.TabIndex = 1;
             this.tabPageLogistica.Text = "Logística";
             this.tabPageLogistica.UseVisualStyleBackColor = true;
             // 
-            // frmCotizacion
+            // frmOfertaVenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(731, 544);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "frmCotizacion";
+            this.Name = "frmOfertaVenta";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Presupuesto";
+            this.Text = "Oferta de ventas";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmCotizacion_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -525,5 +619,13 @@
         private DevExpress.XtraGrid.Columns.GridColumn colIndicadorImpuesto1;
         private DevExpress.XtraGrid.Columns.GridColumn colPrecioUnitarioGravada;
         private DevExpress.XtraGrid.Columns.GridColumn colTotalGravada;
+        private System.Windows.Forms.TextBox txtTotalGravada;
+        private DevExpress.XtraEditors.LabelControl labelControl1;
+        private System.Windows.Forms.TextBox txtTotal;
+        private DevExpress.XtraEditors.LabelControl labelControl4;
+        private System.Windows.Forms.TextBox txtImpuesto;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
+        private System.Windows.Forms.TextBox txtDescuento;
+        private DevExpress.XtraEditors.LabelControl labelControl2;
     }
 }

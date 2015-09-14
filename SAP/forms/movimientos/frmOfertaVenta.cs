@@ -13,7 +13,7 @@ using SAP.util;
 using System.Threading;
 namespace SAP.forms.movimientos
 {
-    public partial class frmCotizacion : Form
+    public partial class frmOfertaVenta : Form
     {
         #region Declare
         Documents ofertaVentaDoc;
@@ -29,7 +29,8 @@ namespace SAP.forms.movimientos
         #region Functions
         private void bindingControls()
         {
-            this.txtId.DataBindings.Add("Text", ofertaVenta, "Comments");            
+            this.txtId.DataBindings.Add("Text", ofertaVenta, "Comments");
+                        
         }
 
         private void centerFormInContainer()
@@ -41,7 +42,7 @@ namespace SAP.forms.movimientos
 
         private void inicializarObjetos()
         {
-            centerFormInContainer();
+            //centerFormInContainer();
 
             //Cria uma lista de productos, isso facilitara na hora de carregar o combo de produtos en cada line do quotation
             productos = Util.getGenericList<Producto>("itemCode", "itemName", "oitm").ToList<Producto>();
@@ -55,6 +56,7 @@ namespace SAP.forms.movimientos
             
             this.ofertaVenta = new OfertaVenta();            
             BindingList<OfertaVentaLine> listCotizacion = new BindingList<OfertaVentaLine>(this.ofertaVenta.Lines);
+            
             listCotizacion.AllowNew = true;
             this.gridControl1.DataSource = listCotizacion;
             gridView2.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
@@ -72,6 +74,7 @@ namespace SAP.forms.movimientos
 
             ComboUtil.populateLookUpEditWhitEnums(cmbStatus, typeof(DocumentStatus));
             this.cmbStatus.EditValue = DocumentStatus.Abierto;
+            
         }
 
         private void addLine()
@@ -186,7 +189,7 @@ namespace SAP.forms.movimientos
 
         #region FunctionsC#
 
-        public frmCotizacion()
+        public frmOfertaVenta()
         {
             InitializeComponent();
         }

@@ -184,7 +184,7 @@
             this.pedidosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ordemDeVentaToolStripMenuItem});
             this.pedidosToolStripMenuItem.Name = "pedidosToolStripMenuItem";
-            this.pedidosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pedidosToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
             this.pedidosToolStripMenuItem.Text = "Ventas";
             // 
             // ordemDeVentaToolStripMenuItem
@@ -284,6 +284,7 @@
             this.Name = "frmPrincipal";
             this.Text = "iCommerce";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmPrincipal_FormClosing);
             this.tableLayoutPanel.ResumeLayout(false);
             this.panelStatusBar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

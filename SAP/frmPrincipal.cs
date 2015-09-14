@@ -23,25 +23,38 @@ namespace SAP
 
             private void ordemDeVentaToolStripMenuItem_Click(object sender, EventArgs e)
             {
-                frmCotizacion form = new frmCotizacion();
-                form.MdiParent = this;
-                form.Parent = this.panelBottom;
-                //this.panelBottom.Controls.Clear();
-                this.panelBottom.Controls.Add(form);
-                form.Show();
+                if (GlobalVar.isReady)
+                {
+                    frmOfertaVenta form = new frmOfertaVenta();
+                    form.MdiParent = this;
+                    form.Parent = this.panelBottom;
+                    //this.panelBottom.Controls.Clear();
+                    this.panelBottom.Controls.Add(form);
+                    form.Show();
+                }
+                else
+                {
+                    Util.AutoClosingMessageBox.Show("Pendiente de conexión con el sistema SAP, aguarde.", "Aviso", 3000);
+                }
+                
             }
 
         #endregion
 
         private void timerVerificaConexao_Tick(object sender, EventArgs e)
         {
-            if (GlobalVar.Empresa != null)
+            if (GlobalVar.isReady)
             {
                 this.btnConexao.ImageIndex = 0;
                 this.timerVerificaConexao.Enabled = false;
                 this.btnConexao.ToolTip = "Conectado a SAP";
             }
             
+        }
+
+        private void frmPrincipal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            GlobalVar.Empresa.Disconnect();
         }
     }
 }

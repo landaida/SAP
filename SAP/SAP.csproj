@@ -57,11 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="model\DocumentStatus.cs" />
-    <Compile Include="forms\movimientos\frmCotizacion.cs">
+    <Compile Include="forms\movimientos\frmOfertaVenta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\movimientos\frmCotizacion.Designer.cs">
-      <DependentUpon>frmCotizacion.cs</DependentUpon>
+    <Compile Include="forms\movimientos\frmOfertaVenta.Designer.cs">
+      <DependentUpon>frmOfertaVenta.cs</DependentUpon>
     </Compile>
     <Compile Include="frmPrincipal.cs">
       <SubType>Form</SubType>
@@ -85,8 +85,8 @@
     <Compile Include="util\HashCodeBuilder.cs" />
     <Compile Include="util\ToStringBuilder.cs" />
     <Compile Include="util\Util.cs" />
-    <EmbeddedResource Include="forms\movimientos\frmCotizacion.resx">
-      <DependentUpon>frmCotizacion.cs</DependentUpon>
+    <EmbeddedResource Include="forms\movimientos\frmOfertaVenta.resx">
+      <DependentUpon>frmOfertaVenta.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPrincipal.resx">
       <DependentUpon>frmPrincipal.cs</DependentUpon>
@@ -103,6 +103,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\DataSources\SAP.model.Cotizacion.datasource" />
+    <None Include="Properties\DataSources\SAP.model.OfertaVenta.datasource" />
     <None Include="Properties\DataSources\SAPbobsCOM.Documents.datasource" />
     <None Include="Properties\DataSources\SAPbobsCOM.WorkOrders.datasource" />
     <None Include="Properties\Settings.settings">

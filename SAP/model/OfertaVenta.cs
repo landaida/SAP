@@ -36,56 +36,6 @@ namespace SAP.model
             get { return fecha; }
             set { fecha = value; }
         }
-
-        public Double Total
-        {
-            get { 
-                Double value = 0;
-                foreach(OfertaVentaLine line in lines)
-                {
-                    value += line.Total;
-                }
-                return value;
-            }
-            set { }
-        }
         
-        public Double TotalGravada
-        {
-
-            get {
-                Double value = 0;
-                foreach (OfertaVentaLine line in lines)
-                {
-                    value += line.TotalGravada;
-                }
-                return value;
-            }
-        }
-
-        public Double TotalDescuento
-        {
-            get { 
-                Double value = 0;
-                foreach (OfertaVentaLine line in lines)
-                {
-                    value += line.DescuentoValor;
-                }
-                return value;
-            }
-        }
-
-        public Double ImpuestoValor
-        {
-            get
-            {
-                Double value = 0;
-                foreach (OfertaVentaLine line in lines)
-                {
-                    value += line.Total - line.TotalGravada;
-                }
-                return value;
-            }
-        }
     }
 }

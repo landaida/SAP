@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cmbStatus = new DevExpress.XtraEditors.LookUpEdit();
@@ -43,13 +43,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.txtTotal = new System.Windows.Forms.TextBox();
+            this.txtTotal = new DevExpress.XtraEditors.TextEdit();
+            this.txtImpuesto = new DevExpress.XtraEditors.TextEdit();
+            this.txtDescuento = new DevExpress.XtraEditors.TextEdit();
+            this.txtTotalGravada = new DevExpress.XtraEditors.TextEdit();
             this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
-            this.txtImpuesto = new System.Windows.Forms.TextBox();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
-            this.txtDescuento = new System.Windows.Forms.TextBox();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-            this.txtTotalGravada = new System.Windows.Forms.TextBox();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.cmbVendedor = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -80,6 +80,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.cmbCliente.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotal.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtImpuesto.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtDescuento.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalGravada.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbVendedor.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.panel3.SuspendLayout();
@@ -229,12 +233,12 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.txtTotal);
-            this.panel2.Controls.Add(this.labelControl4);
             this.panel2.Controls.Add(this.txtImpuesto);
-            this.panel2.Controls.Add(this.labelControl3);
             this.panel2.Controls.Add(this.txtDescuento);
-            this.panel2.Controls.Add(this.labelControl2);
             this.panel2.Controls.Add(this.txtTotalGravada);
+            this.panel2.Controls.Add(this.labelControl4);
+            this.panel2.Controls.Add(this.labelControl3);
+            this.panel2.Controls.Add(this.labelControl2);
             this.panel2.Controls.Add(this.labelControl1);
             this.panel2.Controls.Add(this.cmbVendedor);
             this.panel2.Controls.Add(this.label6);
@@ -254,8 +258,43 @@
             this.txtTotal.Enabled = false;
             this.txtTotal.Location = new System.Drawing.Point(616, 88);
             this.txtTotal.Name = "txtTotal";
+            this.txtTotal.Properties.DisplayFormat.FormatString = "n2";
+            this.txtTotal.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.txtTotal.Size = new System.Drawing.Size(100, 20);
-            this.txtTotal.TabIndex = 21;
+            this.txtTotal.TabIndex = 25;
+            // 
+            // txtImpuesto
+            // 
+            this.txtImpuesto.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txtImpuesto.Enabled = false;
+            this.txtImpuesto.Location = new System.Drawing.Point(616, 62);
+            this.txtImpuesto.Name = "txtImpuesto";
+            this.txtImpuesto.Properties.DisplayFormat.FormatString = "n2";
+            this.txtImpuesto.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.txtImpuesto.Size = new System.Drawing.Size(100, 20);
+            this.txtImpuesto.TabIndex = 24;
+            // 
+            // txtDescuento
+            // 
+            this.txtDescuento.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txtDescuento.Enabled = false;
+            this.txtDescuento.Location = new System.Drawing.Point(616, 34);
+            this.txtDescuento.Name = "txtDescuento";
+            this.txtDescuento.Properties.DisplayFormat.FormatString = "n2";
+            this.txtDescuento.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.txtDescuento.Size = new System.Drawing.Size(100, 20);
+            this.txtDescuento.TabIndex = 23;
+            // 
+            // txtTotalGravada
+            // 
+            this.txtTotalGravada.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.txtTotalGravada.Enabled = false;
+            this.txtTotalGravada.Location = new System.Drawing.Point(616, 8);
+            this.txtTotalGravada.Name = "txtTotalGravada";
+            this.txtTotalGravada.Properties.DisplayFormat.FormatString = "n2";
+            this.txtTotalGravada.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.txtTotalGravada.Size = new System.Drawing.Size(100, 20);
+            this.txtTotalGravada.TabIndex = 22;
             // 
             // labelControl4
             // 
@@ -266,15 +305,6 @@
             this.labelControl4.TabIndex = 20;
             this.labelControl4.Text = "Total del documento";
             // 
-            // txtImpuesto
-            // 
-            this.txtImpuesto.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txtImpuesto.Enabled = false;
-            this.txtImpuesto.Location = new System.Drawing.Point(616, 62);
-            this.txtImpuesto.Name = "txtImpuesto";
-            this.txtImpuesto.Size = new System.Drawing.Size(100, 20);
-            this.txtImpuesto.TabIndex = 19;
-            // 
             // labelControl3
             // 
             this.labelControl3.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -284,15 +314,6 @@
             this.labelControl3.TabIndex = 18;
             this.labelControl3.Text = "Impuesto";
             // 
-            // txtDescuento
-            // 
-            this.txtDescuento.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txtDescuento.Enabled = false;
-            this.txtDescuento.Location = new System.Drawing.Point(616, 34);
-            this.txtDescuento.Name = "txtDescuento";
-            this.txtDescuento.Size = new System.Drawing.Size(100, 20);
-            this.txtDescuento.TabIndex = 17;
-            // 
             // labelControl2
             // 
             this.labelControl2.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -301,15 +322,6 @@
             this.labelControl2.Size = new System.Drawing.Size(51, 13);
             this.labelControl2.TabIndex = 16;
             this.labelControl2.Text = "Descuento";
-            // 
-            // txtTotalGravada
-            // 
-            this.txtTotalGravada.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.txtTotalGravada.Enabled = false;
-            this.txtTotalGravada.Location = new System.Drawing.Point(616, 8);
-            this.txtTotalGravada.Name = "txtTotalGravada";
-            this.txtTotalGravada.Size = new System.Drawing.Size(100, 20);
-            this.txtTotalGravada.TabIndex = 15;
             // 
             // labelControl1
             // 
@@ -421,9 +433,9 @@
             // gridControl1
             // 
             this.gridControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            gridLevelNode2.RelationName = "Level1";
+            gridLevelNode1.RelationName = "Level1";
             this.gridControl1.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode2});
+            gridLevelNode1});
             this.gridControl1.Location = new System.Drawing.Point(3, 3);
             this.gridControl1.MainView = this.gridView2;
             this.gridControl1.Name = "gridControl1";
@@ -453,6 +465,7 @@
             this.gridView2.OptionsCustomization.AllowQuickHideColumns = false;
             this.gridView2.OptionsDetail.EnableMasterViewMode = false;
             this.gridView2.OptionsView.ShowGroupPanel = false;
+            this.gridView2.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gridView2_CellValueChanged);
             // 
             // colCodigo
             // 
@@ -567,6 +580,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotal.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtImpuesto.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtDescuento.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTotalGravada.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbVendedor.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             this.panel3.ResumeLayout(false);
@@ -619,13 +636,13 @@
         private DevExpress.XtraGrid.Columns.GridColumn colIndicadorImpuesto1;
         private DevExpress.XtraGrid.Columns.GridColumn colPrecioUnitarioGravada;
         private DevExpress.XtraGrid.Columns.GridColumn colTotalGravada;
-        private System.Windows.Forms.TextBox txtTotalGravada;
         private DevExpress.XtraEditors.LabelControl labelControl1;
-        private System.Windows.Forms.TextBox txtTotal;
         private DevExpress.XtraEditors.LabelControl labelControl4;
-        private System.Windows.Forms.TextBox txtImpuesto;
         private DevExpress.XtraEditors.LabelControl labelControl3;
-        private System.Windows.Forms.TextBox txtDescuento;
         private DevExpress.XtraEditors.LabelControl labelControl2;
+        private DevExpress.XtraEditors.TextEdit txtTotal;
+        private DevExpress.XtraEditors.TextEdit txtImpuesto;
+        private DevExpress.XtraEditors.TextEdit txtDescuento;
+        private DevExpress.XtraEditors.TextEdit txtTotalGravada;
     }
 }

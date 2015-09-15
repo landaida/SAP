@@ -11,6 +11,7 @@ using SAP.model;
 using SAPbobsCOM;
 using SAP.util;
 using System.Threading;
+
 namespace SAP.forms.movimientos
 {
     public partial class frmOfertaVenta : Form
@@ -20,17 +21,17 @@ namespace SAP.forms.movimientos
         BusinessPartners cliente;
         List<Producto> productos;        
         OfertaVenta ofertaVenta;
+        BindingSource bindingSource = new BindingSource();
 
 
-        
         int response = 0;
         #endregion
 
         #region Functions
         private void bindingControls()
         {
-            this.txtId.DataBindings.Add("Text", ofertaVenta, "Comments");
-                        
+            bindingSource.DataSource = this.ofertaVenta;
+            this.txtTotalGravada.DataBindings.Add("Text", bindingSource, "TotalGravada", false, DataSourceUpdateMode.OnPropertyChanged);
         }
 
         private void centerFormInContainer()
@@ -62,7 +63,7 @@ namespace SAP.forms.movimientos
             gridView2.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
             //bindingListProducto.AddingNew += this.OnAddingNew;
 
-            this.addLine();
+            //this.addLine();
             
 
             // this.txtCliente.TextChanged += new EventHandler(generics_TextChanged);
@@ -74,12 +75,14 @@ namespace SAP.forms.movimientos
 
             ComboUtil.populateLookUpEditWhitEnums(cmbStatus, typeof(DocumentStatus));
             this.cmbStatus.EditValue = DocumentStatus.Abierto;
+
+            //this.bindingControls();
             
         }
 
         private void addLine()
         {
-           this.ofertaVenta.Lines.Add(new OfertaVentaLine());
+            this.ofertaVenta.Lines.Add(new OfertaVentaLine());
         }
         
         private void getBusinessPartnersInfo()
@@ -122,7 +125,7 @@ namespace SAP.forms.movimientos
         {
             bool retorno = false;
             
-            this.ofertaVenta.Lines = this.lines().Where(p => p.Producto != null && p.Cantidad > 0 && p.PrecioUnitario > 0).ToList();
+            this.ofertaVenta.Lines = (List<OfertaVentaLine>)this.lines().Where(p => p.Producto != null && p.Cantidad > 0 && p.PrecioUnitario > 0);
 
             if (this.lines().Count > 0)
                 retorno = true;
@@ -210,5 +213,25 @@ namespace SAP.forms.movimientos
         }
 
         #endregion
+
+        private void gridView2_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            
+            Double total = 0;
+            Double totalGravada = 0;
+            Double descuento = 0;
+            Double impuesto = 0;
+            foreach (OfertaVentaLine item in this.ofertaVenta.Lines)
+            {
+                totalGravada += item.PrecioUnitarioGravada * item.Cantidad;
+                total += item.PrecioUnitario * item.Cantidad;
+                descuento += item.DescuentoValor * item.Cantidad;
+                impuesto += item.PrecioUnitarioImpuesto * item.Cantidad;
+            }
+            this.txtImpuesto.Text = impuesto.ToString();
+            this.txtTotal.Text = total.ToString();
+            this.txtTotalGravada.Text = totalGravada.ToString();
+            this.txtDescuento.Text = descuento.ToString();
+        }
     }
 }

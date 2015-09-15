@@ -125,7 +125,7 @@ namespace SAP.forms.movimientos
         {
             bool retorno = false;
             
-            this.ofertaVenta.Lines = (List<OfertaVentaLine>)this.lines().Where(p => p.Producto != null && p.Cantidad > 0 && p.PrecioUnitario > 0);
+            this.ofertaVenta.Lines = this.lines().Where(p => p.Producto != null && p.Cantidad > 0 && p.PrecioUnitario > 0).ToList<OfertaVentaLine>();
 
             if (this.lines().Count > 0)
                 retorno = true;
@@ -157,6 +157,12 @@ namespace SAP.forms.movimientos
                     this.ofertaVentaDoc = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
                     
                     this.ofertaVentaDoc.CardCode = cliente.CardCode;
+                    this.ofertaVentaDoc.CardName = cliente.CardName;
+                    this.ofertaVentaDoc.DocDate = this.txtFechaDocumento.Value;
+                    this.ofertaVentaDoc.Comments = this.txtObservacion.Text;
+
+                    if(this.cmbVendedor.EditValue.ToString().Trim().Length > 0)
+                        this.ofertaVentaDoc.SalesPersonCode = Convert.ToInt32(this.cmbVendedor.EditValue);
 
                     for(int i = 1; i<= this.lines().Count; i++)
                     {
@@ -228,10 +234,15 @@ namespace SAP.forms.movimientos
                 descuento += item.DescuentoValor * item.Cantidad;
                 impuesto += item.PrecioUnitarioImpuesto * item.Cantidad;
             }
-            this.txtImpuesto.Text = impuesto.ToString();
-            this.txtTotal.Text = total.ToString();
-            this.txtTotalGravada.Text = totalGravada.ToString();
-            this.txtDescuento.Text = descuento.ToString();
+            this.txtImpuesto.Text = Convert.ToString(impuesto);
+            this.txtTotal.Text = Convert.ToString(total);
+            this.txtTotalGravada.Text = Convert.ToString(totalGravada);
+            this.txtDescuento.Text = Convert.ToString(descuento);
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

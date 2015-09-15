@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cmbStatus = new DevExpress.XtraEditors.LookUpEdit();
@@ -260,6 +260,9 @@
             this.txtTotal.Name = "txtTotal";
             this.txtTotal.Properties.DisplayFormat.FormatString = "n2";
             this.txtTotal.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.txtTotal.Properties.Mask.EditMask = "n2";
+            this.txtTotal.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            this.txtTotal.Properties.Mask.UseMaskAsDisplayFormat = true;
             this.txtTotal.Size = new System.Drawing.Size(100, 20);
             this.txtTotal.TabIndex = 25;
             // 
@@ -271,6 +274,9 @@
             this.txtImpuesto.Name = "txtImpuesto";
             this.txtImpuesto.Properties.DisplayFormat.FormatString = "n2";
             this.txtImpuesto.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.txtImpuesto.Properties.Mask.EditMask = "n2";
+            this.txtImpuesto.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            this.txtImpuesto.Properties.Mask.UseMaskAsDisplayFormat = true;
             this.txtImpuesto.Size = new System.Drawing.Size(100, 20);
             this.txtImpuesto.TabIndex = 24;
             // 
@@ -282,6 +288,9 @@
             this.txtDescuento.Name = "txtDescuento";
             this.txtDescuento.Properties.DisplayFormat.FormatString = "n2";
             this.txtDescuento.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.txtDescuento.Properties.Mask.EditMask = "n2";
+            this.txtDescuento.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            this.txtDescuento.Properties.Mask.UseMaskAsDisplayFormat = true;
             this.txtDescuento.Size = new System.Drawing.Size(100, 20);
             this.txtDescuento.TabIndex = 23;
             // 
@@ -293,6 +302,11 @@
             this.txtTotalGravada.Name = "txtTotalGravada";
             this.txtTotalGravada.Properties.DisplayFormat.FormatString = "n2";
             this.txtTotalGravada.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.txtTotalGravada.Properties.EditFormat.FormatString = "n2";
+            this.txtTotalGravada.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.txtTotalGravada.Properties.Mask.EditMask = "n2";
+            this.txtTotalGravada.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Numeric;
+            this.txtTotalGravada.Properties.Mask.UseMaskAsDisplayFormat = true;
             this.txtTotalGravada.Size = new System.Drawing.Size(100, 20);
             this.txtTotalGravada.TabIndex = 22;
             // 
@@ -387,6 +401,7 @@
             this.btnCancelar.TabIndex = 1;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // btnGuardar
             // 
@@ -433,9 +448,9 @@
             // gridControl1
             // 
             this.gridControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            gridLevelNode1.RelationName = "Level1";
+            gridLevelNode2.RelationName = "Level1";
             this.gridControl1.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode1});
+            gridLevelNode2});
             this.gridControl1.Location = new System.Drawing.Point(3, 3);
             this.gridControl1.MainView = this.gridView2;
             this.gridControl1.Name = "gridControl1";

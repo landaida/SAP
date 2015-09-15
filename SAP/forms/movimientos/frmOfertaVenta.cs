@@ -125,9 +125,9 @@ namespace SAP.forms.movimientos
         {
             bool retorno = false;
             
-            this.ofertaVenta.Lines = this.lines().Where(p => p.Producto != null && p.Cantidad > 0 && p.PrecioUnitario > 0).ToList<OfertaVentaLine>();
+            this.ofertaVenta.Lines = this.ofertaVenta.Lines.Where(p => p.Producto != null && p.Cantidad > 0 && p.PrecioUnitario > 0).ToList<OfertaVentaLine>();
 
-            if (this.lines().Count > 0)
+            if (this.ofertaVenta.Lines.Count > 0)
                 retorno = true;
 
             return retorno;
@@ -139,7 +139,7 @@ namespace SAP.forms.movimientos
 
             if (this.cmbCliente.EditValue.ToString().Trim().Length <= 0)
                 Util.AutoClosingMessageBox.Show("Seleccione un cliente por favor.", "Aviso", 3000);
-            else if (this.isValidLines())
+            else if (!this.isValidLines())
                 Util.AutoClosingMessageBox.Show("Debe agregar por lo menos un producto.", "Aviso", 3000);
             else
                 retorno = true;
@@ -164,7 +164,7 @@ namespace SAP.forms.movimientos
                     if(this.cmbVendedor.EditValue.ToString().Trim().Length > 0)
                         this.ofertaVentaDoc.SalesPersonCode = Convert.ToInt32(this.cmbVendedor.EditValue);
 
-                    for(int i = 1; i<= this.lines().Count; i++)
+                    for(int i = 0; i<= this.lines().Count-1; i++)
                     {
                         OfertaVentaLine item = this.lines()[i];
                         this.ofertaVentaDoc.Lines.ItemCode = item.ProductoId;
@@ -172,13 +172,15 @@ namespace SAP.forms.movimientos
                         this.ofertaVentaDoc.Lines.PriceAfterVAT = item.PrecioUnitario;
                         this.ofertaVentaDoc.Lines.TaxCode = item.IndicadorImpuesto; 
 
-                        if (i < this.lines().Count)
+                        if (i < this.lines().Count-1)
                             this.ofertaVentaDoc.Lines.Add();
                     }
                     int response = this.ofertaVentaDoc.Add();
                     if (response == 0)
                     {
-                        Util.AutoClosingMessageBox.Show("Oferta de venta generada con éxito.", "Aviso", 3000);
+                        String docNum = "";
+                        GlobalVar.Empresa.GetNewObjectCode(out docNum);
+                        MessageBox.Show("Oferta de venta nro.: " + docNum + " generada con éxito.", "Aviso");
                     }
                     else
                     {

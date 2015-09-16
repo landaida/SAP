@@ -109,6 +109,15 @@ namespace SAP.util
         {
             Cursor.Current = Cursors.Default;
         }
+
+        public static void showForm(Form childForm, Form parentForm)
+        {
+            parentForm.IsMdiContainer = true;
+            childForm.MdiParent = parentForm;
+            parentForm.Controls.Add(childForm);
+            childForm.Show();
+        }
+
     }
 }
 

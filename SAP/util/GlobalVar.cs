@@ -16,7 +16,6 @@ namespace SAP.util
 
         public static void inicializarEmpresa()
         {
-            Util.cursorShow();
             int res = 0;
             if (empresa == null)
             {
@@ -40,7 +39,6 @@ namespace SAP.util
                 isReady = true;
                 Console.WriteLine("ok create Conexion with SAP licensing server");
             }
-            Util.cursorHidden();
         }
 
         public static Company Empresa

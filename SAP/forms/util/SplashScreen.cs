@@ -16,5 +16,10 @@ namespace SAP.forms.util
         {
             InitializeComponent();
         }
+
+        public void setLabel(string label)
+        {
+            this.labelControl1.Text = label;
+        }
     }
 }

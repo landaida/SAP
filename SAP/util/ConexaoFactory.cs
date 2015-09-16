@@ -11,13 +11,11 @@ namespace SAP.util
         private static SqlConnection connection;
         
         public static SqlConnection initSQLConection() 
-        {
-            Util.cursorShow();
+        {            
             connection = new SqlConnection(@"Data Source="+ DBConfig.Server+ ";Initial Catalog="+DBConfig.DBName+";User ID="+ DBConfig.DBUser+ ";Password="+ DBConfig.DBPassword);
             //connection = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=" + DBConfig.DBName + ";User ID=" + DBConfig.DBUser + ";Password=" + DBConfig.DBPassword);
             connection.Open();
             Console.WriteLine("ok create Conexion with DB");
-            Util.cursorHidden();
             return connection;            
         }
 

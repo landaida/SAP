@@ -6,11 +6,14 @@ using System.Data.SqlClient;
 using SAP.model;
 using SAPbobsCOM;
 using System.Windows.Forms;
+using SAP.forms.util;
 
 namespace SAP.util
 {
     public static class Util
     {
+        public static readonly SplashScreen splashScreen = new SplashScreen();
+
         public static IEnumerable<T> getGenericList<T>(String valueMember, String displayMember, String tableName, String where = "")
         {
             
@@ -99,23 +102,30 @@ namespace SAP.util
             [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
             static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
         }
-
-        public static void cursorShow()
+        public static void showSplashScreen(Form parentForm, String label = "")
         {
-            Cursor.Current = Cursors.WaitCursor;
+            if(label.Trim().Length > 0 )
+                Util.splashScreen.setLabel(label);
+            Util.showForm(Util.splashScreen, parentForm, true);
         }
 
-        public static void cursorHidden()
+        public static void hideSplashScreen()
         {
-            Cursor.Current = Cursors.Default;
+            Util.splashScreen.Hide();
         }
 
-        public static void showForm(Form childForm, Form parentForm)
+        public static void showForm(Form childForm, Form parentForm, bool dialog = false)
         {
-            parentForm.IsMdiContainer = true;
-            childForm.MdiParent = parentForm;
-            parentForm.Controls.Add(childForm);
-            childForm.Show();
+            
+            if (dialog)
+                childForm.ShowDialog();
+            else
+            {
+                childForm.MdiParent = parentForm;
+                parentForm.IsMdiContainer = true;
+                childForm.Show();
+            }
+                
         }
 
     }

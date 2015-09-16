@@ -17,7 +17,6 @@ namespace SAP.model
         private Double cantidad = 1;
         private Double precioUnitario;
         private Double descuento;
-        private Double descuentoValor;
         private String indicadorImpuesto;
         private Double total;
 

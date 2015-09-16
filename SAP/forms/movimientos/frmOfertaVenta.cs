@@ -24,7 +24,7 @@ namespace SAP.forms.movimientos
         BindingSource bindingSource = new BindingSource();
 
 
-        int response = 0;
+        
         #endregion
 
         #region Functions
@@ -151,7 +151,7 @@ namespace SAP.forms.movimientos
         {
             if (this.isValidForm())
             {
-                Util.cursorShow();
+                Util.showSplashScreen(this);
                 if (GlobalVar.Empresa.Connected == true)
                 {
                     this.ofertaVentaDoc = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
@@ -192,7 +192,7 @@ namespace SAP.forms.movimientos
                 {
                     Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
                 }
-                Util.cursorHidden();
+                Util.hideSplashScreen();
             }
         }
 

@@ -269,8 +269,8 @@ namespace SAP.forms.movimientos
             this.txtId.Text = null;
             this.cmbCliente.EditValue = null;
             this.cmbStatus.EditValue = DocumentStatus.Abierto;
-            this.txtFechaDocumento.Value = new DateTime();
-            this.txtFechaLanzamiento.Value = new DateTime();
+            this.txtFechaDocumento.Value = DateTime.Now;
+            this.txtFechaLanzamiento.Value = DateTime.Now;
             this.cmbVendedor.EditValue = null;
             this.txtObservacion.Text = null;
 

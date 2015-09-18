@@ -153,6 +153,7 @@
     <None Include="Resources\g-dots.gif.bmp" />
     <None Include="Resources\g-dots.gif" />
     <None Include="Resources\1442554339_back.png" />
+    <None Include="Resources\1442556929_Find.png" />
     <Content Include="Resources\trafficlight_green-128.png" />
     <Content Include="Resources\trafficlight_red-128.png" />
   </ItemGroup>

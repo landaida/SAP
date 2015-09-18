@@ -31,6 +31,7 @@
             DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSearchQuotation = new DevExpress.XtraEditors.SimpleButton();
             this.btnCopyToSalesOrders = new DevExpress.XtraEditors.SimpleButton();
             this.cmbStatus = new DevExpress.XtraEditors.LookUpEdit();
             this.cmbCliente = new DevExpress.XtraEditors.SearchLookUpEdit();
@@ -115,6 +116,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnSearchQuotation);
             this.panel1.Controls.Add(this.btnCopyToSalesOrders);
             this.panel1.Controls.Add(this.cmbStatus);
             this.panel1.Controls.Add(this.cmbCliente);
@@ -131,6 +133,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(725, 114);
             this.panel1.TabIndex = 1;
+            // 
+            // btnSearchQuotation
+            // 
+            this.btnSearchQuotation.Image = global::SAP.Properties.Resources._1442556929_Find;
+            this.btnSearchQuotation.Location = new System.Drawing.Point(182, 2);
+            this.btnSearchQuotation.Name = "btnSearchQuotation";
+            this.btnSearchQuotation.Size = new System.Drawing.Size(25, 23);
+            this.btnSearchQuotation.TabIndex = 28;
+            this.btnSearchQuotation.ToolTip = "Buscar Documento";
+            this.btnSearchQuotation.Click += new System.EventHandler(this.btnSearchQuotation_Click);
             // 
             // btnCopyToSalesOrders
             // 
@@ -202,7 +214,6 @@
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(121, 20);
             this.txtId.TabIndex = 4;
-            this.txtId.TextChanged += new System.EventHandler(this.txtId_TextChanged);
             // 
             // label4
             // 
@@ -488,6 +499,7 @@
             this.colTotalGravada});
             this.gridView2.GridControl = this.gridControl1;
             this.gridView2.Name = "gridView2";
+            this.gridView2.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
             this.gridView2.OptionsCustomization.AllowColumnMoving = false;
             this.gridView2.OptionsCustomization.AllowFilter = false;
             this.gridView2.OptionsCustomization.AllowGroup = false;
@@ -682,5 +694,6 @@
         private DevExpress.XtraEditors.TextEdit txtDescuento;
         private DevExpress.XtraEditors.TextEdit txtTotalGravada;
         private DevExpress.XtraEditors.SimpleButton btnCopyToSalesOrders;
+        private DevExpress.XtraEditors.SimpleButton btnSearchQuotation;
     }
 }

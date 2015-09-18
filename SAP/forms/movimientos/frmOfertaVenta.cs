@@ -43,7 +43,7 @@ namespace SAP.forms.movimientos
 
         private void inicializarObjetos()
         {
-
+            this.ofertaVentaDoc = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
             //centerFormInContainer();
 
             //Cria uma lista de productos, isso facilitara na hora de carregar o combo de produtos en cada line do quotation
@@ -64,7 +64,7 @@ namespace SAP.forms.movimientos
             gridView2.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
             //bindingListProducto.AddingNew += this.OnAddingNew;
 
-            //this.addLine();
+            this.addLine();
             
 
             // this.txtCliente.TextChanged += new EventHandler(generics_TextChanged);
@@ -84,10 +84,13 @@ namespace SAP.forms.movimientos
         private void addLine()
         {
             this.ofertaVenta.Lines.Add(new OfertaVentaLine());
+            this.gridView2.RefreshData();
         }
         
         private void getBusinessPartnersInfo()
-        {            
+        {
+            if (this.cmbCliente.EditValue == null) return;
+
             String key = this.cmbCliente.EditValue.ToString();
             if (key.Trim().Length > 0)
             {
@@ -156,11 +159,10 @@ namespace SAP.forms.movimientos
                 //Util.showSplashScreen(this.MdiParent);
                 if (GlobalVar.Empresa.Connected == true)
                 {
-                    this.ofertaVentaDoc = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
-                    
                     this.ofertaVentaDoc.CardCode = cliente.CardCode;
                     this.ofertaVentaDoc.CardName = cliente.CardName;
                     this.ofertaVentaDoc.DocDate = this.txtFechaDocumento.Value;
+                    this.ofertaVentaDoc.DocDueDate = this.txtFechaLanzamiento.Value;
                     this.ofertaVentaDoc.Comments = this.txtObservacion.Text;
 
                     if(this.cmbVendedor.EditValue.ToString().Trim().Length > 0)
@@ -206,9 +208,82 @@ namespace SAP.forms.movimientos
 
         private void getQuotationByKey()
         {
-            throw new NotImplementedException();
+            if(this.txtId.Text.Trim().Length > 0)
+            {
+                bool res;
+                res = ofertaVentaDoc.GetByKey(Convert.ToInt32(this.txtId.Text));
+                if (res)
+                {
+                    this.cmbCliente.EditValue = ofertaVentaDoc.CardCode;
+                    this.txtFechaDocumento.Value = this.ofertaVentaDoc.DocDate;
+                    this.txtFechaLanzamiento.Value = this.ofertaVentaDoc.DocDueDate;
+                    this.txtObservacion.Text = this.ofertaVentaDoc.Comments;                    
+                    this.cmbVendedor.EditValue = this.ofertaVentaDoc.SalesPersonCode;
+
+                    this.ofertaVenta.Lines.Clear();
+                    for (int i = 0; i <= this.ofertaVentaDoc.Lines.Count - 1; i++)
+                    {
+                        
+                        OfertaVentaLine line = new OfertaVentaLine();
+                        this.ofertaVentaDoc.Lines.SetCurrentLine(i);
+                        line.ProductoId = this.ofertaVentaDoc.Lines.ItemCode;
+                        line.Cantidad = this.ofertaVentaDoc.Lines.Quantity;
+                        line.PrecioUnitario = this.ofertaVentaDoc.Lines.PriceAfterVAT;
+                        line.IndicadorImpuesto = this.ofertaVentaDoc.Lines.TaxCode;
+                        
+                        this.ofertaVenta.Lines.Add(line);
+                    }
+
+                    this.gridView2.RefreshData();
+                    this.actualizaTotales();
+                    this.btnCopyToSalesOrders.Enabled = true;
+                    this.btnGuardar.Enabled = false;
+                }
+            }
         }
 
+        private void actualizaTotales()
+        {
+            Double total = 0;
+            Double totalGravada = 0;
+            Double descuento = 0;
+            Double impuesto = 0;
+            foreach (OfertaVentaLine item in this.ofertaVenta.Lines)
+            {
+                totalGravada += item.PrecioUnitarioGravada * item.Cantidad;
+                total += item.PrecioUnitario * item.Cantidad;
+                descuento += item.DescuentoValor * item.Cantidad;
+                impuesto += item.PrecioUnitarioImpuesto * item.Cantidad;
+            }
+            this.txtImpuesto.Text = Convert.ToString(impuesto);
+            this.txtTotal.Text = Convert.ToString(total);
+            this.txtTotalGravada.Text = Convert.ToString(totalGravada);
+            this.txtDescuento.Text = Convert.ToString(descuento);
+        }
+
+        private void limpiar()
+        {
+            this.btnCopyToSalesOrders.Enabled = false;
+            this.btnGuardar.Enabled = true;
+
+            this.txtId.Text = null;
+            this.cmbCliente.EditValue = null;
+            this.cmbStatus.EditValue = DocumentStatus.Abierto;
+            this.txtFechaDocumento.Value = new DateTime();
+            this.txtFechaLanzamiento.Value = new DateTime();
+            this.cmbVendedor.EditValue = null;
+            this.txtObservacion.Text = null;
+
+            this.ofertaVenta = new OfertaVenta();
+            BindingList<OfertaVentaLine> listCotizacion = new BindingList<OfertaVentaLine>(this.ofertaVenta.Lines);
+
+            listCotizacion.AllowNew = true;
+            this.gridControl1.DataSource = listCotizacion;
+
+            this.addLine();
+            this.actualizaTotales();
+
+        }
         #endregion
 
 
@@ -236,38 +311,26 @@ namespace SAP.forms.movimientos
                 
         private void gridView2_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
         {
-            
-            Double total = 0;
-            Double totalGravada = 0;
-            Double descuento = 0;
-            Double impuesto = 0;
-            foreach (OfertaVentaLine item in this.ofertaVenta.Lines)
-            {
-                totalGravada += item.PrecioUnitarioGravada * item.Cantidad;
-                total += item.PrecioUnitario * item.Cantidad;
-                descuento += item.DescuentoValor * item.Cantidad;
-                impuesto += item.PrecioUnitarioImpuesto * item.Cantidad;
-            }
-            this.txtImpuesto.Text = Convert.ToString(impuesto);
-            this.txtTotal.Text = Convert.ToString(total);
-            this.txtTotalGravada.Text = Convert.ToString(totalGravada);
-            this.txtDescuento.Text = Convert.ToString(descuento);
+
+            this.actualizaTotales();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.limpiar();
         }
 
         private void simpleButton1_Click(object sender, EventArgs e)
         {
             this.copyToSalesOrders();
         }
-        
-        private void txtId_TextChanged(object sender, EventArgs e)
+
+        private void btnSearchQuotation_Click(object sender, EventArgs e)
         {
             this.getQuotationByKey();
         }
         #endregion
+
+
     }
 }

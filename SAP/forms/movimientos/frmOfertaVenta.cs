@@ -183,6 +183,7 @@ namespace SAP.forms.movimientos
                         String docNum = "";
                         GlobalVar.Empresa.GetNewObjectCode(out docNum);
                         this.txtId.Text = docNum;
+                        this.btnCopyToSalesOrders.Enabled = true;
                         MessageBox.Show("Oferta de venta nro.: " + docNum + " generada con éxito.", "Aviso");
                     }
                     else
@@ -198,7 +199,18 @@ namespace SAP.forms.movimientos
             }
         }
 
+        private void copyToSalesOrders()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void getQuotationByKey()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
+
 
         #region FunctionsC#
 
@@ -247,6 +259,15 @@ namespace SAP.forms.movimientos
             this.Close();
         }
 
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+            this.copyToSalesOrders();
+        }
+        
+        private void txtId_TextChanged(object sender, EventArgs e)
+        {
+            this.getQuotationByKey();
+        }
         #endregion
     }
 }

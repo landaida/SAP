@@ -31,6 +31,7 @@
             DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnCopyToSalesOrders = new DevExpress.XtraEditors.SimpleButton();
             this.cmbStatus = new DevExpress.XtraEditors.LookUpEdit();
             this.cmbCliente = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.searchLookUpEdit1View = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -114,6 +115,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnCopyToSalesOrders);
             this.panel1.Controls.Add(this.cmbStatus);
             this.panel1.Controls.Add(this.cmbCliente);
             this.panel1.Controls.Add(this.txtFechaDocumento);
@@ -129,6 +131,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(725, 114);
             this.panel1.TabIndex = 1;
+            // 
+            // btnCopyToSalesOrders
+            // 
+            this.btnCopyToSalesOrders.Enabled = false;
+            this.btnCopyToSalesOrders.Image = global::SAP.Properties.Resources._1442554339_back;
+            this.btnCopyToSalesOrders.Location = new System.Drawing.Point(559, 85);
+            this.btnCopyToSalesOrders.Name = "btnCopyToSalesOrders";
+            this.btnCopyToSalesOrders.Size = new System.Drawing.Size(162, 23);
+            this.btnCopyToSalesOrders.TabIndex = 27;
+            this.btnCopyToSalesOrders.Text = "Copiar a Orden de Venta";
+            this.btnCopyToSalesOrders.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
             // cmbStatus
             // 
@@ -189,6 +202,7 @@
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(121, 20);
             this.txtId.TabIndex = 4;
+            this.txtId.TextChanged += new System.EventHandler(this.txtId_TextChanged);
             // 
             // label4
             // 
@@ -667,5 +681,6 @@
         private DevExpress.XtraEditors.TextEdit txtImpuesto;
         private DevExpress.XtraEditors.TextEdit txtDescuento;
         private DevExpress.XtraEditors.TextEdit txtTotalGravada;
+        private DevExpress.XtraEditors.SimpleButton btnCopyToSalesOrders;
     }
 }

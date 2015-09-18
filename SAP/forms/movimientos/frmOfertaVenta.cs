@@ -43,6 +43,7 @@ namespace SAP.forms.movimientos
 
         private void inicializarObjetos()
         {
+
             //centerFormInContainer();
 
             //Cria uma lista de productos, isso facilitara na hora de carregar o combo de produtos en cada line do quotation
@@ -94,6 +95,7 @@ namespace SAP.forms.movimientos
                 bool retVal = cliente.GetByKey(key);
                 if (retVal)
                 {
+                    this.cmbVendedor.EditValue = cliente.SalesPersonCode;
                     foreach(OfertaVentaLine item in this.lines())
                     {
                         item.Descuento = cliente.DiscountPercent;
@@ -151,7 +153,7 @@ namespace SAP.forms.movimientos
         {
             if (this.isValidForm())
             {
-                Util.showSplashScreen(this);
+                //Util.showSplashScreen(this.MdiParent);
                 if (GlobalVar.Empresa.Connected == true)
                 {
                     this.ofertaVentaDoc = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
@@ -180,19 +182,19 @@ namespace SAP.forms.movimientos
                     {
                         String docNum = "";
                         GlobalVar.Empresa.GetNewObjectCode(out docNum);
+                        this.txtId.Text = docNum;
                         MessageBox.Show("Oferta de venta nro.: " + docNum + " generada con éxito.", "Aviso");
                     }
                     else
                     {
                         Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
                     }
-
                 }
                 else
                 {
                     Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
                 }
-                Util.hideSplashScreen();
+                //Util.hideSplashScreen(this.MdiParent);
             }
         }
 
@@ -219,9 +221,7 @@ namespace SAP.forms.movimientos
         {            
             this.guardar();
         }
-
-        #endregion
-
+                
         private void gridView2_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
         {
             
@@ -246,5 +246,7 @@ namespace SAP.forms.movimientos
         {
             this.Close();
         }
+
+        #endregion
     }
 }

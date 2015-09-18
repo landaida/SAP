@@ -12,6 +12,7 @@ namespace SAP.forms.util
 {
     public partial class SplashScreen : Form
     {
+        public bool close = false;
         public SplashScreen()
         {
             InitializeComponent();
@@ -20,6 +21,12 @@ namespace SAP.forms.util
         public void setLabel(string label)
         {
             this.labelControl1.Text = label;
+        }
+
+        private void SplashScreen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(!close)
+                e.Cancel = true;
         }
     }
 }

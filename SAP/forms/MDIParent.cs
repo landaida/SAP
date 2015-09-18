@@ -27,7 +27,7 @@ namespace SAP.forms
         {
             if (GlobalVar.isReady)
             {
-                Util.hideSplashScreen();                
+                Util.hideSplashScreen(this);
                 this.timerVerificaConexao.Enabled = false;
                 toolStripStatusLabel.Image = imageList1.Images[0];
             }

@@ -106,12 +106,17 @@ namespace SAP.util
         {
             if(label.Trim().Length > 0 )
                 Util.splashScreen.setLabel(label);
-            Util.showForm(Util.splashScreen, parentForm, true);
+
+            parentForm.BeginInvoke(new Action(() => Util.splashScreen.ShowDialog()));
+
+
+            //Util.showForm(Util.splashScreen, parentForm, true);
         }
 
-        public static void hideSplashScreen()
+        public static void hideSplashScreen(Form parentForm)
         {
-            Util.splashScreen.Hide();
+            parentForm.Invoke(new Action(Util.splashScreen.Hide));
+            //Util.splashScreen.Hide();
         }
 
         public static void showForm(Form childForm, Form parentForm, bool dialog = false)

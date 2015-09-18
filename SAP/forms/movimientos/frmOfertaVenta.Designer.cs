@@ -521,40 +521,47 @@
             this.colCantidad1.FieldName = "Cantidad";
             this.colCantidad1.Name = "colCantidad1";
             this.colCantidad1.Visible = true;
-            this.colCantidad1.VisibleIndex = 3;
+            this.colCantidad1.VisibleIndex = 4;
             // 
             // colPrecioUnitario1
             // 
             this.colPrecioUnitario1.Caption = "Precio unitario";
             this.colPrecioUnitario1.FieldName = "PrecioUnitario";
             this.colPrecioUnitario1.Name = "colPrecioUnitario1";
+            this.colPrecioUnitario1.Visible = true;
+            this.colPrecioUnitario1.VisibleIndex = 2;
             // 
             // colPorcentajeDescuento1
             // 
             this.colPorcentajeDescuento1.Caption = "% de descuento";
             this.colPorcentajeDescuento1.FieldName = "Descuento";
             this.colPorcentajeDescuento1.Name = "colPorcentajeDescuento1";
+            this.colPorcentajeDescuento1.OptionsColumn.AllowEdit = false;
+            this.colPorcentajeDescuento1.OptionsColumn.ReadOnly = true;
             this.colPorcentajeDescuento1.Visible = true;
-            this.colPorcentajeDescuento1.VisibleIndex = 4;
+            this.colPorcentajeDescuento1.VisibleIndex = 5;
             // 
             // colIndicadorImpuesto1
             // 
             this.colIndicadorImpuesto1.Caption = "Indicador de impuestos";
             this.colIndicadorImpuesto1.FieldName = "IndicadorImpuesto";
             this.colIndicadorImpuesto1.Name = "colIndicadorImpuesto1";
+            this.colIndicadorImpuesto1.OptionsColumn.AllowEdit = false;
+            this.colIndicadorImpuesto1.OptionsColumn.ReadOnly = true;
             this.colIndicadorImpuesto1.Visible = true;
-            this.colIndicadorImpuesto1.VisibleIndex = 5;
+            this.colIndicadorImpuesto1.VisibleIndex = 6;
             // 
             // colPrecioUnitarioGravada
             // 
-            this.colPrecioUnitarioGravada.Caption = "Precio";
+            this.colPrecioUnitarioGravada.Caption = "Sin IVA";
             this.colPrecioUnitarioGravada.DisplayFormat.FormatString = "n2";
             this.colPrecioUnitarioGravada.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colPrecioUnitarioGravada.FieldName = "PrecioUnitarioGravada";
             this.colPrecioUnitarioGravada.Name = "colPrecioUnitarioGravada";
             this.colPrecioUnitarioGravada.OptionsColumn.AllowEdit = false;
+            this.colPrecioUnitarioGravada.OptionsColumn.ReadOnly = true;
             this.colPrecioUnitarioGravada.Visible = true;
-            this.colPrecioUnitarioGravada.VisibleIndex = 2;
+            this.colPrecioUnitarioGravada.VisibleIndex = 3;
             // 
             // colTotalGravada
             // 
@@ -563,8 +570,10 @@
             this.colTotalGravada.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colTotalGravada.FieldName = "TotalGravada";
             this.colTotalGravada.Name = "colTotalGravada";
+            this.colTotalGravada.OptionsColumn.AllowEdit = false;
+            this.colTotalGravada.OptionsColumn.ReadOnly = true;
             this.colTotalGravada.Visible = true;
-            this.colTotalGravada.VisibleIndex = 6;
+            this.colTotalGravada.VisibleIndex = 7;
             // 
             // tabPageLogistica
             // 

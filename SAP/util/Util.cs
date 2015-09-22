@@ -136,19 +136,25 @@ namespace SAP.util
 
         public static T getValueFromQuery<T>(String query, String fieldName)
         {
-            
-            SqlConnection conn = ConexaoFactory.Connection;
-            SqlCommand sc = new SqlCommand(query, conn);
-            SqlDataReader reader;
+            try
+            {
+                SqlConnection conn = ConexaoFactory.Connection;
+                SqlCommand sc = new SqlCommand(query, conn);
+                SqlDataReader reader;
 
-            reader = sc.ExecuteReader();
+                reader = sc.ExecuteReader();
 
-            var value = reader.GetValue(reader.GetOrdinal(fieldName));
+                var value = reader.GetValue(reader.GetOrdinal(fieldName));
 
-            reader.Close();
+                reader.Close();
 
-            return value is DBNull ? default(T) : (T)value;
-            
+                return value is DBNull ? default(T) : (T)value;
+            }
+            catch(Exception e)
+            {
+                Util.AutoClosingMessageBox.Show(e.Message, "Error", 3000);
+            }
+            return default(T);            
         }
     }
 }

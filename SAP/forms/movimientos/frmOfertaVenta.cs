@@ -249,7 +249,7 @@ namespace SAP.forms.movimientos
         {
             bool retorno = false;
 
-            if (!this.existeDescuento() && !this.superaLimiteCredito())
+            if (!this.superaLimiteCredito() || !this.existeDescuento())
                 retorno = true;
 
             return retorno;
@@ -261,8 +261,14 @@ namespace SAP.forms.movimientos
 
             Double valorDoc = ofertaVenta.Valor;
             int condicion = ofertaVentaDoc.GroupNumber;
+
+            //Si la condicion es al contado retorna falso, no verifica limite de credito
+            if (condicion == 0) return false;
+
             Double limiteCredito = cliente.CreditLimit;
             Double balance = cliente.CurrentAccountBalance;
+            Double ordersBal = cliente.OpenOrdersBalance;
+
             String sql = "  SELECT isnull(sum(T0.[DocTotal]), 0) value " +
                          "   FROM ODRF T0 " +
                          "   WHERE T0.[DocStatus] = 'O' " +
@@ -270,6 +276,11 @@ namespace SAP.forms.movimientos
                          "   and T0.[CardCode] = '"+cliente.CardCode+"' ";
             Double totalDocPreliminares = Util.getValueFromQuery<Double>(sql, "value");
 
+            //Saldo de linea de credito
+            Double saldo = balance + ordersBal + totalDocPreliminares + ofertaVenta.Valor;
+
+            if (saldo > limiteCredito)
+                retorno = true;
 
             return retorno;
         }

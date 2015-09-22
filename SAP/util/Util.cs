@@ -102,6 +102,7 @@ namespace SAP.util
             [System.Runtime.InteropServices.DllImport("user32.dll", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
             static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, IntPtr wParam, IntPtr lParam);
         }
+
         public static void showSplashScreen(Form parentForm, String label = "")
         {
             if(label.Trim().Length > 0 )
@@ -133,6 +134,22 @@ namespace SAP.util
                 
         }
 
+        public static T getValueFromQuery<T>(String query, String fieldName)
+        {
+            
+            SqlConnection conn = ConexaoFactory.Connection;
+            SqlCommand sc = new SqlCommand(query, conn);
+            SqlDataReader reader;
+
+            reader = sc.ExecuteReader();
+
+            var value = reader.GetValue(reader.GetOrdinal(fieldName));
+
+            reader.Close();
+
+            return value is DBNull ? default(T) : (T)value;
+            
+        }
     }
 }
 

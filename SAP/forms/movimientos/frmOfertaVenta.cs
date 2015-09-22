@@ -173,7 +173,7 @@ namespace SAP.forms.movimientos
                         OfertaVentaLine item = this.lines()[i];
                         this.ofertaVentaDoc.Lines.ItemCode = item.ProductoId;
                         this.ofertaVentaDoc.Lines.Quantity = item.Cantidad;
-                        this.ofertaVentaDoc.Lines.PriceAfterVAT = item.PrecioUnitario;
+                        this.ofertaVentaDoc.Lines.PriceAfterVAT = item.PrecioUnitarioGravada;
                         this.ofertaVentaDoc.Lines.TaxCode = item.IndicadorImpuesto; 
 
                         if (i < this.lines().Count-1)
@@ -201,9 +201,91 @@ namespace SAP.forms.movimientos
             }
         }
 
+        
+
         private void copyToSalesOrders()
         {
-            throw new NotImplementedException();
+            if(this.verificarEtapasAutorizacion() && GlobalVar.Empresa.Connected == true)
+            {
+                Documents Orden = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oOrders);
+                Orden.CardCode = ofertaVentaDoc.CardCode;
+                Orden.DocDate = ofertaVentaDoc.DocDate;
+                Orden.DocDueDate = ofertaVentaDoc.DocDueDate;
+                Orden.Comments = ofertaVentaDoc.Comments;
+                Orden.DocCurrency = ofertaVentaDoc.DocCurrency;
+
+                for (int i = 0; i <= this.lines().Count - 1; i++)
+                {
+                    OfertaVentaLine item = this.lines()[i];
+
+                    Orden.Lines.ItemCode = item.ProductoId;
+                    Orden.Lines.Quantity = item.Cantidad;
+                    Orden.Lines.TaxCode = item.IndicadorImpuesto;
+                    Orden.Lines.PriceAfterVAT = item.PrecioUnitarioGravada;
+
+                    if (i < this.lines().Count - 1)
+                        Orden.Lines.Add();
+                }
+
+                int res = Orden.Add();
+
+                if (res == 0)
+                {
+                    String docNum = "";
+                    GlobalVar.Empresa.GetNewObjectCode(out docNum);
+                    this.txtId.Text = docNum;
+                    this.btnCopyToSalesOrders.Enabled = true;                    
+                    MessageBox.Show("Orden de venta nro.: " + docNum + " generada con éxito.", "Aviso");
+                }
+                else
+                {
+                    System.Console.WriteLine(GlobalVar.Empresa.GetLastErrorDescription());
+                    Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
+                }
+            }
+        }
+
+        private bool verificarEtapasAutorizacion()
+        {
+            bool retorno = false;
+
+            if (!this.existeDescuento() && !this.superaLimiteCredito())
+                retorno = true;
+
+            return retorno;
+        }
+
+        private bool superaLimiteCredito()
+        {
+            bool retorno = false;
+
+            Double valorDoc = ofertaVenta.Valor;
+            int condicion = ofertaVentaDoc.GroupNumber;
+            Double limiteCredito = cliente.CreditLimit;
+            Double balance = cliente.CurrentAccountBalance;
+            String sql = "  SELECT isnull(sum(T0.[DocTotal]), 0) value " +
+                         "   FROM ODRF T0 " +
+                         "   WHERE T0.[DocStatus] = 'O' " +
+                         "   and T0.[ObjType] = '17'  " +
+                         "   and T0.[CardCode] = '"+cliente.CardCode+"' ";
+            Double totalDocPreliminares = Util.getValueFromQuery<Double>(sql, "value");
+
+
+            return retorno;
+        }
+
+        private bool existeDescuento()
+        {
+            bool retorno = false;
+            foreach(OfertaVentaLine line in ofertaVenta.Lines)
+            {
+                if(line.PrecioUnitarioGravada < line.PrecioUnitario)
+                {
+                    retorno = true;
+                    break;
+                }
+            }
+            return retorno;
         }
 
         private void getQuotationByKey()

@@ -186,6 +186,7 @@ namespace SAP.forms.movimientos
                         GlobalVar.Empresa.GetNewObjectCode(out docNum);
                         this.txtId.Text = docNum;
                         this.btnCopyToSalesOrders.Enabled = true;
+                        this.btnGuardar.Enabled = false;
                         MessageBox.Show("Oferta de venta nro.: " + docNum + " generada con éxito.", "Aviso");
                     }
                     else
@@ -280,9 +281,53 @@ namespace SAP.forms.movimientos
             Double saldo = balance + ordersBal + totalDocPreliminares + ofertaVenta.Valor;
 
             if (saldo > limiteCredito)
+            {
+                this.saveDocumentDrafts();
                 retorno = true;
+            }
+                
 
             return retorno;
+        }
+
+        private void saveDocumentDrafts()
+        {
+            //Create the Documents object
+            Documents vDrafts = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oDrafts);
+
+            //Set values to the fields
+            vDrafts.DocObjectCode = BoObjectTypes.oOrders;
+            vDrafts.CardCode = ofertaVentaDoc.CardCode;
+            vDrafts.HandWritten = BoYesNoEnum.tNO;
+            vDrafts.DocDate = ofertaVentaDoc.DocDate;
+            vDrafts.DocTotal = ofertaVenta.Valor;
+
+            for (int i = 0; i <= this.lines().Count - 1; i++)
+            {
+                OfertaVentaLine item = this.lines()[i];
+
+                vDrafts.Lines.ItemCode = item.ProductoId;
+                vDrafts.Lines.Quantity = item.Cantidad;
+                vDrafts.Lines.TaxCode = item.IndicadorImpuesto;
+                vDrafts.Lines.PriceAfterVAT = item.PrecioUnitarioGravada;
+
+                if (i < this.lines().Count - 1)
+                    vDrafts.Lines.Add();
+            }
+
+            int retVal = vDrafts.Add();
+
+
+            if(retVal == 0){
+                String docNum = "";
+                GlobalVar.Empresa.GetNewObjectCode(out docNum);
+                MessageBox.Show("Preliminar de venta nro.: " + docNum + " generada con éxito.", "Aviso");
+            }
+            else
+            {
+                System.Console.WriteLine(GlobalVar.Empresa.GetLastErrorDescription());
+                Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
+            }
         }
 
         private bool existeDescuento()

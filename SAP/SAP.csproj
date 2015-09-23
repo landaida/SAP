@@ -69,6 +69,7 @@
     <Compile Include="forms\util\SplashScreen.Designer.cs">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="model\Condicion.cs" />
     <Compile Include="model\DocumentStatus.cs" />
     <Compile Include="forms\movimientos\frmOfertaVenta.cs">
       <SubType>Form</SubType>

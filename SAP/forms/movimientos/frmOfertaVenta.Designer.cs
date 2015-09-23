@@ -76,6 +76,9 @@
             this.colPrecioUnitarioGravada = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotalGravada = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tabPageLogistica = new System.Windows.Forms.TabPage();
+            this.cmbCondicion = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.lblCondicion = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cmbStatus.Properties)).BeginInit();
@@ -95,6 +98,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbProduto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchLookUpEdit1View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCondicion.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -116,6 +121,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.cmbCondicion);
+            this.panel1.Controls.Add(this.lblCondicion);
             this.panel1.Controls.Add(this.btnSearchQuotation);
             this.panel1.Controls.Add(this.btnCopyToSalesOrders);
             this.panel1.Controls.Add(this.cmbStatus);
@@ -158,7 +165,7 @@
             // cmbStatus
             // 
             this.cmbStatus.Enabled = false;
-            this.cmbStatus.Location = new System.Drawing.Point(366, 61);
+            this.cmbStatus.Location = new System.Drawing.Point(363, 75);
             this.cmbStatus.Name = "cmbStatus";
             this.cmbStatus.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -186,7 +193,7 @@
             // 
             // txtFechaDocumento
             // 
-            this.txtFechaDocumento.Location = new System.Drawing.Point(436, 35);
+            this.txtFechaDocumento.Location = new System.Drawing.Point(438, 38);
             this.txtFechaDocumento.Name = "txtFechaDocumento";
             this.txtFechaDocumento.Size = new System.Drawing.Size(149, 20);
             this.txtFechaDocumento.TabIndex = 9;
@@ -195,7 +202,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(323, 34);
+            this.label7.Location = new System.Drawing.Point(320, 41);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(110, 13);
             this.label7.TabIndex = 8;
@@ -203,7 +210,7 @@
             // 
             // txtFechaLanzamiento
             // 
-            this.txtFechaLanzamiento.Location = new System.Drawing.Point(436, 1);
+            this.txtFechaLanzamiento.Location = new System.Drawing.Point(438, 4);
             this.txtFechaLanzamiento.Name = "txtFechaLanzamiento";
             this.txtFechaLanzamiento.Size = new System.Drawing.Size(149, 20);
             this.txtFechaLanzamiento.TabIndex = 7;
@@ -219,7 +226,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(10, 38);
+            this.label4.Location = new System.Drawing.Point(13, 41);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(39, 13);
             this.label4.TabIndex = 3;
@@ -229,7 +236,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(323, 4);
+            this.label3.Location = new System.Drawing.Point(320, 8);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(112, 13);
             this.label3.TabIndex = 2;
@@ -239,7 +246,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(323, 65);
+            this.label2.Location = new System.Drawing.Point(320, 78);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 13);
             this.label2.TabIndex = 1;
@@ -249,7 +256,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(10, 4);
+            this.label1.Location = new System.Drawing.Point(13, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(18, 13);
             this.label1.TabIndex = 0;
@@ -611,6 +618,34 @@
             this.tabPageLogistica.Text = "Logística";
             this.tabPageLogistica.UseVisualStyleBackColor = true;
             // 
+            // cmbCondicion
+            // 
+            this.cmbCondicion.EditValue = " ";
+            this.cmbCondicion.Location = new System.Drawing.Point(59, 75);
+            this.cmbCondicion.Name = "cmbCondicion";
+            this.cmbCondicion.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbCondicion.Properties.View = this.gridView3;
+            this.cmbCondicion.Size = new System.Drawing.Size(121, 20);
+            this.cmbCondicion.TabIndex = 30;
+            // 
+            // gridView3
+            // 
+            this.gridView3.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView3.Name = "gridView3";
+            this.gridView3.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView3.OptionsView.ShowGroupPanel = false;
+            // 
+            // lblCondicion
+            // 
+            this.lblCondicion.AutoSize = true;
+            this.lblCondicion.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCondicion.Location = new System.Drawing.Point(14, 78);
+            this.lblCondicion.Name = "lblCondicion";
+            this.lblCondicion.Size = new System.Drawing.Size(53, 13);
+            this.lblCondicion.TabIndex = 29;
+            this.lblCondicion.Text = "Condición";
+            // 
             // frmOfertaVenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -642,6 +677,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbProduto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchLookUpEdit1View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCondicion.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -695,5 +732,8 @@
         private DevExpress.XtraEditors.TextEdit txtTotalGravada;
         private DevExpress.XtraEditors.SimpleButton btnCopyToSalesOrders;
         private DevExpress.XtraEditors.SimpleButton btnSearchQuotation;
+        private DevExpress.XtraEditors.SearchLookUpEdit cmbCondicion;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView3;
+        private System.Windows.Forms.Label lblCondicion;
     }
 }

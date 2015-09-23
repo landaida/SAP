@@ -61,33 +61,13 @@ namespace SAP.util
             
     }
 
-        public static void populateSearchLookUpEdit(SearchLookUpEdit lkup, String valueMember, String displayMember, String tableName, Type type, String where = "")
+        public static void populateSearchLookUpEdit<T>(SearchLookUpEdit lkup, String valueMember, String displayMember, String tableName, String where = "")
         {
-            if (typeof(Cliente) == type)
-            {
-                List<Cliente> lista = Util.getGenericList<Cliente>(valueMember, displayMember, tableName, where).ToList<Cliente>();
-                //Specify an array of countries as a data source
-                lkup.Properties.DataSource = lista;
+            
+            List<T> lista = Util.getGenericList<T>(valueMember, displayMember, tableName, where).ToList<T>();
+            //Specify an array of countries as a data source
+            lkup.Properties.DataSource = lista;
 
-            }
-            else if (typeof(Producto) == type)
-            {
-                List<Producto> lista = Util.getGenericList<Producto>(valueMember, displayMember, tableName, where).ToList<Producto>();
-                //Specify an array of countries as a data source
-                lkup.Properties.DataSource = lista;
-            }
-            else if (typeof(Usuario) == type)
-            {
-                List<Usuario> lista = Util.getGenericList<Usuario>(valueMember, displayMember, tableName, where).ToList<Usuario>();
-                //Specify an array of countries as a data source
-                lkup.Properties.DataSource = lista;
-            }
-            else if (typeof(Vendedor) == type)
-            {
-                List<Vendedor> lista = Util.getGenericList<Vendedor>(valueMember, displayMember, tableName, where).ToList<Vendedor>();
-                //Specify an array of countries as a data source
-                lkup.Properties.DataSource = lista;
-            }
             //The field whose values are displayed in the edit box
             lkup.Properties.DisplayMember = displayMember;
             //The field whose values match the edit value

@@ -10,7 +10,7 @@ namespace SAP.model
     class Producto
     {
         public Producto()
-        { }
+        { this.ItemCode = ""; this.ItemName = ""; }
 
         public Producto(string itemCode, string itemName)
         {

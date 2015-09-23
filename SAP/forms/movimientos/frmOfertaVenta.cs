@@ -43,19 +43,20 @@ namespace SAP.forms.movimientos
 
         private void inicializarObjetos()
         {
-            this.ofertaVentaDoc = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
+            
             //centerFormInContainer();
 
             //Cria uma lista de productos, isso facilitara na hora de carregar o combo de produtos en cada line do quotation
             productos = Util.getGenericList<Producto>("itemCode", "itemName", "oitm").ToList<Producto>();
 
 
-            ComboUtil.populateSearchLookUpEdit(this.cmbCliente, "CardCode", "CardName", "ocrd", typeof(Cliente));
-            ComboUtil.populateSearchLookUpEdit(this.cmbVendedor, "SlpCode", "SlpName", "oslp", typeof(Vendedor), " and active = 'Y' and locked = 'N'");
+            ComboUtil.populateSearchLookUpEdit<Cliente>(this.cmbCliente, "CardCode", "CardName", "ocrd");
+            ComboUtil.populateSearchLookUpEdit<Vendedor>(this.cmbVendedor, "SlpCode", "SlpName", "oslp", " and active = 'Y' and locked = 'N'");
             ComboUtil.populateSearchLookUpEdit(this.cmbProduto, "ItemCode", "ItemName", productos);
-            
+            ComboUtil.populateSearchLookUpEdit<Condicion>(this.cmbCondicion, "GroupNum", "PymntGroup", "octg");
 
-            
+            this.ofertaVentaDoc = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
+
             this.ofertaVenta = new OfertaVenta();            
             BindingList<OfertaVentaLine> listCotizacion = new BindingList<OfertaVentaLine>(this.ofertaVenta.Lines);
             
@@ -98,6 +99,7 @@ namespace SAP.forms.movimientos
                 bool retVal = cliente.GetByKey(key);
                 if (retVal)
                 {
+                    this.cmbCondicion.EditValue = cliente.GroupCode;
                     this.cmbVendedor.EditValue = cliente.SalesPersonCode;
                     foreach(OfertaVentaLine item in this.lines())
                     {
@@ -264,7 +266,7 @@ namespace SAP.forms.movimientos
             int condicion = ofertaVentaDoc.GroupNumber;
 
             //Si la condicion es al contado retorna falso, no verifica limite de credito
-            if (condicion == 0) return false;
+            if (condicion == -1) return false;
 
             Double limiteCredito = cliente.CreditLimit;
             Double balance = cliente.CurrentAccountBalance;

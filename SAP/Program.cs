@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SAP.util;
 using SAP.forms;
+using SAP.model;
 namespace SAP
 {
     static class Program
@@ -15,7 +16,7 @@ namespace SAP
         [STAThread]
         static void Main()
         {
-            
+
             //inicializa a conexao da empresa por primera y unica vez
             Task task = new Task(() => GlobalVar.inicializarEmpresa());
             task.Start();

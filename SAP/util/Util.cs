@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data.SqlClient;
-using SAP.model;
 using SAPbobsCOM;
 using System.Windows.Forms;
 using SAP.forms.util;
@@ -27,51 +26,31 @@ namespace SAP.util
 
             reader = sc.ExecuteReader();
 
-            if (typeof(T) == typeof(Cliente))
+
+            List<T> result = new List<T>();
+            while (reader.Read())
             {
-                List<Cliente> result = new List<Cliente>();
-                while (reader.Read())
-                {                    
-                    result.Add(new Cliente(reader[valueMember].ToString(), reader[displayMember].ToString()));
-                }
-                reader.Close();
-                return result.OfType<T>();
-            } else if (typeof(T) == typeof(Producto))
-            {
-                List<Producto> result = new List<Producto>();
-                while (reader.Read())
-                {
-                    result.Add(new Producto(reader[valueMember].ToString(), reader[displayMember].ToString()));
-                }
-                reader.Close();
-                return result.OfType<T>();
-            } else if (typeof(T) == typeof(Usuario))
-            {
-                List<Usuario> result = new List<Usuario>();
-                while (reader.Read())
-                {
-                    result.Add(new Usuario(reader[valueMember].ToString(), reader[displayMember].ToString()));
-                }
-                reader.Close();
-                return result.OfType<T>();
+                T item = Activator.CreateInstance<T>(); ;
+                
+
+                foreach (var property in typeof(T).GetProperties())
+                {   
+                    
+                    if (string.CompareOrdinal(property.PropertyType.FullName, "System.String") == 0)
+                    {
+                        item.GetType().GetProperty(property.Name).SetValue(item, reader[valueMember].ToString(), null);
+                    }
+                    //else if (string.CompareOrdinal(property.PropertyType.FullName, "System.") == 0)
+                    //{
+                    //    item.GetType().GetProperty(property.Name).SetValue(item, int.Parse(Sanitizer.GetSafeHtmlFragment(property.GetValue(item, null).ToString())), null);
+                    //}
+                }                
+                result.Add(item);
             }
-            else if (typeof(T) == typeof(Vendedor))
-            {
-                List<Vendedor> result = new List<Vendedor>();
-                while (reader.Read())
-                {
-                    result.Add(new Vendedor(reader[valueMember].ToString(), reader[displayMember].ToString()));
-                }
-                reader.Close();
-                return result.OfType<T>();
-            }
+            reader.Close();
+            return result.OfType<T>();
 
-
-
-
-
-            return null;
-            //conn.Close();
+            
         }
 
         public class AutoClosingMessageBox

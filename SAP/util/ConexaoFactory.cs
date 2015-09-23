@@ -12,8 +12,7 @@ namespace SAP.util
         
         public static SqlConnection initSQLConection() 
         {            
-            connection = new SqlConnection(@"Data Source="+ DBConfig.Server+ ";Initial Catalog="+DBConfig.DBName+";User ID="+ DBConfig.DBUser+ ";Password="+ DBConfig.DBPassword);
-            //connection = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=" + DBConfig.DBName + ";User ID=" + DBConfig.DBUser + ";Password=" + DBConfig.DBPassword);
+            connection = new SqlConnection(DBConfig.cadenaConexionBD);            
             connection.Open();
             Console.WriteLine("ok create Conexion with DB");
             return connection;            

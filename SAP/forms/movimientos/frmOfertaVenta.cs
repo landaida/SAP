@@ -99,7 +99,7 @@ namespace SAP.forms.movimientos
                 bool retVal = cliente.GetByKey(key);
                 if (retVal)
                 {
-                    this.cmbCondicion.EditValue = cliente.GroupCode;
+                    this.cmbCondicion.EditValue = cliente.PayTermsGrpCode;
                     this.cmbVendedor.EditValue = cliente.SalesPersonCode;
                     foreach(OfertaVentaLine item in this.lines())
                     {
@@ -166,7 +166,7 @@ namespace SAP.forms.movimientos
                     this.ofertaVentaDoc.DocDate = this.txtFechaDocumento.Value;
                     this.ofertaVentaDoc.DocDueDate = this.txtFechaLanzamiento.Value;
                     this.ofertaVentaDoc.Comments = this.txtObservacion.Text;
-
+                    this.ofertaVentaDoc.GroupNumber = Convert.ToInt32(this.cmbCondicion.EditValue);
                     if(this.cmbVendedor.EditValue.ToString().Trim().Length > 0)
                         this.ofertaVentaDoc.SalesPersonCode = Convert.ToInt32(this.cmbVendedor.EditValue);
 
@@ -216,7 +216,7 @@ namespace SAP.forms.movimientos
                 Orden.DocDueDate = ofertaVentaDoc.DocDueDate;
                 Orden.Comments = ofertaVentaDoc.Comments;
                 Orden.DocCurrency = ofertaVentaDoc.DocCurrency;
-
+                Orden.GroupNumber = ofertaVentaDoc.GroupNumber;
                 for (int i = 0; i <= this.lines().Count - 1; i++)
                 {
                     OfertaVentaLine item = this.lines()[i];
@@ -303,7 +303,7 @@ namespace SAP.forms.movimientos
             vDrafts.HandWritten = BoYesNoEnum.tNO;
             vDrafts.DocDate = ofertaVentaDoc.DocDate;
             vDrafts.DocTotal = ofertaVenta.Valor;
-
+            vDrafts.GroupNumber = ofertaVentaDoc.GroupNumber;
             for (int i = 0; i <= this.lines().Count - 1; i++)
             {
                 OfertaVentaLine item = this.lines()[i];

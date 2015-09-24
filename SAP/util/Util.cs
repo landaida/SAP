@@ -38,7 +38,7 @@ namespace SAP.util
                     
                     if (string.CompareOrdinal(property.PropertyType.FullName, "System.String") == 0)
                     {
-                        item.GetType().GetProperty(property.Name).SetValue(item, reader[valueMember].ToString(), null);
+                        item.GetType().GetProperty(property.Name).SetValue(item, reader[property.Name].ToString(), null);
                     }
                     //else if (string.CompareOrdinal(property.PropertyType.FullName, "System.") == 0)
                     //{

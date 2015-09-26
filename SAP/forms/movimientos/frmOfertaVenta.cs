@@ -102,6 +102,7 @@ namespace SAP.forms.movimientos
                 {
                     this.cmbCondicion.EditValue = cliente.PayTermsGrpCode;
                     this.cmbVendedor.EditValue = cliente.SalesPersonCode;
+                    GlobalVar.cardCode = cliente.CardCode;
                     foreach(OfertaVentaLine item in this.lines())
                     {
                         item.Descuento = cliente.DiscountPercent;
@@ -478,11 +479,12 @@ namespace SAP.forms.movimientos
         private bool existeDescuento()
         {
             bool retorno = false;
-            PriceLists priceList = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oPriceLists);
-            foreach(OfertaVentaLine line in ofertaVenta.Lines)
-            {
-                cliente.PriceListNum
-                if(line.PrecioUnitarioGravada < line.PrecioUnitario)
+            
+            for (int i = 0; i <= this.ofertaVentaDoc.Lines.Count - 1; i++)
+            {   
+                this.ofertaVentaDoc.Lines.SetCurrentLine(i);
+
+                if (Util.getItemPrice(ofertaVentaDoc.CardCode, this.ofertaVentaDoc.Lines.ItemCode, this.ofertaVentaDoc.DocDate) > this.ofertaVentaDoc.Lines.PriceAfterVAT)
                 {
                     retorno = true;
                     break;
@@ -615,8 +617,12 @@ namespace SAP.forms.movimientos
         {
             this.getQuotationByKey();
         }
+
         #endregion
 
-
+        private void txtFechaDocumento_ValueChanged(object sender, EventArgs e)
+        {
+            GlobalVar.datetime = this.txtFechaDocumento.Value;
+        }
     }
 }

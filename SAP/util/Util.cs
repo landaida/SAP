@@ -170,6 +170,18 @@ namespace SAP.util
         {
             MessageBox.Show(msg, title, btns, icon);
         }
+
+        public static Double getItemPrice(String cardCode, String itemCode, DateTime dateTime)
+        {
+            //// Get an initialized SBObob object
+            SBObob oSBObob = (SAPbobsCOM.SBObob)GlobalVar.Empresa.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoBridge);
+            //// Get an initialized Recordset object
+            Recordset oRecordSet = (SAPbobsCOM.Recordset)GlobalVar.Empresa.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset);
+
+            oRecordSet = oSBObob.GetItemPrice(cardCode, itemCode, 1, dateTime);
+            System.Console.WriteLine(oRecordSet.Fields.Item(0).Value + " " + oRecordSet.Fields.Item(1).Value);
+            return oRecordSet.Fields.Item(0).Value;
+        }
     }
 }
 

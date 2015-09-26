@@ -31,6 +31,9 @@
             DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cmbCondicion = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.lblCondicion = new System.Windows.Forms.Label();
             this.btnSearchQuotation = new DevExpress.XtraEditors.SimpleButton();
             this.btnCopyToSalesOrders = new DevExpress.XtraEditors.SimpleButton();
             this.cmbStatus = new DevExpress.XtraEditors.LookUpEdit();
@@ -76,11 +79,10 @@
             this.colPrecioUnitarioGravada = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotalGravada = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tabPageLogistica = new System.Windows.Forms.TabPage();
-            this.cmbCondicion = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.gridView3 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.lblCondicion = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCondicion.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbStatus.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbCliente.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).BeginInit();
@@ -98,8 +100,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbProduto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchLookUpEdit1View)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbCondicion.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -140,6 +140,34 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(725, 114);
             this.panel1.TabIndex = 1;
+            // 
+            // cmbCondicion
+            // 
+            this.cmbCondicion.EditValue = " ";
+            this.cmbCondicion.Location = new System.Drawing.Point(59, 75);
+            this.cmbCondicion.Name = "cmbCondicion";
+            this.cmbCondicion.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbCondicion.Properties.View = this.gridView3;
+            this.cmbCondicion.Size = new System.Drawing.Size(121, 20);
+            this.cmbCondicion.TabIndex = 30;
+            // 
+            // gridView3
+            // 
+            this.gridView3.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView3.Name = "gridView3";
+            this.gridView3.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView3.OptionsView.ShowGroupPanel = false;
+            // 
+            // lblCondicion
+            // 
+            this.lblCondicion.AutoSize = true;
+            this.lblCondicion.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCondicion.Location = new System.Drawing.Point(14, 78);
+            this.lblCondicion.Name = "lblCondicion";
+            this.lblCondicion.Size = new System.Drawing.Size(53, 13);
+            this.lblCondicion.TabIndex = 29;
+            this.lblCondicion.Text = "Condición";
             // 
             // btnSearchQuotation
             // 
@@ -197,6 +225,7 @@
             this.txtFechaDocumento.Name = "txtFechaDocumento";
             this.txtFechaDocumento.Size = new System.Drawing.Size(149, 20);
             this.txtFechaDocumento.TabIndex = 9;
+            this.txtFechaDocumento.ValueChanged += new System.EventHandler(this.txtFechaDocumento_ValueChanged);
             // 
             // label7
             // 
@@ -507,6 +536,7 @@
             this.gridView2.GridControl = this.gridControl1;
             this.gridView2.Name = "gridView2";
             this.gridView2.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
+            this.gridView2.OptionsBehavior.Editable = false;
             this.gridView2.OptionsCustomization.AllowColumnMoving = false;
             this.gridView2.OptionsCustomization.AllowFilter = false;
             this.gridView2.OptionsCustomization.AllowGroup = false;
@@ -559,6 +589,8 @@
             // colPrecioUnitario1
             // 
             this.colPrecioUnitario1.Caption = "Precio unitario";
+            this.colPrecioUnitario1.DisplayFormat.FormatString = "n2";
+            this.colPrecioUnitario1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colPrecioUnitario1.FieldName = "PrecioUnitario";
             this.colPrecioUnitario1.Name = "colPrecioUnitario1";
             this.colPrecioUnitario1.Visible = true;
@@ -618,34 +650,6 @@
             this.tabPageLogistica.Text = "Logística";
             this.tabPageLogistica.UseVisualStyleBackColor = true;
             // 
-            // cmbCondicion
-            // 
-            this.cmbCondicion.EditValue = " ";
-            this.cmbCondicion.Location = new System.Drawing.Point(59, 75);
-            this.cmbCondicion.Name = "cmbCondicion";
-            this.cmbCondicion.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cmbCondicion.Properties.View = this.gridView3;
-            this.cmbCondicion.Size = new System.Drawing.Size(121, 20);
-            this.cmbCondicion.TabIndex = 30;
-            // 
-            // gridView3
-            // 
-            this.gridView3.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.gridView3.Name = "gridView3";
-            this.gridView3.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.gridView3.OptionsView.ShowGroupPanel = false;
-            // 
-            // lblCondicion
-            // 
-            this.lblCondicion.AutoSize = true;
-            this.lblCondicion.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCondicion.Location = new System.Drawing.Point(14, 78);
-            this.lblCondicion.Name = "lblCondicion";
-            this.lblCondicion.Size = new System.Drawing.Size(53, 13);
-            this.lblCondicion.TabIndex = 29;
-            this.lblCondicion.Text = "Condición";
-            // 
             // frmOfertaVenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -659,6 +663,8 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCondicion.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbStatus.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbCliente.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.searchLookUpEdit1View)).EndInit();
@@ -677,8 +683,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbProduto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchLookUpEdit1View)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbCondicion.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView3)).EndInit();
             this.ResumeLayout(false);
 
         }

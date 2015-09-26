@@ -140,17 +140,16 @@ namespace SAP.model
         #region Functions
         private void getProductInfo(String value)
         {
-            bool res = items.GetByKey(value);
-            if (res)
-            {
-                this.PrecioUnitario = items.PriceList.Price;
-                this.IndicadorImpuesto = items.ApTaxCode;
-            }
+            //bool res = items.GetByKey(value);
+            //items.PriceList.Price
+            this.PrecioUnitario = Util.getItemPrice(GlobalVar.cardCode, value, GlobalVar.datetime);
+            this.IndicadorImpuesto = items.ApTaxCode;
         }
         private void refreshTotal()
         {
             this.Total = (this.PrecioUnitario - ((this.PrecioUnitario * this.Descuento) / 100)) * this.Cantidad;
         }
+
         #endregion
     }
 }

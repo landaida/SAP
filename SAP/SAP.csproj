@@ -63,6 +63,12 @@
     <Compile Include="forms\MDIParent.Designer.cs">
       <DependentUpon>MDIParent.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\movimientos\AprovalComments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\movimientos\AprovalComments.Designer.cs">
+      <DependentUpon>AprovalComments.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\util\SplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,7 @@
     <Compile Include="model\Producto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="util\AuthorizationTemplate.cs" />
     <Compile Include="util\ComboUtil.cs" />
     <Compile Include="util\ConexaoFactory.cs" />
     <Compile Include="util\DBConfig.cs" />
@@ -95,6 +102,9 @@
     <Compile Include="util\Util.cs" />
     <EmbeddedResource Include="forms\MDIParent.resx">
       <DependentUpon>MDIParent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\movimientos\AprovalComments.resx">
+      <DependentUpon>AprovalComments.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\movimientos\frmOfertaVenta.resx">
       <DependentUpon>frmOfertaVenta.cs</DependentUpon>
@@ -157,6 +167,9 @@
     <None Include="Resources\1442556929_Find.png" />
     <Content Include="Resources\trafficlight_green-128.png" />
     <Content Include="Resources\trafficlight_red-128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="controller\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

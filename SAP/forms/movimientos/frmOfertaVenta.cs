@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,6 @@ using SAP.model;
 using SAPbobsCOM;
 using SAP.util;
 using System.Threading;
-
 namespace SAP.forms.movimientos
 {
     public partial class frmOfertaVenta : Form
@@ -22,9 +22,7 @@ namespace SAP.forms.movimientos
         List<Producto> productos;        
         OfertaVenta ofertaVenta;
         BindingSource bindingSource = new BindingSource();
-
-
-        
+        Users usuario;
         #endregion
 
         #region Functions
@@ -56,6 +54,9 @@ namespace SAP.forms.movimientos
             ComboUtil.populateSearchLookUpEdit<Condicion>(this.cmbCondicion, "GroupNum", "PymntGroup", "octg");
 
             this.ofertaVentaDoc = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
+            this.usuario = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oUsers);
+            this.usuario.GetByKey(11);
+
 
             this.ofertaVenta = new OfertaVenta();            
             BindingList<OfertaVentaLine> listCotizacion = new BindingList<OfertaVentaLine>(this.ofertaVenta.Lines);
@@ -63,7 +64,7 @@ namespace SAP.forms.movimientos
             listCotizacion.AllowNew = true;
             this.gridControl1.DataSource = listCotizacion;
             gridView2.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
-            //bindingListProducto.AddingNew += this.OnAddingNew;
+            //bindingListProductAddingNew += this.OnAddingNew;
 
             this.addLine();
             
@@ -107,7 +108,7 @@ namespace SAP.forms.movimientos
                     }
                 }else
                 {
-                    Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
+                    Util.showMessage(GlobalVar.Empresa.GetLastErrorDescription());
                 }
             }
         }
@@ -145,9 +146,9 @@ namespace SAP.forms.movimientos
             bool retorno = false;
 
             if (this.cmbCliente.EditValue.ToString().Trim().Length <= 0)
-                Util.AutoClosingMessageBox.Show("Seleccione un cliente por favor.", "Aviso", 3000);
+                Util.showMessage("Seleccione un cliente por favor.");
             else if (!this.isValidLines())
-                Util.AutoClosingMessageBox.Show("Debe agregar por lo menos un producto.", "Aviso", 3000);
+                Util.showMessage("Debe agregar por lo menos un product");
             else
                 retorno = true;
 
@@ -189,23 +190,22 @@ namespace SAP.forms.movimientos
                         this.txtId.Text = docNum;
                         this.btnCopyToSalesOrders.Enabled = true;
                         this.btnGuardar.Enabled = false;
-                        MessageBox.Show("Oferta de venta nro.: " + docNum + " generada con éxito.", "Aviso");
+                        Util.showMessage("Oferta de venta nr: " + docNum + " generada con éxit");
+
                     }
                     else
                     {
-                        Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
+                        Util.showMessage(GlobalVar.Empresa.GetLastErrorDescription());
                     }
                 }
                 else
                 {
-                    Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
+                    Util.showMessage(GlobalVar.Empresa.GetLastErrorDescription());
                 }
                 //Util.hideSplashScreen(this.MdiParent);
             }
         }
-
         
-
         private void copyToSalesOrders()
         {
             if(this.verificarEtapasAutorizacion() && GlobalVar.Empresa.Connected == true)
@@ -237,23 +237,41 @@ namespace SAP.forms.movimientos
                     String docNum = "";
                     GlobalVar.Empresa.GetNewObjectCode(out docNum);
                     this.txtId.Text = docNum;
-                    this.btnCopyToSalesOrders.Enabled = true;                    
-                    MessageBox.Show("Orden de venta nro.: " + docNum + " generada con éxito.", "Aviso");
+                    this.btnCopyToSalesOrders.Enabled = true;
+                    Util.showMessage("Orden de venta nr: " + docNum + " generada con éxit");
                 }
                 else
                 {
                     System.Console.WriteLine(GlobalVar.Empresa.GetLastErrorDescription());
-                    Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
+                    Util.showMessage(GlobalVar.Empresa.GetLastErrorDescription());
                 }
             }
         }
 
         private bool verificarEtapasAutorizacion()
-        {
-            bool retorno = false;
+        {   
+            bool retorno = false, existeDescuento = false, superaLimiteCredito = false;
 
-            if (!this.superaLimiteCredito() || !this.existeDescuento())
-                retorno = true;
+            if (!this.existeDescuento())
+                existeDescuento = true;
+            if (!this.superaLimiteCredito())
+                superaLimiteCredito = true;
+
+            if(existeDescuento || superaLimiteCredito)
+            {
+                AprovalComments testDialog = new AprovalComments();
+                
+                // Show testDialog as a modal dialog and determine if DialogResult = OK.
+                if (testDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    // Read the contents of testDialog's TextBox.
+                    if (existeDescuento)
+                        this.saveDocumentDrafts(AuthorizationTemplate.Porcentagem_Desc_02, testDialog.comentarioDescuento);
+                    if (superaLimiteCredito)
+                        this.saveDocumentDrafts(AuthorizationTemplate.Limite_de_Credito_03, testDialog.comentarioLimiteCredito);
+                }
+                testDialog.Dispose();               
+            }
 
             return retorno;
         }
@@ -262,7 +280,7 @@ namespace SAP.forms.movimientos
         {
             bool retorno = false;
 
-            Double valorDoc = ofertaVenta.Valor;
+            
             int condicion = ofertaVentaDoc.GroupNumber;
 
             //Si la condicion es al contado retorna falso, no verifica limite de credito
@@ -270,6 +288,10 @@ namespace SAP.forms.movimientos
 
             Double limiteCredito = cliente.CreditLimit;
             Double balance = cliente.CurrentAccountBalance;
+
+            //If a business transaction is not a Pay-Immediately transaction, the amount of money 
+            //must be recorded to Account - Payable account or Account - Receivable account, and the open 
+            //balance for the business partner will then be adjusted accordingly.
             Double ordersBal = cliente.OpenOrdersBalance;
 
             String sql = "  SELECT isnull(sum(T0.[DocTotal]), 0) value " +
@@ -277,22 +299,28 @@ namespace SAP.forms.movimientos
                          "   WHERE T0.[DocStatus] = 'O' " +
                          "   and T0.[ObjType] = '17'  " +
                          "   and T0.[CardCode] = '"+cliente.CardCode+"' ";
-            Double totalDocPreliminares = Util.getValueFromQuery<Double>(sql, "value");
+            Double totalDocPreliminares = 0;
+            try
+            {
+                totalDocPreliminares = Util.getValueFromQuery<Double>(sql, "value");
+            }
+            catch(Exception e)
+            {
+                System.Console.WriteLine(e.Message);
+            }
+            
 
             //Saldo de linea de credito
-            Double saldo = balance + ordersBal + totalDocPreliminares + ofertaVenta.Valor;
+            Double saldo = balance + ordersBal + totalDocPreliminares + Convert.ToDouble(this.txtTotal.EditValue);
 
-            if (saldo > limiteCredito)
-            {
-                this.saveDocumentDrafts();
+            if (saldo > limiteCredito)                
                 retorno = true;
-            }
                 
 
             return retorno;
         }
 
-        private void saveDocumentDrafts()
+        private void saveDocumentDrafts(AuthorizationTemplate authTemplate, String remarks)
         {
             //Create the Documents object
             Documents vDrafts = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oDrafts);
@@ -302,8 +330,10 @@ namespace SAP.forms.movimientos
             vDrafts.CardCode = ofertaVentaDoc.CardCode;
             vDrafts.HandWritten = BoYesNoEnum.tNO;
             vDrafts.DocDate = ofertaVentaDoc.DocDate;
-            vDrafts.DocTotal = ofertaVenta.Valor;
+            vDrafts.DocTotal = ofertaVentaDoc.DocTotal;
             vDrafts.GroupNumber = ofertaVentaDoc.GroupNumber;
+            vDrafts.OpeningRemarks = remarks;
+
             for (int i = 0; i <= this.lines().Count - 1; i++)
             {
                 OfertaVentaLine item = this.lines()[i];
@@ -323,20 +353,135 @@ namespace SAP.forms.movimientos
             if(retVal == 0){
                 String docNum = "";
                 GlobalVar.Empresa.GetNewObjectCode(out docNum);
-                MessageBox.Show("Preliminar de venta nro.: " + docNum + " generada con éxito.", "Aviso");
+                Util.showMessage("Preliminar de venta nr: " + docNum + " generada con éxit");
+                this.createAlertsForApprovals(vDrafts, authTemplate);
             }
             else
             {
                 System.Console.WriteLine(GlobalVar.Empresa.GetLastErrorDescription());
-                Util.AutoClosingMessageBox.Show(GlobalVar.Empresa.GetLastErrorDescription(), "Aviso", 3000);
+                Util.showMessage(GlobalVar.Empresa.GetLastErrorDescription());
             }
+        }
+
+        private void createAlertsForApprovals(Documents vDrafts, AuthorizationTemplate authTemplate)
+        {
+            String sql = "insert into OWDD (WtmCode, OwnerID, DocEntry, ObjType, DocDate, CurrStep, Remarks, UserSign, CreateDate, MaxRejReqr, MaxReqr)"
+                +"values(@WtmCode, @OwnerID, @DocEntry, @ObjType, @DocDate, @CurrStep, @Remarks, @UserSign, @CreateDate, @MaxRejReqr, @MaxReqr)";
+
+            ApprovalRequestsService oApprovalRequestsService = GlobalVar.Empresa.GetCompanyService().GetBusinessService(ServiceTypes.ApprovalRequestsService);
+            ApprovalRequest oApprovalRequest = oApprovalRequestsService.GetDataInterface(ApprovalRequestsServiceDataInterfaces.arsApprovalRequest);
+            
+            List<SqlParameter> sp = new List<SqlParameter>()
+            {
+                new SqlParameter() {ParameterName = "@WtmCode", SqlDbType = SqlDbType.NVarChar, Value= (int)authTemplate},
+                new SqlParameter() {ParameterName = "@OwnerID", SqlDbType = SqlDbType.NVarChar, Value = this.usuario.UserCode},
+                new SqlParameter() {ParameterName = "@DocEntry", SqlDbType = SqlDbType.NVarChar, Value = vDrafts.DocEntry},
+                new SqlParameter() {ParameterName = "@ObjType", SqlDbType = SqlDbType.Int, Value = oApprovalRequest.ObjectType},
+                new SqlParameter() {ParameterName = "@DocDate", SqlDbType = SqlDbType.Int, Value = vDrafts.DocDate},
+                new SqlParameter() {ParameterName = "@CurrStep", SqlDbType = SqlDbType.Int, Value = oApprovalRequest.CurrentStage},
+                new SqlParameter() {ParameterName = "@Remarks", SqlDbType = SqlDbType.Int, Value = vDrafts.OpeningRemarks},
+                new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.Int, Value = this.usuario.UserCode},
+                new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.Int, Value = DateTime.Now},
+                new SqlParameter() {ParameterName = "@MaxRejReqr", SqlDbType = SqlDbType.Int, Value = 1},
+                new SqlParameter() {ParameterName = "@MaxReqr", SqlDbType = SqlDbType.Int, Value = 1}
+            };
+
+            Util.createUpdateFromQuery(sql, sp);
+            /*
+            ApprovalRequestsService oApprovalRequestsService = GlobalVar.Empresa.GetCompanyService().GetBusinessService(ServiceTypes.ApprovalRequestsService);
+            ApprovalRequestsParams oApprovalRequestsParams = oApprovalRequestsService.GetDataInterface(ApprovalRequestsServiceDataInterfaces.arsApprovalRequestsParams);
+            ApprovalRequest oApprovalRequest = oApprovalRequestsService.GetDataInterface(ApprovalRequestsServiceDataInterfaces.arsApprovalRequest);
+            ApprovalRequestParams oApprovalRequestParams = oApprovalRequestsService.GetDataInterface(ApprovalRequestsServiceDataInterfaces.arsApprovalRequestParams);
+
+            //Get request list 
+            oApprovalRequestsParams = oApprovalRequestsService.GetAllApprovalRequestsList();
+            oApprovalRequestParams = oApprovalRequestsParams.Item(oApprovalRequestsParams.Count - 1);
+
+            //Approve request  
+            oApprovalRequest = oApprovalRequestsService.GetApprovalRequest(oApprovalRequestParams);
+            oApprovalRequest.ApprovalRequestDecisions.Add();
+            oApprovalRequest.ApprovalRequestDecisions.Item(0).Remarks = "Approved";
+            oApprovalRequest.ApprovalRequestDecisions.Item(0).Status = BoApprovalRequestDecisionEnum.ardApproved;
+
+            //Incase we want to approve with another user, uncomment the following 2 lines 
+            //oApprovalRequest.ApprovalRequestDecisions.Item(0).ApproverUserName = B1User 
+            //oApprovalRequest.ApprovalRequestDecisions.Item(0).ApproverPassword = B1Password 
+            
+            try {
+                oApprovalRequestsService.UpdateRequest(oApprovalRequest);
+            } catch (Exception e) {
+                Util.showMessage(e.Message);
+            }
+            */
+            /*
+
+            Dim oCmpSrv As SAPbobsCOM.CompanyService
+            Dim oMessageService As MessagesService
+            Dim oMessage As Message
+            Dim pMessageDataColumns As MessageDataColumns
+            Dim pMessageDataColumn As MessageDataColumn
+            Dim oLines As MessageDataLines
+            Dim oLine As MessageDataLine
+            Dim oRecipientCollection As RecipientCollection
+
+            'get company service
+            oCmpSrv = oCompany.GetCompanyService
+
+            'get msg service
+            oMessageService = oCmpSrv.GetBusinessService(ServiceTypes.MessagesService)
+
+            'get the data interface for the new message
+            oMessage=oMessageService.GetDataInterface(MessagesServiceDataInterface.msdiMessage)
+
+            'fill subject
+            oMessage.Subject = "My Subject"
+
+            'fill text
+            oMessage.Text = "My Text"
+
+            'Add Recipient
+            oRecipientCollection = oMessage.RecipientCollection
+
+            'Add new a recipient
+            oRecipientCollection.Add()
+
+            'send internal message
+            oRecipientCollection.Item(0).SendInternal = BoYesNoEnum.tYES
+
+            'add existing user code
+            oRecipientCollection.Item(0).UserCode = "manager"
+
+            'get columns data
+            pMessageDataColumns = oMessage.MessageDataColumns
+
+            'get column
+            pMessageDataColumn = pMessageDataColumns.Add()
+
+            'set column name
+            pMessageDataColumn.ColumnName = "My Column Name"
+
+            'get lines
+            oLines = pMessageDataColumn.MessageDataLines()
+
+            'add new line
+            oLine = oLines.Add()
+
+            'set the line value
+            oLine.Value = "My Value"
+
+            'send the message
+            oMessageService.SendMessage(oMessage)
+
+            */
         }
 
         private bool existeDescuento()
         {
             bool retorno = false;
+            PriceLists priceList = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oPriceLists);
             foreach(OfertaVentaLine line in ofertaVenta.Lines)
             {
+                cliente.PriceListNum
                 if(line.PrecioUnitarioGravada < line.PrecioUnitario)
                 {
                     retorno = true;
@@ -424,6 +569,7 @@ namespace SAP.forms.movimientos
             this.actualizaTotales();
 
         }
+        
         #endregion
 
 

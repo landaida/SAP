@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using SAPbobsCOM;
 using System.Windows.Forms;
 using SAP.forms.util;
+using System.Data;
 
 namespace SAP.util
 {
@@ -131,9 +132,43 @@ namespace SAP.util
             }
             catch(Exception e)
             {
-                Util.AutoClosingMessageBox.Show(e.Message, "Error", 3000);
+                System.Console.WriteLine(e.Message);
             }
             return default(T);            
+        }
+
+
+        public static int createUpdateFromQuery(String query, List<SqlParameter> parameters)
+        {
+            int recordsAffected = 0;
+            try
+            {
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = ConexaoFactory.Connection;// <== lacking
+                    command.CommandType = CommandType.Text;
+                    command.CommandText = query;
+                    command.Parameters.AddRange(parameters.ToArray());
+                                                    
+                    recordsAffected = command.ExecuteNonQuery();                        
+                        
+                }
+            }
+            catch (Exception e)
+            {
+                Util.showMessage(e.Message);
+            }
+            finally
+            {
+                //connection.Close();
+            }
+            return recordsAffected;
+        }
+
+
+        public static void showMessage(String msg, String title = "Aviso", MessageBoxButtons btns = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.Information)
+        {
+            MessageBox.Show(msg, title, btns, icon);
         }
     }
 }

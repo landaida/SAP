@@ -103,6 +103,7 @@ namespace SAP.forms.movimientos
                     this.cmbCondicion.EditValue = cliente.PayTermsGrpCode;
                     this.cmbVendedor.EditValue = cliente.SalesPersonCode;
                     GlobalVar.cardCode = cliente.CardCode;
+                    this.gridView2.OptionsBehavior.Editable = true;
                     foreach(OfertaVentaLine item in this.lines())
                     {
                         item.Descuento = cliente.DiscountPercent;
@@ -260,18 +261,18 @@ namespace SAP.forms.movimientos
 
             if(existeDescuento || superaLimiteCredito)
             {
-                AprovalComments testDialog = new AprovalComments();
-                
+                AprovalComments dialog = new AprovalComments();
+                dialog.setComponentes(existeDescuento, superaLimiteCredito, false);
                 // Show testDialog as a modal dialog and determine if DialogResult = OK.
-                if (testDialog.ShowDialog(this) == DialogResult.OK)
+                if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
                     // Read the contents of testDialog's TextBox.
                     if (existeDescuento)
-                        this.saveDocumentDrafts(AuthorizationTemplate.Porcentagem_Desc_02, testDialog.comentarioDescuento);
+                        this.saveDocumentDrafts(AuthorizationTemplate.Porcentagem_Desc_02, dialog.getComentarioDescuento);
                     if (superaLimiteCredito)
-                        this.saveDocumentDrafts(AuthorizationTemplate.Limite_de_Credito_03, testDialog.comentarioLimiteCredito);
+                        this.saveDocumentDrafts(AuthorizationTemplate.Limite_de_Credito_03, dialog.getComentarioLimiteCredito);
                 }
-                testDialog.Dispose();               
+                dialog.Dispose();               
             }
 
             return retorno;
@@ -525,6 +526,10 @@ namespace SAP.forms.movimientos
                     this.actualizaTotales();
                     this.btnCopyToSalesOrders.Enabled = true;
                     this.btnGuardar.Enabled = false;
+
+                    this.gridView2.OptionsBehavior.Editable = true;
+                    this.cmbCliente.Enabled = false;
+                    this.txtId.Enabled = false;
                 }
             }
         }
@@ -569,6 +574,10 @@ namespace SAP.forms.movimientos
 
             this.addLine();
             this.actualizaTotales();
+
+            this.gridView2.OptionsBehavior.Editable = false;
+            this.cmbCliente.Enabled = true;
+            this.txtId.Enabled = true;
 
         }
         

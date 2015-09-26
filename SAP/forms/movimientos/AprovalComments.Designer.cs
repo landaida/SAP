@@ -120,6 +120,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "AprovalComments";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AprovalComments";
             ((System.ComponentModel.ISupportInitialize)(this.txtComentarioDescuento.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtComentarioLimiteCredito.Properties)).EndInit();

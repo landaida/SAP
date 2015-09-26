@@ -15,11 +15,16 @@ namespace SAP.forms.movimientos
             this.btnCancelar.DialogResult = DialogResult.Cancel;
         }
 
-        private void btnGuardar_Click(object sender, EventArgs e)
+        public void setComponentes(bool disableDescuento, bool disableLimiteCredito, bool disableTituloVencido)
         {
-            this.comentarioDescuento = this.txtComentarioDescuento.Text;
-            this.comentarioLimiteCredito = this.txtComentarioLimiteCredito.Text;
-            this.comentarioTituloVencido = this.txtComentarioTituloVencido.Text;
+            this.txtComentarioDescuento.Enabled = !disableDescuento;
+            this.txtComentarioLimiteCredito.Enabled = !disableLimiteCredito;
+            this.txtComentarioTituloVencido.Enabled = !disableTituloVencido;
         }
+
+        public string getComentarioDescuento { get { return this.txtComentarioDescuento.Text; } }
+        public string getComentarioLimiteCredito { get { return this.txtComentarioLimiteCredito.Text; } }
+        public string getComentarioTituloVencido { get { return this.txtComentarioTituloVencido.Text; } }
+
     }
 }

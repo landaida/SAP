@@ -22,6 +22,7 @@ namespace SAP.util
                 where = " where 1 = 1 " + where;
             }
             SqlConnection conn = ConexaoFactory.Connection;
+            conn.Open();
             SqlCommand sc = new SqlCommand("select " + valueMember + "," + displayMember + " from [" + tableName + "] " + where, conn);
             SqlDataReader reader;
 
@@ -49,6 +50,7 @@ namespace SAP.util
                 result.Add(item);
             }
             reader.Close();
+            conn.Close();
             return result.OfType<T>();
 
             
@@ -114,20 +116,17 @@ namespace SAP.util
                 
         }
 
-        public static T getValueFromQuery<T>(String query, String fieldName)
+        public static T getValueFromQuery<T>(String query)
         {
             try
             {
                 SqlConnection conn = ConexaoFactory.Connection;
+                conn.Open();
                 SqlCommand sc = new SqlCommand(query, conn);
-                SqlDataReader reader;
 
-                reader = sc.ExecuteReader();
+                var value = sc.ExecuteScalar();
 
-                var value = reader.GetValue(reader.GetOrdinal(fieldName));
-
-                reader.Close();
-
+                conn.Close();
                 return value is DBNull ? default(T) : (T)value;
             }
             catch(Exception e)
@@ -141,26 +140,27 @@ namespace SAP.util
         public static int createUpdateFromQuery(String query, List<SqlParameter> parameters)
         {
             int recordsAffected = 0;
-            try
+
+            using (SqlCommand command = new SqlCommand())
             {
-                using (SqlCommand command = new SqlCommand())
+                try
                 {
                     command.Connection = ConexaoFactory.Connection;// <== lacking
+                    command.Connection.Open();
                     command.CommandType = CommandType.Text;
                     command.CommandText = query;
                     command.Parameters.AddRange(parameters.ToArray());
-                                                    
-                    recordsAffected = command.ExecuteNonQuery();                        
-                        
+
+                    recordsAffected = command.ExecuteNonQuery();
                 }
-            }
-            catch (Exception e)
-            {
-                Util.showMessage(e.Message);
-            }
-            finally
-            {
-                //connection.Close();
+                catch(Exception e)
+                {
+                    Util.showMessage(e.Message);
+                }
+                finally
+                {
+                    command.Connection.Close();
+                }                        
             }
             return recordsAffected;
         }

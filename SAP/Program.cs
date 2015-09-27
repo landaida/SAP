@@ -21,8 +21,8 @@ namespace SAP
             Task task = new Task(() => GlobalVar.inicializarEmpresa());
             task.Start();
             //inicializa conexao banco
-            Task task1 = new Task(() => ConexaoFactory.initSQLConection());
-            task1.Start();
+            //Task task1 = new Task(() => ConexaoFactory.initSQLConection());
+            //task1.Start();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MDIParent());

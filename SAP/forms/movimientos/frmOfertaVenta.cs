@@ -254,15 +254,15 @@ namespace SAP.forms.movimientos
         {   
             bool retorno = false, existeDescuento = false, superaLimiteCredito = false;
 
-            if (!this.existeDescuento())
+            if (this.existeDescuento())
                 existeDescuento = true;
-            if (!this.superaLimiteCredito())
+            if (this.superaLimiteCredito())
                 superaLimiteCredito = true;
 
             if(existeDescuento || superaLimiteCredito)
             {
                 AprovalComments dialog = new AprovalComments();
-                dialog.setComponentes(existeDescuento, superaLimiteCredito, false);
+                dialog.setComponentes(!existeDescuento, !superaLimiteCredito, true);
                 // Show testDialog as a modal dialog and determine if DialogResult = OK.
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
@@ -304,7 +304,7 @@ namespace SAP.forms.movimientos
             Double totalDocPreliminares = 0;
             try
             {
-                totalDocPreliminares = Util.getValueFromQuery<Double>(sql, "value");
+                totalDocPreliminares = Util.getValueFromQuery<Double>(sql);
             }
             catch(Exception e)
             {
@@ -335,6 +335,7 @@ namespace SAP.forms.movimientos
             vDrafts.DocTotal = ofertaVentaDoc.DocTotal;
             vDrafts.GroupNumber = ofertaVentaDoc.GroupNumber;
             vDrafts.OpeningRemarks = remarks;
+            vDrafts.Comments = "Based On Sales Quotations "+this.txtId.Text;
 
             for (int i = 0; i <= this.lines().Count - 1; i++)
             {
@@ -367,23 +368,24 @@ namespace SAP.forms.movimientos
 
         private void createAlertsForApprovals(Documents vDrafts, AuthorizationTemplate authTemplate)
         {
-            String sql = "insert into OWDD (WtmCode, OwnerID, DocEntry, ObjType, DocDate, CurrStep, Remarks, UserSign, CreateDate, MaxRejReqr, MaxReqr)"
-                +"values(@WtmCode, @OwnerID, @DocEntry, @ObjType, @DocDate, @CurrStep, @Remarks, @UserSign, @CreateDate, @MaxRejReqr, @MaxReqr)";
-
+            String sql = "insert into OWDD (WddCode, WtmCode, OwnerID, DocEntry, ObjType, DocDate, CurrStep, Remarks, UserSign, CreateDate, MaxRejReqr, MaxReqr)"
+                + "values(@WddCode, @WtmCode, @OwnerID, @DocEntry, @ObjType, @DocDate, @CurrStep, @Remarks, @UserSign, @CreateDate, @MaxRejReqr, @MaxReqr)";
+            int wddCode = Util.getValueFromQuery<int>("select max(WddCode) + 1 value from owdd");
             ApprovalRequestsService oApprovalRequestsService = GlobalVar.Empresa.GetCompanyService().GetBusinessService(ServiceTypes.ApprovalRequestsService);
             ApprovalRequest oApprovalRequest = oApprovalRequestsService.GetDataInterface(ApprovalRequestsServiceDataInterfaces.arsApprovalRequest);
             
             List<SqlParameter> sp = new List<SqlParameter>()
             {
-                new SqlParameter() {ParameterName = "@WtmCode", SqlDbType = SqlDbType.NVarChar, Value= (int)authTemplate},
-                new SqlParameter() {ParameterName = "@OwnerID", SqlDbType = SqlDbType.NVarChar, Value = this.usuario.UserCode},
-                new SqlParameter() {ParameterName = "@DocEntry", SqlDbType = SqlDbType.NVarChar, Value = vDrafts.DocEntry},
-                new SqlParameter() {ParameterName = "@ObjType", SqlDbType = SqlDbType.Int, Value = oApprovalRequest.ObjectType},
-                new SqlParameter() {ParameterName = "@DocDate", SqlDbType = SqlDbType.Int, Value = vDrafts.DocDate},
+                new SqlParameter() {ParameterName = "@WddCode", SqlDbType = SqlDbType.Int, Value= wddCode},
+                new SqlParameter() {ParameterName = "@WtmCode", SqlDbType = SqlDbType.Int, Value= (int)authTemplate},
+                new SqlParameter() {ParameterName = "@OwnerID", SqlDbType = SqlDbType.NVarChar, Value = 11},
+                new SqlParameter() {ParameterName = "@DocEntry", SqlDbType = SqlDbType.Int, Value = vDrafts.DocEntry},
+                new SqlParameter() {ParameterName = "@ObjType", SqlDbType = SqlDbType.NVarChar, Value = oApprovalRequest.ObjectType},
+                new SqlParameter() {ParameterName = "@DocDate", SqlDbType = SqlDbType.DateTime, Value = vDrafts.DocDate},
                 new SqlParameter() {ParameterName = "@CurrStep", SqlDbType = SqlDbType.Int, Value = oApprovalRequest.CurrentStage},
-                new SqlParameter() {ParameterName = "@Remarks", SqlDbType = SqlDbType.Int, Value = vDrafts.OpeningRemarks},
-                new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.Int, Value = this.usuario.UserCode},
-                new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.Int, Value = DateTime.Now},
+                new SqlParameter() {ParameterName = "@Remarks", SqlDbType = SqlDbType.NVarChar, Value = vDrafts.OpeningRemarks},
+                new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.NVarChar, Value = 11},
+                new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.DateTime, Value = DateTime.Now},
                 new SqlParameter() {ParameterName = "@MaxRejReqr", SqlDbType = SqlDbType.Int, Value = 1},
                 new SqlParameter() {ParameterName = "@MaxReqr", SqlDbType = SqlDbType.Int, Value = 1}
             };

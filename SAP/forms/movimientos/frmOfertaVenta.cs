@@ -357,7 +357,7 @@ namespace SAP.forms.movimientos
                 String docNum = "";
                 GlobalVar.Empresa.GetNewObjectCode(out docNum);
                 Util.showMessage("Preliminar de venta nr: " + docNum + " generada con éxit");
-                this.createAlertsForApprovals(vDrafts, authTemplate);
+                this.createAlertsForApprovals(vDrafts, authTemplate, Convert.ToInt32(docNum));
             }
             else
             {
@@ -366,7 +366,7 @@ namespace SAP.forms.movimientos
             }
         }
 
-        private void createAlertsForApprovals(Documents vDrafts, AuthorizationTemplate authTemplate)
+        private void createAlertsForApprovals(Documents vDrafts, AuthorizationTemplate authTemplate, int idDraft)
         {
             String sql = "insert into OWDD (WddCode, WtmCode, OwnerID, DocEntry, ObjType, DocDate, CurrStep, Remarks, UserSign, CreateDate, MaxRejReqr, MaxReqr)"
                 + "values(@WddCode, @WtmCode, @OwnerID, @DocEntry, @ObjType, @DocDate, @CurrStep, @Remarks, @UserSign, @CreateDate, @MaxRejReqr, @MaxReqr)";
@@ -378,13 +378,13 @@ namespace SAP.forms.movimientos
             {
                 new SqlParameter() {ParameterName = "@WddCode", SqlDbType = SqlDbType.Int, Value= wddCode},
                 new SqlParameter() {ParameterName = "@WtmCode", SqlDbType = SqlDbType.Int, Value= (int)authTemplate},
-                new SqlParameter() {ParameterName = "@OwnerID", SqlDbType = SqlDbType.NVarChar, Value = 11},
-                new SqlParameter() {ParameterName = "@DocEntry", SqlDbType = SqlDbType.Int, Value = vDrafts.DocEntry},
+                new SqlParameter() {ParameterName = "@OwnerID", SqlDbType = SqlDbType.NVarChar, Value = 16},
+                new SqlParameter() {ParameterName = "@DocEntry", SqlDbType = SqlDbType.Int, Value = idDraft},
                 new SqlParameter() {ParameterName = "@ObjType", SqlDbType = SqlDbType.NVarChar, Value = oApprovalRequest.ObjectType},
                 new SqlParameter() {ParameterName = "@DocDate", SqlDbType = SqlDbType.DateTime, Value = vDrafts.DocDate},
                 new SqlParameter() {ParameterName = "@CurrStep", SqlDbType = SqlDbType.Int, Value = oApprovalRequest.CurrentStage},
                 new SqlParameter() {ParameterName = "@Remarks", SqlDbType = SqlDbType.NVarChar, Value = vDrafts.OpeningRemarks},
-                new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.NVarChar, Value = 11},
+                new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.NVarChar, Value = 16},
                 new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.DateTime, Value = DateTime.Now},
                 new SqlParameter() {ParameterName = "@MaxRejReqr", SqlDbType = SqlDbType.Int, Value = 1},
                 new SqlParameter() {ParameterName = "@MaxReqr", SqlDbType = SqlDbType.Int, Value = 1}

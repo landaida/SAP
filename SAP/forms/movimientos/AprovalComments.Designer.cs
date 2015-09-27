@@ -49,6 +49,7 @@
             this.label1.Size = new System.Drawing.Size(87, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Porcentaje desc.";
+            this.label1.UseWaitCursor = true;
             // 
             // label2
             // 
@@ -58,6 +59,7 @@
             this.label2.Size = new System.Drawing.Size(84, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Limite de credito";
+            this.label2.UseWaitCursor = true;
             // 
             // label3
             // 
@@ -67,6 +69,7 @@
             this.label3.Size = new System.Drawing.Size(74, 13);
             this.label3.TabIndex = 2;
             this.label3.Text = "Titulo vencido";
+            this.label3.UseWaitCursor = true;
             // 
             // btnGuardar
             // 
@@ -75,6 +78,7 @@
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 3;
             this.btnGuardar.Text = "Guardar";
+            this.btnGuardar.UseWaitCursor = true;
             // 
             // btnCancelar
             // 
@@ -83,6 +87,7 @@
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 4;
             this.btnCancelar.Text = "Cancelar";
+            this.btnCancelar.UseWaitCursor = true;
             // 
             // txtComentarioDescuento
             // 
@@ -90,6 +95,7 @@
             this.txtComentarioDescuento.Name = "txtComentarioDescuento";
             this.txtComentarioDescuento.Size = new System.Drawing.Size(204, 20);
             this.txtComentarioDescuento.TabIndex = 5;
+            this.txtComentarioDescuento.UseWaitCursor = true;
             // 
             // txtComentarioLimiteCredito
             // 
@@ -97,6 +103,7 @@
             this.txtComentarioLimiteCredito.Name = "txtComentarioLimiteCredito";
             this.txtComentarioLimiteCredito.Size = new System.Drawing.Size(204, 20);
             this.txtComentarioLimiteCredito.TabIndex = 6;
+            this.txtComentarioLimiteCredito.UseWaitCursor = true;
             // 
             // txtComentarioTituloVencido
             // 
@@ -104,6 +111,7 @@
             this.txtComentarioTituloVencido.Name = "txtComentarioTituloVencido";
             this.txtComentarioTituloVencido.Size = new System.Drawing.Size(204, 20);
             this.txtComentarioTituloVencido.TabIndex = 7;
+            this.txtComentarioTituloVencido.UseWaitCursor = true;
             // 
             // AprovalComments
             // 
@@ -118,10 +126,11 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "AprovalComments";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "AprovalComments";
+            this.Text = "Autorización requerida";
+            this.UseWaitCursor = true;
             ((System.ComponentModel.ISupportInitialize)(this.txtComentarioDescuento.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtComentarioLimiteCredito.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtComentarioTituloVencido.Properties)).EndInit();

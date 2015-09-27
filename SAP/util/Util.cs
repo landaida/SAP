@@ -163,6 +163,16 @@ namespace SAP.util
                 }                        
             }
             return recordsAffected;
+
+            /*  Ayuda a crear un CRUD manual usando el metodo mas arriba
+
+            SELECT ','+COLUMN_NAME, ',@'+COLUMN_NAME, data_type
+            ,'new SqlParameter() {ParameterName = "@'+COLUMN_NAME+'", SqlDbType = SqlDbType.'+case when t.DATA_TYPE in ('int', 'smallint') then 'Int' when t.DATA_TYPE = 'datetime' then 'DateTime' else 'NVarChar' end +', Value= wddCode},'
+            FROM INFORMATION_SCHEMA.COLUMNS t
+            WHERE TABLE_NAME = 'OAIB'
+
+
+            */
         }
 
 

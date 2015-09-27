@@ -106,10 +106,8 @@ namespace SAP.model
 
         private Double getImpuestoPorcentaje()
         {
-            Double value = 0;
-            if (this.IndicadorImpuesto.Equals("IVA_10"))
-                value = (10.0 / 100) + 1;
-            else if (this.IndicadorImpuesto.Equals("IVA_5"))
+            Double value = (10.0 / 100) + 1;
+            if (this.IndicadorImpuesto.Equals("IVA_5"))
                 value = (5.0 / 100) + 1;
             return value;
         }

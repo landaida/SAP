@@ -357,7 +357,7 @@ namespace SAP.forms.movimientos
                 String docNum = "";
                 GlobalVar.Empresa.GetNewObjectCode(out docNum);
                 Util.showMessage("Preliminar de venta nr: " + docNum + " generada con éxit");
-                this.createAlertsForApprovals(vDrafts, authTemplate, Convert.ToInt32(docNum));
+                this.createApprovalRequest(vDrafts, authTemplate, Convert.ToInt32(docNum));
             }
             else
             {
@@ -366,7 +366,7 @@ namespace SAP.forms.movimientos
             }
         }
 
-        private void createAlertsForApprovals(Documents vDrafts, AuthorizationTemplate authTemplate, int idDraft)
+        private void createApprovalRequest(Documents vDrafts, AuthorizationTemplate authTemplate, int idDraft)
         {
             String sql = "insert into OWDD (WddCode, WtmCode, OwnerID, DocEntry, ObjType, DocDate, CurrStep, Remarks, UserSign, CreateDate, MaxRejReqr, MaxReqr)"
                 + "values(@WddCode, @WtmCode, @OwnerID, @DocEntry, @ObjType, @DocDate, @CurrStep, @Remarks, @UserSign, @CreateDate, @MaxRejReqr, @MaxReqr)";
@@ -391,92 +391,62 @@ namespace SAP.forms.movimientos
             };
 
             Util.createUpdateFromQuery(sql, sp);
-            /*
-            ApprovalRequestsService oApprovalRequestsService = GlobalVar.Empresa.GetCompanyService().GetBusinessService(ServiceTypes.ApprovalRequestsService);
-            ApprovalRequestsParams oApprovalRequestsParams = oApprovalRequestsService.GetDataInterface(ApprovalRequestsServiceDataInterfaces.arsApprovalRequestsParams);
-            ApprovalRequest oApprovalRequest = oApprovalRequestsService.GetDataInterface(ApprovalRequestsServiceDataInterfaces.arsApprovalRequest);
-            ApprovalRequestParams oApprovalRequestParams = oApprovalRequestsService.GetDataInterface(ApprovalRequestsServiceDataInterfaces.arsApprovalRequestParams);
 
-            //Get request list 
-            oApprovalRequestsParams = oApprovalRequestsService.GetAllApprovalRequestsList();
-            oApprovalRequestParams = oApprovalRequestsParams.Item(oApprovalRequestsParams.Count - 1);
+            this.createApprovalAlerts(vDrafts, authTemplate, idDraft, wddCode);
+        }
 
-            //Approve request  
-            oApprovalRequest = oApprovalRequestsService.GetApprovalRequest(oApprovalRequestParams);
-            oApprovalRequest.ApprovalRequestDecisions.Add();
-            oApprovalRequest.ApprovalRequestDecisions.Item(0).Remarks = "Approved";
-            oApprovalRequest.ApprovalRequestDecisions.Item(0).Status = BoApprovalRequestDecisionEnum.ardApproved;
-
-            //Incase we want to approve with another user, uncomment the following 2 lines 
-            //oApprovalRequest.ApprovalRequestDecisions.Item(0).ApproverUserName = B1User 
-            //oApprovalRequest.ApprovalRequestDecisions.Item(0).ApproverPassword = B1Password 
+        private void createApprovalAlerts(Documents vDrafts, AuthorizationTemplate authTemplate, int idDraft, int wddCode)
+        {
+            String sql = "insert into OALR (Code, Type, Priority, Subject, UserText, DataCols, DataParams, MsgData, UserSign, DataSource)"
+                + "values(@Code, @Type, @Priority, @Subject, @UserText, @DataCols, @DataParams, @MsgData, @UserSign, @DataSource)";
+            int code = Util.getValueFromQuery<int>("select max(Code) + 1 value from OALR");
+        
+            int docNumDraft = Util.getValueFromQuery<int>("select DocNum from ODRF where DocEntry = "+wddCode);
             
-            try {
-                oApprovalRequestsService.UpdateRequest(oApprovalRequest);
-            } catch (Exception e) {
-                Util.showMessage(e.Message);
-            }
-            */
-            /*
 
-            Dim oCmpSrv As SAPbobsCOM.CompanyService
-            Dim oMessageService As MessagesService
-            Dim oMessage As Message
-            Dim pMessageDataColumns As MessageDataColumns
-            Dim pMessageDataColumn As MessageDataColumn
-            Dim oLines As MessageDataLines
-            Dim oLine As MessageDataLine
-            Dim oRecipientCollection As RecipientCollection
+            string msg = "Pedido de cliente basado en núm.documento preliminar "+docNumDraft+"	122	"+wddCode+"      1          16         ";
+            List<SqlParameter> sp = new List<SqlParameter>()
+            {
+                new SqlParameter() {ParameterName = "@Code", SqlDbType = SqlDbType.Int, Value= code},
+                new SqlParameter() {ParameterName = "@Type", SqlDbType = SqlDbType.NVarChar, Value= "M"},
+                new SqlParameter() {ParameterName = "@Priority", SqlDbType = SqlDbType.NVarChar, Value= 1},
+                new SqlParameter() {ParameterName = "@Subject", SqlDbType = SqlDbType.NVarChar, Value= "Petición de autorización documento"},
+                new SqlParameter() {ParameterName = "@UserText", SqlDbType = SqlDbType.NVarChar, Value= vDrafts.OpeningRemarks},
+                new SqlParameter() {ParameterName = "@DataCols", SqlDbType = SqlDbType.Int, Value= 1},
+                new SqlParameter() {ParameterName = "@DataParams", SqlDbType = SqlDbType.NVarChar, Value= "Petición de autorización documY"},
+                new SqlParameter() {ParameterName = "@MsgData", SqlDbType = SqlDbType.NVarChar, Value= msg},
+                new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.Int, Value= 16},
+                new SqlParameter() {ParameterName = "@DataSource", SqlDbType = SqlDbType.NVarChar, Value= "N"}
 
-            'get company service
-            oCmpSrv = oCompany.GetCompanyService
+            };
 
-            'get msg service
-            oMessageService = oCmpSrv.GetBusinessService(ServiceTypes.MessagesService)
+            Util.createUpdateFromQuery(sql, sp);
 
-            'get the data interface for the new message
-            oMessage=oMessageService.GetDataInterface(MessagesServiceDataInterface.msdiMessage)
+            this.createApprovalAlertsHeader();
 
-            'fill subject
-            oMessage.Subject = "My Subject"
+            Util.showMessage("Documentos generados exitosamente, aguarde las autorizaciones correspondientes.");
+            this.limpiar();
+        }
 
-            'fill text
-            oMessage.Text = "My Text"
+        private void createApprovalAlertsHeader()
+        {
+            String sql = "insert into OAIB (AlertCode, UserSign, Opened, RecDate, WasRead, Deleted)"
+            + "values(@AlertCode,@UserSign,@Opened,@RecDate,@WasRead,@Deleted)";
+            int code = Util.getValueFromQuery<int>("select max(AlertCode) + 1 value from OAIB");            
+            
+            List<SqlParameter> sp = new List<SqlParameter>()
+            {
+            new SqlParameter() {ParameterName = "@AlertCode", SqlDbType = SqlDbType.Int, Value= code},
+            new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.Int, Value= 16},
+            new SqlParameter() {ParameterName = "@Opened", SqlDbType = SqlDbType.NVarChar, Value= "N"},
+            new SqlParameter() {ParameterName = "@RecDate", SqlDbType = SqlDbType.DateTime, Value= DateTime.Now},
+            //new SqlParameter() {ParameterName = "@RecTime", SqlDbType = SqlDbType.SmallInt, Value= Convert.ToInt16(DateTime.Now.Ticks)},
+            new SqlParameter() {ParameterName = "@WasRead", SqlDbType = SqlDbType.NVarChar, Value= "N"},
+            new SqlParameter() {ParameterName = "@Deleted", SqlDbType = SqlDbType.NVarChar, Value= "N"}
 
-            'Add Recipient
-            oRecipientCollection = oMessage.RecipientCollection
+            };
 
-            'Add new a recipient
-            oRecipientCollection.Add()
-
-            'send internal message
-            oRecipientCollection.Item(0).SendInternal = BoYesNoEnum.tYES
-
-            'add existing user code
-            oRecipientCollection.Item(0).UserCode = "manager"
-
-            'get columns data
-            pMessageDataColumns = oMessage.MessageDataColumns
-
-            'get column
-            pMessageDataColumn = pMessageDataColumns.Add()
-
-            'set column name
-            pMessageDataColumn.ColumnName = "My Column Name"
-
-            'get lines
-            oLines = pMessageDataColumn.MessageDataLines()
-
-            'add new line
-            oLine = oLines.Add()
-
-            'set the line value
-            oLine.Value = "My Value"
-
-            'send the message
-            oMessageService.SendMessage(oMessage)
-
-            */
+            Util.createUpdateFromQuery(sql, sp);
         }
 
         private bool existeDescuento()

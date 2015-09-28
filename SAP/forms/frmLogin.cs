@@ -30,11 +30,13 @@ namespace SAP.forms
             {
                 if (GlobalVar.Empresa.AuthenticateUser(this.txtUsuario.Text, this.txtContrasena.Text) == AuthenticateUserResultsEnum.aturUsernamePasswordMatch)
                 {
-                    this.Close();
+                    Int16 code = Util.getValueFromQuery<Int16>("select o.USERID from OUSR o where o.USER_CODE = '"+this.txtUsuario.Text+"'");
+                    GlobalVar.usuarioId = code;
+                    this.DialogResult = DialogResult.OK;
                 }
                 else
                 {
-                    Util.showMessage("Por favor ingrese otra credencial, usuario o contraseñas inválidas.");
+                    Util.showMessage("Por favor ingrese otra credencial, usuario o contraseña inválida.");
                 }
             }
         }
@@ -59,7 +61,7 @@ namespace SAP.forms
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            this.Close();            
         }
     }
 }

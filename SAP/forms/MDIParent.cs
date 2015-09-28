@@ -30,16 +30,22 @@ namespace SAP.forms
                 Util.hideSplashScreen(this);
                 this.timerVerificaConexao.Enabled = false;
                 toolStripStatusLabel.Image = imageList1.Images[0];
-                //frmLogin dialog = new frmLogin();
-                //dialog.ShowDialog();
+                frmLogin dialog = new frmLogin();
+                if (dialog.ShowDialog(this) == DialogResult.OK)
+                {
 
+                }
+                else
+                {
+                    this.Close();
+                }
             }
         }
 
         private void MDIParent_FormClosed(object sender, FormClosedEventArgs e)
         {
             GlobalVar.Empresa.Disconnect();
-            System.Windows.Forms.Application.Exit();
+            Application.Exit();
         }
 
         private void MDIParent_Load(object sender, EventArgs e)

@@ -192,7 +192,7 @@ namespace SAP.forms.movimientos
                         this.txtId.Text = docNum;
                         this.btnCopyToSalesOrders.Enabled = true;
                         this.btnGuardar.Enabled = false;
-                        Util.showMessage("Oferta de venta nr: " + docNum + " generada con éxit");
+                        Util.showMessage("Oferta de venta nr: " + docNum + " generada con éxito");
 
                     }
                     else
@@ -380,13 +380,13 @@ namespace SAP.forms.movimientos
             {
                 new SqlParameter() {ParameterName = "@WddCode", SqlDbType = SqlDbType.Int, Value= wddCode},
                 new SqlParameter() {ParameterName = "@WtmCode", SqlDbType = SqlDbType.Int, Value= (int)authTemplate},
-                new SqlParameter() {ParameterName = "@OwnerID", SqlDbType = SqlDbType.NVarChar, Value = 16},
+                new SqlParameter() {ParameterName = "@OwnerID", SqlDbType = SqlDbType.NVarChar, Value = GlobalVar.usuarioId},
                 new SqlParameter() {ParameterName = "@DocEntry", SqlDbType = SqlDbType.Int, Value = idDraft},
                 new SqlParameter() {ParameterName = "@ObjType", SqlDbType = SqlDbType.NVarChar, Value = oApprovalRequest.ObjectType},
                 new SqlParameter() {ParameterName = "@DocDate", SqlDbType = SqlDbType.DateTime, Value = vDrafts.DocDate},
                 new SqlParameter() {ParameterName = "@CurrStep", SqlDbType = SqlDbType.Int, Value = oApprovalRequest.CurrentStage},
                 new SqlParameter() {ParameterName = "@Remarks", SqlDbType = SqlDbType.NVarChar, Value = vDrafts.OpeningRemarks},
-                new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.NVarChar, Value = 16},
+                new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.NVarChar, Value = GlobalVar.usuarioId},
                 new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.DateTime, Value = DateTime.Now},
                 new SqlParameter() {ParameterName = "@MaxRejReqr", SqlDbType = SqlDbType.Int, Value = 1},
                 new SqlParameter() {ParameterName = "@MaxReqr", SqlDbType = SqlDbType.Int, Value = 1}
@@ -420,7 +420,7 @@ namespace SAP.forms.movimientos
                 int docNumDraft = Util.getValueFromQuery<int>("select DocNum from ODRF where DocEntry = " + wddCode);
 
 
-                string msg = "Pedido de cliente basado en núm.documento preliminar " + docNumDraft + "	122	" + wddCode + "      "+aproUserId+"          16         ";
+                string msg = "Pedido de cliente basado en núm.documento preliminar " + docNumDraft + "	122	" + wddCode + "      "+aproUserId+"          "+ GlobalVar.usuarioId + "         ";
                 List<SqlParameter> sp = new List<SqlParameter>()
             {
                 new SqlParameter() {ParameterName = "@Code", SqlDbType = SqlDbType.Int, Value= code},
@@ -431,7 +431,7 @@ namespace SAP.forms.movimientos
                 new SqlParameter() {ParameterName = "@DataCols", SqlDbType = SqlDbType.Int, Value= 1},
                 new SqlParameter() {ParameterName = "@DataParams", SqlDbType = SqlDbType.NVarChar, Value= "Petición de autorización documY"},
                 new SqlParameter() {ParameterName = "@MsgData", SqlDbType = SqlDbType.NVarChar, Value= msg},
-                new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.Int, Value= 16},
+                new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.Int, Value= GlobalVar.usuarioId},
                 new SqlParameter() {ParameterName = "@DataSource", SqlDbType = SqlDbType.NVarChar, Value= "N"}
 
             };

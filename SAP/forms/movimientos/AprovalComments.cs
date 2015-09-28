@@ -13,6 +13,7 @@ namespace SAP.forms.movimientos
             InitializeComponent();
             this.btnGuardar.DialogResult = DialogResult.OK;
             this.btnCancelar.DialogResult = DialogResult.Cancel;
+            this.Cursor = Cursors.Default;
         }
 
         public void setComponentes(bool disableDescuento, bool disableLimiteCredito, bool disableTituloVencido)

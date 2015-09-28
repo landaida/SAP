@@ -58,18 +58,20 @@
             // 
             // txtContrasena
             // 
+            this.txtContrasena.EnterMoveNextControl = true;
             this.txtContrasena.Location = new System.Drawing.Point(82, 87);
             this.txtContrasena.Name = "txtContrasena";
             this.txtContrasena.Properties.PasswordChar = '*';
             this.txtContrasena.Size = new System.Drawing.Size(167, 20);
-            this.txtContrasena.TabIndex = 4;
+            this.txtContrasena.TabIndex = 1;
             // 
             // txtUsuario
             // 
+            this.txtUsuario.EnterMoveNextControl = true;
             this.txtUsuario.Location = new System.Drawing.Point(82, 38);
             this.txtUsuario.Name = "txtUsuario";
             this.txtUsuario.Size = new System.Drawing.Size(167, 20);
-            this.txtUsuario.TabIndex = 5;
+            this.txtUsuario.TabIndex = 0;
             // 
             // btnCancelar
             // 
@@ -77,7 +79,7 @@
             this.btnCancelar.Location = new System.Drawing.Point(174, 130);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
-            this.btnCancelar.TabIndex = 6;
+            this.btnCancelar.TabIndex = 3;
             this.btnCancelar.Text = "Cancelar";
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
@@ -87,7 +89,7 @@
             this.btnEntrar.Location = new System.Drawing.Point(93, 130);
             this.btnEntrar.Name = "btnEntrar";
             this.btnEntrar.Size = new System.Drawing.Size(75, 23);
-            this.btnEntrar.TabIndex = 7;
+            this.btnEntrar.TabIndex = 2;
             this.btnEntrar.Text = "Entrar";
             this.btnEntrar.Click += new System.EventHandler(this.btnEntrar_Click);
             // 

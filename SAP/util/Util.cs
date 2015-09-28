@@ -14,16 +14,27 @@ namespace SAP.util
     {
         public static readonly SplashScreen splashScreen = new SplashScreen();
 
-        public static IEnumerable<T> getGenericList<T>(String valueMember, String displayMember, String tableName, String where = "")
+        public static IEnumerable<T> getGenericList<T>(String valueMember, String displayMember, String tableName, String where = "", List<String> otherColumns = null)
         {
-            
+
+            String moreColumns = "";
+            if (otherColumns != null && otherColumns.Count > 0)
+            {
+                foreach (String column in otherColumns)
+                {
+                    if (moreColumns.Length == 0)
+                        moreColumns = " " + column;
+                    moreColumns += ", "+column;
+                }
+            }
+
             if(where != null && where.Trim().Length != 0)
             {
                 where = " where 1 = 1 " + where;
             }
             SqlConnection conn = ConexaoFactory.Connection;
             conn.Open();
-            SqlCommand sc = new SqlCommand("select " + valueMember + "," + displayMember + " from [" + tableName + "] " + where, conn);
+            SqlCommand sc = new SqlCommand("select " + valueMember + "," + displayMember + moreColumns + " from [" + tableName + "] " + where, conn);
             SqlDataReader reader;
 
             reader = sc.ExecuteReader();

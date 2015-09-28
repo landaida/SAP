@@ -56,8 +56,8 @@ namespace SAP.forms.movimientos
             ComboUtil.populateSearchLookUpEdit<Vendedor>(this.cmbVendedor, "SlpCode", "SlpName", "oslp", " and active = 'Y' and locked = 'N'");
             ComboUtil.populateSearchLookUpEdit(this.cmbProduto, "ItemCode", "ItemName", productos);
             ComboUtil.populateSearchLookUpEdit<Condicion>(this.cmbCondicion, "GroupNum", "PymntGroup", "octg");
-            ComboUtil.populateSearchLookUpEdit(this.cmbAlmacen, "WhsCode", "WhsName", productos);
-            ComboUtil.populateSearchLookUpEdit(this.cmbSucursal, "OcrCode", "PrcCode", productos);
+            ComboUtil.populateSearchLookUpEdit(this.cmbAlmacen, "WhsCode", "WhsName", almacenes);
+            ComboUtil.populateSearchLookUpEdit(this.cmbSucursal, "OcrCode", "PrcCode", sucursales);
 
             this.ofertaVentaDoc = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
             this.usuario = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oUsers);
@@ -71,8 +71,8 @@ namespace SAP.forms.movimientos
             this.gridControl1.DataSource = listCotizacion;
             gridView2.OptionsView.NewItemRowPosition = DevExpress.XtraGrid.Views.Grid.NewItemRowPosition.Top;
             //bindingListProductAddingNew += this.OnAddingNew;
-
-            this.addLine();
+            listCotizacion.AddingNew += this.OnAddingNew;
+            //this.addLine();
             
 
             // this.txtCliente.TextChanged += new EventHandler(generics_TextChanged);
@@ -88,9 +88,23 @@ namespace SAP.forms.movimientos
             //this.bindingControls();            
         }
 
+        private void OnAddingNew(object sender, AddingNewEventArgs e)
+        {
+            if(e.NewObject == null)
+            {
+                OfertaVentaLine line = new OfertaVentaLine();                
+                line.Almacen = (from d in this.almacenes where d.WhsCode.ToUpper().Contains("CDE") select d).First();
+                line.Sucursal = (from d in this.sucursales where d.OcrCode.ToUpper().Contains("CDE") select d).First();
+                e.NewObject = line;
+            }
+        }
+
         private void addLine()
         {
-            this.ofertaVenta.Lines.Add(new OfertaVentaLine());
+            OfertaVentaLine line = new OfertaVentaLine();
+            line.Almacen = this.almacenes.First();
+            line.Sucursal = this.sucursales.First();
+            this.ofertaVenta.Lines.Add(line);
             this.gridView2.RefreshData();
         }
         
@@ -238,6 +252,8 @@ namespace SAP.forms.movimientos
                     Orden.Lines.Quantity = item.Cantidad;
                     Orden.Lines.TaxCode = item.IndicadorImpuesto;
                     Orden.Lines.PriceAfterVAT = item.PrecioUnitarioGravada;
+                    Orden.Lines.WarehouseCode = item.Almacen.WhsCode;
+                    Orden.Lines.CostingCode = item.Sucursal.PrcCode;
 
                     if (i < this.lines().Count - 1)
                         Orden.Lines.Add();
@@ -349,7 +365,10 @@ namespace SAP.forms.movimientos
             vDrafts.DocTotal = ofertaVentaDoc.DocTotal;
             vDrafts.GroupNumber = ofertaVentaDoc.GroupNumber;
             vDrafts.OpeningRemarks = remarks;
-            vDrafts.Comments = "Based On Sales Quotations "+this.txtId.Text;
+            if (this.txtObservacion.Text.Trim().Length == 0)
+                vDrafts.Comments = "Basado en la oferta de venta" + this.txtId.Text;
+            else
+                vDrafts.Comments = this.txtObservacion.Text;
 
             for (int i = 0; i <= this.lines().Count - 1; i++)
             {
@@ -359,7 +378,8 @@ namespace SAP.forms.movimientos
                 vDrafts.Lines.Quantity = item.Cantidad;
                 vDrafts.Lines.TaxCode = item.IndicadorImpuesto;
                 vDrafts.Lines.PriceAfterVAT = item.PrecioUnitarioGravada;
-
+                vDrafts.Lines.WarehouseCode = item.Almacen.WhsCode;
+                vDrafts.Lines.CostingCode = item.Sucursal.OcrCode;
                 if (i < this.lines().Count - 1)
                     vDrafts.Lines.Add();
             }
@@ -519,7 +539,8 @@ namespace SAP.forms.movimientos
                         line.Cantidad = this.ofertaVentaDoc.Lines.Quantity;
                         line.PrecioUnitario = this.ofertaVentaDoc.Lines.PriceAfterVAT;
                         line.IndicadorImpuesto = this.ofertaVentaDoc.Lines.TaxCode;
-                        
+                        line.Almacen = (from d in this.almacenes where d.WhsCode.ToUpper().Contains(this.ofertaVentaDoc.Lines.WarehouseCode) select d).First();
+
                         this.ofertaVenta.Lines.Add(line);
                     }
 

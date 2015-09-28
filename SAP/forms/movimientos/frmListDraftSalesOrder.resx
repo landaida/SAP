@@ -117,35 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="1442554339_back" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1442554339_back.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="trafficlight_red_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\trafficlight_red-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icommerce_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icommerce_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="g_dots" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\g-dots.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="trafficlight_green_128" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\trafficlight_green-128.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="1442556929_Find" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1442556929_Find.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="next32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\next32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="PrinterMenu32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PrinterMenu32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="VisPrint32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\VisPrint32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="next16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\next16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

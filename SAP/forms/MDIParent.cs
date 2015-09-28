@@ -50,8 +50,19 @@ namespace SAP.forms
 
         private void MDIParent_Load(object sender, EventArgs e)
         {
+            GlobalVar.mdiParent = this;
             toolStripStatusLabel.Image = imageList1.Images[1];
             Util.showSplashScreen(this);
+        }
+
+        private void documentosPreliminaresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.abriDocumentosPreliminares();
+        }
+
+        private void abriDocumentosPreliminares()
+        {
+            Util.showForm(new frmListDraftSalesOrder(), this);
         }
     }
 }

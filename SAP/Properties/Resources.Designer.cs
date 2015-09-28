@@ -103,6 +103,26 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap next16x16 {
+            get {
+                object obj = ResourceManager.GetObject("next16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap next32x32 {
+            get {
+                object obj = ResourceManager.GetObject("next32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap PrinterMenu32 {
             get {
                 object obj = ResourceManager.GetObject("PrinterMenu32", resourceCulture);

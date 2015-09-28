@@ -22,13 +22,14 @@ namespace SAP.model
         private Almacen almacen;
         private Sucursal sucursal;
 
-        public OfertaVentaLine(){}
+        public OfertaVentaLine() { }
 
-        public OfertaVentaLine(Double cantidad, Double precioUnitario) {
+        public OfertaVentaLine(Double cantidad, Double precioUnitario)
+        {
             this.cantidad = cantidad;
             this.precioUnitario = precioUnitario;
         }
-        
+
         public int Id
         {
             get { return id; }
@@ -46,16 +47,17 @@ namespace SAP.model
         public String ProductoId
         {
             get { return productoId; }
-            set {
+            set
+            {
                 productoId = value;
-                if(value != null && (producto == null || producto.ItemCode != value))
+                if (value != null && (producto == null || producto.ItemCode != value))
                 {
-                    List<Producto> lista = Util.getGenericList<Producto>("ItemCode", "ItemName", "oitm", "and itemCode = "+ value).ToList();
-                    if(lista != null && lista.Count > 0)
+                    List<Producto> lista = Util.getGenericList<Producto>("ItemCode", "ItemName", "oitm", "and itemCode = " + value).ToList();
+                    if (lista != null && lista.Count > 0)
                     {
                         this.producto = lista.First();
                         this.getProductInfo(value);
-                    }                           
+                    }
                 }
             }
         }
@@ -63,9 +65,10 @@ namespace SAP.model
         public Producto Producto
         {
             get { return producto; }
-            set {
+            set
+            {
                 producto = value;
-                if(value != null)
+                if (value != null)
                 {
                     this.ProductoId = value.ItemCode;
                     this.getProductInfo(value.ItemCode);
@@ -87,21 +90,24 @@ namespace SAP.model
 
         public Double PrecioUnitarioGravada
         {
-            get {
+            get
+            {
                 return precioUnitario == 0 ? 0 : precioUnitario / this.getImpuestoPorcentaje();
             }
         }
 
         public Double TotalGravada
         {
-            get {
+            get
+            {
                 return precioUnitario == 0 ? 0 : PrecioUnitarioGravada * this.Cantidad;
             }
         }
 
         public Double PrecioUnitarioImpuesto
         {
-            get {
+            get
+            {
                 return precioUnitario == 0 ? 0 : precioUnitario - (precioUnitario / this.getImpuestoPorcentaje());
             }
         }
@@ -134,11 +140,11 @@ namespace SAP.model
 
         public Double DescuentoValor
         {
-            get { return (PrecioUnitario * Descuento)/100; }
+            get { return (PrecioUnitario * Descuento) / 100; }
         }
 
-        public Almacen Almacen{get;set;}
-        public Sucursal Sucursal{ get; set; }
+        public Almacen Almacen{ get; set;}
+        public Sucursal Sucursal{ get; set;}
 
         #region Functions
         private void getProductInfo(String value)

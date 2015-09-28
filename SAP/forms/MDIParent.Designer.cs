@@ -43,6 +43,7 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.timerVerificaConexao = new System.Windows.Forms.Timer(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.documentosPreliminaresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -61,7 +62,8 @@
             // fileMenu
             // 
             this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem});
+            this.newToolStripMenuItem,
+            this.documentosPreliminaresToolStripMenuItem});
             this.fileMenu.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
             this.fileMenu.Name = "fileMenu";
             this.fileMenu.Size = new System.Drawing.Size(53, 20);
@@ -72,8 +74,8 @@
             this.newToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripMenuItem.Image")));
             this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
             this.newToolStripMenuItem.Text = "&Oferta de ventas";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
             // 
@@ -147,6 +149,14 @@
             this.imageList1.Images.SetKeyName(0, "trafficlight_green-128.png");
             this.imageList1.Images.SetKeyName(1, "trafficlight_red-128.png");
             // 
+            // documentosPreliminaresToolStripMenuItem
+            // 
+            this.documentosPreliminaresToolStripMenuItem.Name = "documentosPreliminaresToolStripMenuItem";
+            this.documentosPreliminaresToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
+            this.documentosPreliminaresToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.documentosPreliminaresToolStripMenuItem.Text = "Documentos &preliminares";
+            this.documentosPreliminaresToolStripMenuItem.Click += new System.EventHandler(this.documentosPreliminaresToolStripMenuItem_Click);
+            // 
             // MDIParent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -188,6 +198,7 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Timer timerVerificaConexao;
         private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ToolStripMenuItem documentosPreliminaresToolStripMenuItem;
     }
 }
 

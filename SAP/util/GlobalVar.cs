@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SAPbobsCOM;
 using System.Threading;
-
+using System.Windows.Forms;
 namespace SAP.util
 {
     public static class GlobalVar
@@ -16,6 +16,7 @@ namespace SAP.util
         public static String cardCode;
         public static DateTime datetime;
         public static Int16 usuarioId;
+        public static Form mdiParent; 
 
         public static void inicializarEmpresa()
         {

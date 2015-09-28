@@ -84,7 +84,6 @@
             this.colAlmacen = new DevExpress.XtraGrid.Columns.GridColumn();
             this.cmbAlmacen = new DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit();
             this.repositoryItemSearchLookUpEdit2View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.tabPageLogistica = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cmbCondicion.Properties)).BeginInit();
@@ -497,7 +496,6 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPageContenido);
-            this.tabControl1.Controls.Add(this.tabPageLogistica);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -698,16 +696,6 @@
             this.repositoryItemSearchLookUpEdit2View.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.repositoryItemSearchLookUpEdit2View.OptionsView.ShowGroupPanel = false;
             // 
-            // tabPageLogistica
-            // 
-            this.tabPageLogistica.Location = new System.Drawing.Point(4, 22);
-            this.tabPageLogistica.Name = "tabPageLogistica";
-            this.tabPageLogistica.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLogistica.Size = new System.Drawing.Size(717, 231);
-            this.tabPageLogistica.TabIndex = 1;
-            this.tabPageLogistica.Text = "Logística";
-            this.tabPageLogistica.UseVisualStyleBackColor = true;
-            // 
             // frmOfertaVenta
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -764,7 +752,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPageContenido;
-        private System.Windows.Forms.TabPage tabPageLogistica;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtObservacion;
         private System.Windows.Forms.Label label5;

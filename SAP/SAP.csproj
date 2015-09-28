@@ -75,6 +75,12 @@
     <Compile Include="forms\movimientos\AprovalComments.Designer.cs">
       <DependentUpon>AprovalComments.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\movimientos\frmListDraftSalesOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\movimientos\frmListDraftSalesOrder.Designer.cs">
+      <DependentUpon>frmListDraftSalesOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\util\SplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +89,7 @@
     </Compile>
     <Compile Include="model\Aprobador.cs" />
     <Compile Include="model\Almacen.cs" />
+    <Compile Include="model\Draft.cs" />
     <Compile Include="model\Sucursal.cs" />
     <Compile Include="model\Condicion.cs" />
     <Compile Include="model\DocumentStatus.cs" />
@@ -117,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\movimientos\AprovalComments.resx">
       <DependentUpon>AprovalComments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\movimientos\frmListDraftSalesOrder.resx">
+      <DependentUpon>frmListDraftSalesOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\movimientos\frmOfertaVenta.resx">
       <DependentUpon>frmOfertaVenta.cs</DependentUpon>
@@ -177,6 +187,8 @@
     <None Include="Resources\g-dots.gif" />
     <None Include="Resources\1442554339_back.png" />
     <None Include="Resources\1442556929_Find.png" />
+    <None Include="Resources\next32x32.png" />
+    <None Include="Resources\next16x16.png" />
     <Content Include="Resources\trafficlight_green-128.png" />
     <Content Include="Resources\trafficlight_red-128.png" />
   </ItemGroup>

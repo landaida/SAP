@@ -417,10 +417,10 @@ namespace SAP.forms.movimientos
                 + "values(@Code, @Type, @Priority, @Subject, @UserText, @DataCols, @DataParams, @MsgData, @UserSign, @DataSource)";
                 int code = Util.getValueFromQuery<int>("select max(Code) + 1 value from OALR");
 
-                int docNumDraft = Util.getValueFromQuery<int>("select DocNum from ODRF where DocEntry = " + wddCode);
+                //int docNumDraft = Util.getValueFromQuery<int>("select DocNum from ODRF where DocEntry = " + wddCode);
 
 
-                string msg = "Pedido de cliente basado en núm.documento preliminar " + docNumDraft + "	122	" + wddCode + "      "+aproUserId+"          "+ GlobalVar.usuarioId + "         ";
+                string msg = "Pedido de cliente basado en núm.documento preliminar " + idDraft + "	122	" + wddCode + "      "+aproUserId+"          "+ GlobalVar.usuarioId + "         ";
                 List<SqlParameter> sp = new List<SqlParameter>()
             {
                 new SqlParameter() {ParameterName = "@Code", SqlDbType = SqlDbType.Int, Value= code},

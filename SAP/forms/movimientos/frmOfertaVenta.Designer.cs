@@ -78,6 +78,12 @@
             this.colIndicadorImpuesto1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPrecioUnitarioGravada = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotalGravada = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colSucursal = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.cmbSucursal = new DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit();
+            this.gridView4 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.colAlmacen = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.cmbAlmacen = new DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit();
+            this.repositoryItemSearchLookUpEdit2View = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.tabPageLogistica = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -100,6 +106,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbProduto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchLookUpEdit1View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbSucursal)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbAlmacen)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchLookUpEdit2View)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -516,7 +526,9 @@
             this.gridControl1.MainView = this.gridView2;
             this.gridControl1.Name = "gridControl1";
             this.gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.cmbProduto});
+            this.cmbProduto,
+            this.cmbSucursal,
+            this.cmbAlmacen});
             this.gridControl1.Size = new System.Drawing.Size(711, 185);
             this.gridControl1.TabIndex = 1;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -532,7 +544,9 @@
             this.colPorcentajeDescuento1,
             this.colIndicadorImpuesto1,
             this.colPrecioUnitarioGravada,
-            this.colTotalGravada});
+            this.colTotalGravada,
+            this.colSucursal,
+            this.colAlmacen});
             this.gridView2.GridControl = this.gridControl1;
             this.gridView2.Name = "gridView2";
             this.gridView2.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.True;
@@ -640,6 +654,50 @@
             this.colTotalGravada.Visible = true;
             this.colTotalGravada.VisibleIndex = 7;
             // 
+            // colSucursal
+            // 
+            this.colSucursal.Caption = "Sucursal";
+            this.colSucursal.ColumnEdit = this.cmbSucursal;
+            this.colSucursal.FieldName = "Sucursal";
+            this.colSucursal.Name = "colSucursal";
+            // 
+            // cmbSucursal
+            // 
+            this.cmbSucursal.AutoHeight = false;
+            this.cmbSucursal.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbSucursal.Name = "cmbSucursal";
+            this.cmbSucursal.View = this.gridView4;
+            // 
+            // gridView4
+            // 
+            this.gridView4.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.gridView4.Name = "gridView4";
+            this.gridView4.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView4.OptionsView.ShowGroupPanel = false;
+            // 
+            // colAlmacen
+            // 
+            this.colAlmacen.Caption = "Almacen";
+            this.colAlmacen.ColumnEdit = this.cmbAlmacen;
+            this.colAlmacen.FieldName = "Almacen";
+            this.colAlmacen.Name = "colAlmacen";
+            // 
+            // cmbAlmacen
+            // 
+            this.cmbAlmacen.AutoHeight = false;
+            this.cmbAlmacen.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbAlmacen.Name = "cmbAlmacen";
+            this.cmbAlmacen.View = this.repositoryItemSearchLookUpEdit2View;
+            // 
+            // repositoryItemSearchLookUpEdit2View
+            // 
+            this.repositoryItemSearchLookUpEdit2View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.repositoryItemSearchLookUpEdit2View.Name = "repositoryItemSearchLookUpEdit2View";
+            this.repositoryItemSearchLookUpEdit2View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.repositoryItemSearchLookUpEdit2View.OptionsView.ShowGroupPanel = false;
+            // 
             // tabPageLogistica
             // 
             this.tabPageLogistica.Location = new System.Drawing.Point(4, 22);
@@ -683,6 +741,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbProduto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchLookUpEdit1View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbSucursal)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbAlmacen)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemSearchLookUpEdit2View)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -739,5 +801,11 @@
         private DevExpress.XtraEditors.SearchLookUpEdit cmbCondicion;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView3;
         private System.Windows.Forms.Label lblCondicion;
+        private DevExpress.XtraGrid.Columns.GridColumn colSucursal;
+        private DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit cmbSucursal;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView4;
+        private DevExpress.XtraGrid.Columns.GridColumn colAlmacen;
+        private DevExpress.XtraEditors.Repository.RepositoryItemSearchLookUpEdit cmbAlmacen;
+        private DevExpress.XtraGrid.Views.Grid.GridView repositoryItemSearchLookUpEdit2View;
     }
 }

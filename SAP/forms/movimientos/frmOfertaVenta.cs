@@ -24,6 +24,8 @@ namespace SAP.forms.movimientos
         BindingSource bindingSource = new BindingSource();
         Users usuario;
         List<Aprobador> aprobadores;
+        List<Almacen> almacenes;
+        List<Sucursal> sucursales;
         #endregion
 
         #region Functions
@@ -47,12 +49,15 @@ namespace SAP.forms.movimientos
 
             //Cria uma lista de productos, isso facilitara na hora de carregar o combo de produtos en cada line do quotation
             productos = Util.getGenericList<Producto>("itemCode", "itemName", "oitm").ToList<Producto>();
-
+            almacenes = Util.getGenericList<Almacen>("whsCode", "whsName", "owhs").ToList<Almacen>();
+            sucursales = Util.getGenericList<Sucursal>("ocrCode", "prcCode", "ocr1").ToList<Sucursal>();
 
             ComboUtil.populateSearchLookUpEdit<Cliente>(this.cmbCliente, "CardCode", "CardName", "ocrd");
             ComboUtil.populateSearchLookUpEdit<Vendedor>(this.cmbVendedor, "SlpCode", "SlpName", "oslp", " and active = 'Y' and locked = 'N'");
             ComboUtil.populateSearchLookUpEdit(this.cmbProduto, "ItemCode", "ItemName", productos);
             ComboUtil.populateSearchLookUpEdit<Condicion>(this.cmbCondicion, "GroupNum", "PymntGroup", "octg");
+            ComboUtil.populateSearchLookUpEdit(this.cmbAlmacen, "WhsCode", "WhsName", productos);
+            ComboUtil.populateSearchLookUpEdit(this.cmbSucursal, "OcrCode", "PrcCode", productos);
 
             this.ofertaVentaDoc = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oQuotations);
             this.usuario = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oUsers);
@@ -189,11 +194,9 @@ namespace SAP.forms.movimientos
                     {
                         String docNum = "";
                         GlobalVar.Empresa.GetNewObjectCode(out docNum);
-                        this.txtId.Text = docNum;
-                        this.btnCopyToSalesOrders.Enabled = true;
-                        this.btnGuardar.Enabled = false;
+                        this.txtId.Text = docNum;                        
                         Util.showMessage("Oferta de venta nr: " + docNum + " generada con éxito");
-
+                        this.enableCopyToSalesOrder(true);
                     }
                     else
                     {
@@ -207,7 +210,15 @@ namespace SAP.forms.movimientos
                 //Util.hideSplashScreen(this.MdiParent);
             }
         }
-        
+
+        private void enableCopyToSalesOrder(bool v)
+        {
+            this.btnCopyToSalesOrders.Enabled = v;
+            this.btnGuardar.Enabled = !v;
+            this.colAlmacen.Visible = v;
+            this.colSucursal.Visible = v;
+        }
+
         private void copyToSalesOrders()
         {
             if(this.verificarEtapasAutorizacion() && GlobalVar.Empresa.Connected == true)
@@ -239,7 +250,7 @@ namespace SAP.forms.movimientos
                     String docNum = "";
                     GlobalVar.Empresa.GetNewObjectCode(out docNum);
                     this.txtId.Text = docNum;
-                    this.btnCopyToSalesOrders.Enabled = true;
+                    this.enableCopyToSalesOrder(true);
                     Util.showMessage("Orden de venta nr: " + docNum + " generada con éxit");
                 }
                 else
@@ -333,7 +344,8 @@ namespace SAP.forms.movimientos
             vDrafts.DocObjectCode = BoObjectTypes.oOrders;
             vDrafts.CardCode = ofertaVentaDoc.CardCode;
             vDrafts.HandWritten = BoYesNoEnum.tNO;
-            vDrafts.DocDate = ofertaVentaDoc.DocDate;
+            vDrafts.DocDate = this.txtFechaDocumento.Value;
+            vDrafts.DocDueDate = this.txtFechaLanzamiento.Value;
             vDrafts.DocTotal = ofertaVentaDoc.DocTotal;
             vDrafts.GroupNumber = ofertaVentaDoc.GroupNumber;
             vDrafts.OpeningRemarks = remarks;
@@ -513,8 +525,7 @@ namespace SAP.forms.movimientos
 
                     this.gridView2.RefreshData();
                     this.actualizaTotales();
-                    this.btnCopyToSalesOrders.Enabled = true;
-                    this.btnGuardar.Enabled = false;
+                    this.enableCopyToSalesOrder(true);
 
                     this.gridView2.OptionsBehavior.Editable = true;
                     this.cmbCliente.Enabled = false;
@@ -544,8 +555,7 @@ namespace SAP.forms.movimientos
 
         private void limpiar()
         {
-            this.btnCopyToSalesOrders.Enabled = false;
-            this.btnGuardar.Enabled = true;
+            this.enableCopyToSalesOrder(false);
 
             this.txtId.Text = null;
             this.cmbCliente.EditValue = null;

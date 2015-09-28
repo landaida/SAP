@@ -82,6 +82,8 @@
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="model\Aprobador.cs" />
+    <Compile Include="model\Almacen.cs" />
+    <Compile Include="model\Sucursal.cs" />
     <Compile Include="model\Condicion.cs" />
     <Compile Include="model\DocumentStatus.cs" />
     <Compile Include="forms\movimientos\frmOfertaVenta.cs">

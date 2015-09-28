@@ -19,6 +19,8 @@ namespace SAP.model
         private Double descuento;
         private String indicadorImpuesto;
         private Double total;
+        private Almacen almacen;
+        private Sucursal sucursal;
 
         public OfertaVentaLine(){}
 
@@ -134,6 +136,9 @@ namespace SAP.model
         {
             get { return (PrecioUnitario * Descuento)/100; }
         }
+
+        public Almacen Almacen{get;set;}
+        public Sucursal Sucursal{ get; set; }
 
         #region Functions
         private void getProductInfo(String value)

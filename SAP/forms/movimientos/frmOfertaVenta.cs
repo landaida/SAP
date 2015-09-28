@@ -279,14 +279,16 @@ namespace SAP.forms.movimientos
 
         private bool verificarEtapasAutorizacion()
         {   
-            bool retorno = false, existeDescuento = false, superaLimiteCredito = false;
+            bool retorno = false, existeDescuento = false, superaLimiteCredito = false, titulosVencidos = false;
 
-            if (this.existeDescuento())
+            if (this.etapaExisteDescuento())
                 existeDescuento = true;
-            if (this.superaLimiteCredito())
+            if (this.etapaSuperaLimiteCredito())
                 superaLimiteCredito = true;
+            if (this.etapaTitulosVencidos())
+                titulosVencidos = true;
 
-            if(existeDescuento || superaLimiteCredito)
+            if(existeDescuento || superaLimiteCredito || titulosVencidos)
             {
                 this.aprobadores = Util.getGenericList<Aprobador>("WstCode", "UserId", "wst1").ToList<Aprobador>();
 
@@ -300,6 +302,8 @@ namespace SAP.forms.movimientos
                         this.saveDocumentDrafts(AuthorizationTemplate.Porcentagem_Desc_02, dialog.getComentarioDescuento);
                     if (superaLimiteCredito)
                         this.saveDocumentDrafts(AuthorizationTemplate.Limite_de_Credito_03, dialog.getComentarioLimiteCredito);
+                    if (titulosVencidos)
+                        this.saveDocumentDrafts(AuthorizationTemplate.Titulos_Vencidos_03, dialog.getComentarioTituloVencido);
                 }
                 dialog.Dispose();               
             }
@@ -307,7 +311,7 @@ namespace SAP.forms.movimientos
             return retorno;
         }
 
-        private bool superaLimiteCredito()
+        private bool etapaSuperaLimiteCredito()
         {
             bool retorno = false;
 
@@ -390,7 +394,7 @@ namespace SAP.forms.movimientos
             if(retVal == 0){
                 String docNum = "";
                 GlobalVar.Empresa.GetNewObjectCode(out docNum);
-                Util.showMessage("Preliminar de venta nr: " + docNum + " generada con éxit");
+                Util.showMessage("Preliminar de venta nr: " + docNum + " generada con éxito");
                 this.createApprovalRequest(vDrafts, authTemplate, Convert.ToInt32(docNum));
             }
             else
@@ -498,7 +502,7 @@ namespace SAP.forms.movimientos
             Util.createUpdateFromQuery(sql, sp);
         }
 
-        private bool existeDescuento()
+        private bool etapaExisteDescuento()
         {
             bool retorno = false;
             
@@ -601,8 +605,15 @@ namespace SAP.forms.movimientos
 
         }
         
+        private bool etapaTitulosVencidos()
+        {   
+            string sql = " select  max(DATEDIFF(day, b.duedate, getdate())) as DiasVencidos "
+                        + " from oinv a, inv6 b where a.docentry = b.docentry  and a.GroupNum not in (-1) "
+                        + " and(b.InsTotal - b.PaidToDate) > 0 and a.cardcode = '"+cliente.CardCode+"'";
+            int diasAtrasados = Util.getValueFromQuery<int>(sql);
+            return diasAtrasados > 0;
+        }
         #endregion
-
 
         #region FunctionsC#
 
@@ -646,12 +657,11 @@ namespace SAP.forms.movimientos
         {
             this.getQuotationByKey();
         }
-
-        #endregion
-
+        
         private void txtFechaDocumento_ValueChanged(object sender, EventArgs e)
         {
             GlobalVar.datetime = this.txtFechaDocumento.Value;
         }
+        #endregion
     }
 }

@@ -15,6 +15,7 @@ namespace SAP.util
         public static bool isReady = false;
         public static String cardCode;
         public static DateTime datetime;
+        public static int usuarioId;
 
         public static void inicializarEmpresa()
         {

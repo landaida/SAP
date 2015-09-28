@@ -32,7 +32,7 @@ namespace SAP.util
             List<T> result = new List<T>();
             while (reader.Read())
             {
-                T item = Activator.CreateInstance<T>(); ;
+                T item = Activator.CreateInstance<T>();
                 
 
                 foreach (var property in typeof(T).GetProperties())
@@ -42,10 +42,18 @@ namespace SAP.util
                     {
                         item.GetType().GetProperty(property.Name).SetValue(item, reader[property.Name].ToString(), null);
                     }
-                    //else if (string.CompareOrdinal(property.PropertyType.FullName, "System.") == 0)
-                    //{
-                    //    item.GetType().GetProperty(property.Name).SetValue(item, int.Parse(Sanitizer.GetSafeHtmlFragment(property.GetValue(item, null).ToString())), null);
-                    //}
+                    else if (string.CompareOrdinal(property.PropertyType.FullName, "System.Int16") == 0 )
+                    {
+                        item.GetType().GetProperty(property.Name).SetValue(item, Convert.ToInt16(reader[property.Name]), null);
+                    }
+                    else if (string.CompareOrdinal(property.PropertyType.FullName, "System.Int32") == 0)
+                    {
+                        item.GetType().GetProperty(property.Name).SetValue(item, Convert.ToInt32(reader[property.Name]), null);
+                    }
+                    else if (string.CompareOrdinal(property.PropertyType.FullName, "System.Int64") == 0)
+                    {
+                        item.GetType().GetProperty(property.Name).SetValue(item, Convert.ToInt64(reader[property.Name]), null);
+                    }
                 }                
                 result.Add(item);
             }
@@ -192,7 +200,12 @@ namespace SAP.util
             System.Console.WriteLine(oRecordSet.Fields.Item(0).Value + " " + oRecordSet.Fields.Item(1).Value);
             return oRecordSet.Fields.Item(0).Value;
         }
-    }
+
+
+
+}
+
+
 }
 
 public static class ControlExtension

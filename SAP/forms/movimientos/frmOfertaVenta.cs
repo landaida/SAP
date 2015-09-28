@@ -23,6 +23,7 @@ namespace SAP.forms.movimientos
         OfertaVenta ofertaVenta;
         BindingSource bindingSource = new BindingSource();
         Users usuario;
+        List<Aprobador> aprobadores;
         #endregion
 
         #region Functions
@@ -79,8 +80,7 @@ namespace SAP.forms.movimientos
             ComboUtil.populateLookUpEditWhitEnums(cmbStatus, typeof(DocumentStatus));
             this.cmbStatus.EditValue = DocumentStatus.Abierto;
 
-            //this.bindingControls();
-            
+            //this.bindingControls();            
         }
 
         private void addLine()
@@ -261,6 +261,8 @@ namespace SAP.forms.movimientos
 
             if(existeDescuento || superaLimiteCredito)
             {
+                this.aprobadores = Util.getGenericList<Aprobador>("WstCode", "UserId", "wst1").ToList<Aprobador>();
+
                 AprovalComments dialog = new AprovalComments();
                 dialog.setComponentes(!existeDescuento, !superaLimiteCredito, true);
                 // Show testDialog as a modal dialog and determine if DialogResult = OK.
@@ -397,15 +399,29 @@ namespace SAP.forms.movimientos
 
         private void createApprovalAlerts(Documents vDrafts, AuthorizationTemplate authTemplate, int idDraft, int wddCode)
         {
-            String sql = "insert into OALR (Code, Type, Priority, Subject, UserText, DataCols, DataParams, MsgData, UserSign, DataSource)"
-                + "values(@Code, @Type, @Priority, @Subject, @UserText, @DataCols, @DataParams, @MsgData, @UserSign, @DataSource)";
-            int code = Util.getValueFromQuery<int>("select max(Code) + 1 value from OALR");
-        
-            int docNumDraft = Util.getValueFromQuery<int>("select DocNum from ODRF where DocEntry = "+wddCode);
-            
+            //obtiene solo los usuarioas aprobadores de la regla que se esta insertando
+            List<int> aproUsers = new List<int>();
+            foreach(Aprobador apro in this.aprobadores)
+            {
+                if (authTemplate == AuthorizationTemplate.Limite_de_Credito_03 && apro.WstCode == 2)
+                    aproUsers.Add(apro.UserId);
+                else if (authTemplate == AuthorizationTemplate.Porcentagem_Desc_02 && apro.WstCode == 1)
+                    aproUsers.Add(apro.UserId);
+                else if (authTemplate == AuthorizationTemplate.Titulos_Vencidos_03 && apro.WstCode == 3)
+                    aproUsers.Add(apro.UserId);
+            }
 
-            string msg = "Pedido de cliente basado en núm.documento preliminar "+docNumDraft+"	122	"+wddCode+"      1          16         ";
-            List<SqlParameter> sp = new List<SqlParameter>()
+            foreach(int aproUserId in aproUsers)
+            {
+                String sql = "insert into OALR (Code, Type, Priority, Subject, UserText, DataCols, DataParams, MsgData, UserSign, DataSource)"
+                + "values(@Code, @Type, @Priority, @Subject, @UserText, @DataCols, @DataParams, @MsgData, @UserSign, @DataSource)";
+                int code = Util.getValueFromQuery<int>("select max(Code) + 1 value from OALR");
+
+                int docNumDraft = Util.getValueFromQuery<int>("select DocNum from ODRF where DocEntry = " + wddCode);
+
+
+                string msg = "Pedido de cliente basado en núm.documento preliminar " + docNumDraft + "	122	" + wddCode + "      "+aproUserId+"          16         ";
+                List<SqlParameter> sp = new List<SqlParameter>()
             {
                 new SqlParameter() {ParameterName = "@Code", SqlDbType = SqlDbType.Int, Value= code},
                 new SqlParameter() {ParameterName = "@Type", SqlDbType = SqlDbType.NVarChar, Value= "M"},
@@ -420,15 +436,16 @@ namespace SAP.forms.movimientos
 
             };
 
-            Util.createUpdateFromQuery(sql, sp);
+                Util.createUpdateFromQuery(sql, sp);
 
-            this.createApprovalAlertsHeader();
+                this.createApprovalAlertsHeader(aproUserId);
+            }
 
             Util.showMessage("Documentos generados exitosamente, aguarde las autorizaciones correspondientes.");
             this.limpiar();
         }
 
-        private void createApprovalAlertsHeader()
+        private void createApprovalAlertsHeader(int aproUserId)
         {
             String sql = "insert into OAIB (AlertCode, UserSign, Opened, RecDate, WasRead, Deleted)"
             + "values(@AlertCode,@UserSign,@Opened,@RecDate,@WasRead,@Deleted)";
@@ -437,7 +454,7 @@ namespace SAP.forms.movimientos
             List<SqlParameter> sp = new List<SqlParameter>()
             {
             new SqlParameter() {ParameterName = "@AlertCode", SqlDbType = SqlDbType.Int, Value= code},
-            new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.Int, Value= 16},
+            new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.Int, Value= aproUserId},
             new SqlParameter() {ParameterName = "@Opened", SqlDbType = SqlDbType.NVarChar, Value= "N"},
             new SqlParameter() {ParameterName = "@RecDate", SqlDbType = SqlDbType.DateTime, Value= DateTime.Now},
             //new SqlParameter() {ParameterName = "@RecTime", SqlDbType = SqlDbType.SmallInt, Value= Convert.ToInt16(DateTime.Now.Ticks)},

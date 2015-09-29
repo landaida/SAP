@@ -236,15 +236,17 @@ namespace SAP.forms.movimientos
 
         private void copyToSalesOrders()
         {
-            if(this.verificarEtapasAutorizacion() && GlobalVar.Empresa.Connected == true)
+            if((this.vDrafts != null && this.vDrafts.CardCode != null) || this.verificarEtapasAutorizacion() && GlobalVar.Empresa.Connected == true)
             {
+                Documents doc = vDrafts ?? ofertaVentaDoc;
+
                 Documents Orden = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oOrders);
-                Orden.CardCode = ofertaVentaDoc.CardCode;
-                Orden.DocDate = ofertaVentaDoc.DocDate;
-                Orden.DocDueDate = ofertaVentaDoc.DocDueDate;
-                Orden.Comments = ofertaVentaDoc.Comments;
-                Orden.DocCurrency = ofertaVentaDoc.DocCurrency;
-                Orden.GroupNumber = ofertaVentaDoc.GroupNumber;
+                Orden.CardCode = doc.CardCode;
+                Orden.DocDate = doc.DocDate;
+                Orden.DocDueDate = doc.DocDueDate;
+                Orden.Comments = doc.Comments;
+                Orden.DocCurrency = doc.DocCurrency;
+                Orden.GroupNumber = doc.GroupNumber;
                 for (int i = 0; i <= this.lines().Count - 1; i++)
                 {
                     OfertaVentaLine item = this.lines()[i];
@@ -268,7 +270,8 @@ namespace SAP.forms.movimientos
                     GlobalVar.Empresa.GetNewObjectCode(out docNum);
                     this.txtId.Text = docNum;
                     this.enableCopyToSalesOrder(true);
-                    Util.showMessage("Orden de venta nr: " + docNum + " generada con éxit");
+                    Util.showMessage("Orden de venta nr: " + docNum + " generada con éxito");
+                    this.limpiar();
                 }
                 else
                 {
@@ -370,8 +373,9 @@ namespace SAP.forms.movimientos
             vDrafts.DocTotal = ofertaVentaDoc.DocTotal;
             vDrafts.GroupNumber = ofertaVentaDoc.GroupNumber;
             vDrafts.OpeningRemarks = remarks;
+            vDrafts.SalesPersonCode = (int)this.cmbVendedor.EditValue;
             if (this.txtObservacion.Text.Trim().Length == 0)
-                vDrafts.Comments = "Basado en la oferta de venta" + this.txtId.Text;
+                vDrafts.Comments = "Basado en la oferta de venta " + this.txtId.Text;
             else
                 vDrafts.Comments = this.txtObservacion.Text;
 
@@ -506,17 +510,12 @@ namespace SAP.forms.movimientos
         private bool etapaExisteDescuento()
         {
             bool retorno = false;
-            
-            for (int i = 0; i <= this.ofertaVentaDoc.Lines.Count - 1; i++)
-            {   
-                this.ofertaVentaDoc.Lines.SetCurrentLine(i);
 
-                if (Util.getItemPrice(ofertaVentaDoc.CardCode, this.ofertaVentaDoc.Lines.ItemCode, this.ofertaVentaDoc.DocDate) > this.ofertaVentaDoc.Lines.PriceAfterVAT)
-                {
-                    retorno = true;
-                    break;
-                }
-            }
+            this.ofertaVenta.Lines = this.ofertaVenta.Lines.Where(p => Util.getItemPrice(GlobalVar.cardCode, p.ProductoId, this.txtFechaDocumento.Value) > p.PrecioUnitario).ToList<OfertaVentaLine>();
+
+            if (this.ofertaVenta.Lines.Count > 0)
+                retorno = true;
+
             return retorno;
         }
 
@@ -537,7 +536,7 @@ namespace SAP.forms.movimientos
         {
             Documents doc = vDrafts ?? ofertaVentaDoc;
 
-            this.cmbCliente.EditValue = ofertaVentaDoc.CardCode; 
+            this.cmbCliente.EditValue = doc.CardCode; 
             this.txtFechaDocumento.Value = doc.DocDate;
             this.txtFechaLanzamiento.Value = doc.DocDueDate;
             this.txtObservacion.Text = doc.Comments;
@@ -554,7 +553,7 @@ namespace SAP.forms.movimientos
                 line.PrecioUnitario = doc.Lines.PriceAfterVAT;
                 line.IndicadorImpuesto = doc.Lines.TaxCode;
                 line.Almacen = (from d in this.almacenes where d.WhsCode.ToUpper().Contains(doc.Lines.WarehouseCode) select d).First();
-
+                line.Sucursal = (from d in this.sucursales where d.OcrCode.ToUpper().Contains(doc.Lines.CostingCode) select d).First();
                 this.ofertaVenta.Lines.Add(line);
             }
 
@@ -621,6 +620,8 @@ namespace SAP.forms.movimientos
             this.cmbCliente.Enabled = true;
             this.txtId.Enabled = true;
 
+            this.ofertaVentaDoc = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oOrders);
+            this.vDrafts = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oDrafts);
         }
         
         private bool etapaTitulosVencidos()

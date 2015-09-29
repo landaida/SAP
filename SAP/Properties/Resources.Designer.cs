@@ -81,6 +81,60 @@ namespace SAP.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 0104452.
+        /// </summary>
+        internal static string BOPassword {
+            get {
+                return ResourceManager.GetString("BOPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to emerson.
+        /// </summary>
+        internal static string BOUser {
+            get {
+                return ResourceManager.GetString("BOUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SBO_SideragroNueva.
+        /// </summary>
+        internal static string DBName {
+            get {
+                return ResourceManager.GetString("DBName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to raposa28@09.
+        /// </summary>
+        internal static string DBPassword {
+            get {
+                return ResourceManager.GetString("DBPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MSSQL2008.
+        /// </summary>
+        internal static string DBServerType {
+            get {
+                return ResourceManager.GetString("DBServerType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sa.
+        /// </summary>
+        internal static string DBUser {
+            get {
+                return ResourceManager.GetString("DBUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap g_dots {
@@ -127,6 +181,15 @@ namespace SAP.Properties {
             get {
                 object obj = ResourceManager.GetObject("PrinterMenu32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to winserver.
+        /// </summary>
+        internal static string Server {
+            get {
+                return ResourceManager.GetString("Server", resourceCulture);
             }
         }
         

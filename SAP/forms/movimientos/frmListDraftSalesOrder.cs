@@ -15,6 +15,7 @@ namespace SAP.forms.movimientos
     public partial class frmListDraftSalesOrder : DevExpress.XtraEditors.XtraForm
     {
         private List<Draft> listDraft;
+        private int index;
 
         public frmListDraftSalesOrder()
         {
@@ -33,7 +34,9 @@ namespace SAP.forms.movimientos
             moreColumns.Add("DocTotal");
             moreColumns.Add("Comments");
             moreColumns.Add("DocEntry");
-            this.listDraft = Util.getGenericList<Draft>("DocNum", "DocDate", "odrf", " and DocStatus = 'O' and WddStatus = 'W' order by DocNum desc", moreColumns).ToList<Draft>();
+            moreColumns.Add("DocStatus");
+            moreColumns.Add("WddStatus");
+            this.listDraft = Util.getGenericList<Draft>("DocNum", "DocDate", "odrf", " and DocStatus = 'O' and WddStatus in ('W', '-', 'Y') and UserSign = "+GlobalVar.usuarioId+" order by DocNum desc", moreColumns).ToList<Draft>();
 
             BindingList<Draft> lista = new BindingList<Draft>(this.listDraft);
             this.gridControl1.DataSource = lista;
@@ -41,6 +44,11 @@ namespace SAP.forms.movimientos
 
         private void btnGoToDocDraft_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
+            if(this.listDraft[this.index].WddStatus != "Y")
+            {
+                Util.showMessage("Pendiente de aprobación");
+                return;
+            }
             Form frm = null;
             foreach(Form form in this.Parent.Controls)
             {
@@ -60,9 +68,15 @@ namespace SAP.forms.movimientos
             {
                 formOV = (frmOfertaVenta)frm;
                 formOV.BringToFront();
-            }
-            formOV.getDocumentDraftByKey((int)((ButtonEdit)sender).EditValue);
+            }            
+            
+            formOV.getDocumentDraftByKey(this.listDraft[this.index].DocEntry);
 
+        }
+
+        private void gridView1_FocusedRowChanged(object sender, DevExpress.XtraGrid.Views.Base.FocusedRowChangedEventArgs e)
+        {
+            this.index = e.FocusedRowHandle;
         }
     }
 }

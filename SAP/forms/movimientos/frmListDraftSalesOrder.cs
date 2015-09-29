@@ -32,6 +32,7 @@ namespace SAP.forms.movimientos
             moreColumns.Add("CardCode");
             moreColumns.Add("DocTotal");
             moreColumns.Add("Comments");
+            moreColumns.Add("DocEntry");
             this.listDraft = Util.getGenericList<Draft>("DocNum", "DocDate", "odrf", " and DocStatus = 'O' and WddStatus = 'W' order by DocNum desc", moreColumns).ToList<Draft>();
 
             BindingList<Draft> lista = new BindingList<Draft>(this.listDraft);
@@ -49,16 +50,19 @@ namespace SAP.forms.movimientos
                     break;
                 }
             }
-
-            if(frm == null)
+            frmOfertaVenta formOV;
+            if (frm == null)
             {
-                Util.showForm(new frmOfertaVenta(), GlobalVar.mdiParent);
+                formOV = new frmOfertaVenta();                
+                Util.showForm(formOV, GlobalVar.mdiParent);
             }
             else
             {
-                frm.BringToFront();
+                formOV = (frmOfertaVenta)frm;
+                formOV.BringToFront();
             }
-            
+            formOV.getDocumentDraftByKey((int)((ButtonEdit)sender).EditValue);
+
         }
     }
 }

@@ -26,6 +26,7 @@ namespace SAP.forms.movimientos
         List<Aprobador> aprobadores;
         List<Almacen> almacenes;
         List<Sucursal> sucursales;
+        Documents vDrafts;
         #endregion
 
         #region Functions
@@ -358,7 +359,7 @@ namespace SAP.forms.movimientos
         private void saveDocumentDrafts(AuthorizationTemplate authTemplate, String remarks)
         {
             //Create the Documents object
-            Documents vDrafts = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oDrafts);
+            vDrafts = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oDrafts);
 
             //Set values to the fields
             vDrafts.DocObjectCode = BoObjectTypes.oOrders;
@@ -527,35 +528,52 @@ namespace SAP.forms.movimientos
                 res = ofertaVentaDoc.GetByKey(Convert.ToInt32(this.txtId.Text));
                 if (res)
                 {
-                    this.cmbCliente.EditValue = ofertaVentaDoc.CardCode;
-                    this.txtFechaDocumento.Value = this.ofertaVentaDoc.DocDate;
-                    this.txtFechaLanzamiento.Value = this.ofertaVentaDoc.DocDueDate;
-                    this.txtObservacion.Text = this.ofertaVentaDoc.Comments;                    
-                    this.cmbVendedor.EditValue = this.ofertaVentaDoc.SalesPersonCode;
-
-                    this.ofertaVenta.Lines.Clear();
-                    for (int i = 0; i <= this.ofertaVentaDoc.Lines.Count - 1; i++)
-                    {
-                        
-                        OfertaVentaLine line = new OfertaVentaLine();
-                        this.ofertaVentaDoc.Lines.SetCurrentLine(i);
-                        line.ProductoId = this.ofertaVentaDoc.Lines.ItemCode;
-                        line.Cantidad = this.ofertaVentaDoc.Lines.Quantity;
-                        line.PrecioUnitario = this.ofertaVentaDoc.Lines.PriceAfterVAT;
-                        line.IndicadorImpuesto = this.ofertaVentaDoc.Lines.TaxCode;
-                        line.Almacen = (from d in this.almacenes where d.WhsCode.ToUpper().Contains(this.ofertaVentaDoc.Lines.WarehouseCode) select d).First();
-
-                        this.ofertaVenta.Lines.Add(line);
-                    }
-
-                    this.gridView2.RefreshData();
-                    this.actualizaTotales();
-                    this.enableCopyToSalesOrder(true);
-
-                    this.gridView2.OptionsBehavior.Editable = true;
-                    this.cmbCliente.Enabled = false;
-                    this.txtId.Enabled = false;
+                    this.setOfertaVentaFromOtherDocs();
                 }
+            }
+        }
+
+        private void setOfertaVentaFromOtherDocs()
+        {
+            Documents doc = vDrafts ?? ofertaVentaDoc;
+
+            this.cmbCliente.EditValue = ofertaVentaDoc.CardCode; 
+            this.txtFechaDocumento.Value = doc.DocDate;
+            this.txtFechaLanzamiento.Value = doc.DocDueDate;
+            this.txtObservacion.Text = doc.Comments;
+            this.cmbVendedor.EditValue = doc.SalesPersonCode;
+
+            this.ofertaVenta.Lines.Clear();
+            for (int i = 0; i <= doc.Lines.Count - 1; i++)
+            {
+
+                OfertaVentaLine line = new OfertaVentaLine();
+                doc.Lines.SetCurrentLine(i);
+                line.ProductoId = doc.Lines.ItemCode;
+                line.Cantidad = doc.Lines.Quantity;
+                line.PrecioUnitario = doc.Lines.PriceAfterVAT;
+                line.IndicadorImpuesto = doc.Lines.TaxCode;
+                line.Almacen = (from d in this.almacenes where d.WhsCode.ToUpper().Contains(doc.Lines.WarehouseCode) select d).First();
+
+                this.ofertaVenta.Lines.Add(line);
+            }
+
+            this.gridView2.RefreshData();
+            this.actualizaTotales();
+            this.enableCopyToSalesOrder(true);
+
+            this.gridView2.OptionsBehavior.Editable = true;
+            this.cmbCliente.Enabled = false;
+            this.txtId.Enabled = false;
+        }
+
+        public void getDocumentDraftByKey(int docEntry)
+        {
+            vDrafts = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oDrafts);
+            bool res = vDrafts.GetByKey(docEntry);
+            if (res)
+            {
+                this.setOfertaVentaFromOtherDocs();
             }
         }
 

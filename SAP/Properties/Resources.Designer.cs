@@ -22,7 +22,7 @@ namespace SAP.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace SAP.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SAP.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace SAP.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1442554339_back {
+        public static System.Drawing.Bitmap _1442554339_back {
             get {
                 object obj = ResourceManager.GetObject("1442554339_back", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +73,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1442556929_Find {
+        public static System.Drawing.Bitmap _1442556929_Find {
             get {
                 object obj = ResourceManager.GetObject("1442556929_Find", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -83,7 +83,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 0104452.
         /// </summary>
-        internal static string BOPassword {
+        public static string BOPassword {
             get {
                 return ResourceManager.GetString("BOPassword", resourceCulture);
             }
@@ -92,7 +92,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized string similar to emerson.
         /// </summary>
-        internal static string BOUser {
+        public static string BOUser {
             get {
                 return ResourceManager.GetString("BOUser", resourceCulture);
             }
@@ -101,7 +101,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized string similar to SBO_SideragroNueva.
         /// </summary>
-        internal static string DBName {
+        public static string DBName {
             get {
                 return ResourceManager.GetString("DBName", resourceCulture);
             }
@@ -110,7 +110,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized string similar to raposa28@09.
         /// </summary>
-        internal static string DBPassword {
+        public static string DBPassword {
             get {
                 return ResourceManager.GetString("DBPassword", resourceCulture);
             }
@@ -119,7 +119,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized string similar to MSSQL2008.
         /// </summary>
-        internal static string DBServerType {
+        public static string DBServerType {
             get {
                 return ResourceManager.GetString("DBServerType", resourceCulture);
             }
@@ -128,7 +128,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized string similar to sa.
         /// </summary>
-        internal static string DBUser {
+        public static string DBUser {
             get {
                 return ResourceManager.GetString("DBUser", resourceCulture);
             }
@@ -137,7 +137,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap g_dots {
+        public static System.Drawing.Bitmap g_dots {
             get {
                 object obj = ResourceManager.GetObject("g_dots", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -147,7 +147,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap icommerce_logo {
+        public static System.Drawing.Bitmap icommerce_logo {
             get {
                 object obj = ResourceManager.GetObject("icommerce_logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -157,7 +157,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap next16x16 {
+        public static System.Drawing.Bitmap next16x16 {
             get {
                 object obj = ResourceManager.GetObject("next16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -167,7 +167,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap next32x32 {
+        public static System.Drawing.Bitmap next32x32 {
             get {
                 object obj = ResourceManager.GetObject("next32x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -177,7 +177,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap PrinterMenu32 {
+        public static System.Drawing.Bitmap PrinterMenu32 {
             get {
                 object obj = ResourceManager.GetObject("PrinterMenu32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -187,7 +187,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized string similar to winserver.
         /// </summary>
-        internal static string Server {
+        public static string Server {
             get {
                 return ResourceManager.GetString("Server", resourceCulture);
             }
@@ -196,7 +196,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap trafficlight_green_128 {
+        public static System.Drawing.Bitmap trafficlight_green_128 {
             get {
                 object obj = ResourceManager.GetObject("trafficlight_green_128", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -206,7 +206,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap trafficlight_red_128 {
+        public static System.Drawing.Bitmap trafficlight_red_128 {
             get {
                 object obj = ResourceManager.GetObject("trafficlight_red_128", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -216,7 +216,7 @@ namespace SAP.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap VisPrint32 {
+        public static System.Drawing.Bitmap VisPrint32 {
             get {
                 object obj = ResourceManager.GetObject("VisPrint32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));

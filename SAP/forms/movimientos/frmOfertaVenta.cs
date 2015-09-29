@@ -479,11 +479,37 @@ namespace SAP.forms.movimientos
 
                 Util.createUpdateFromQuery(sql, sp);
 
-                this.createApprovalAlertsHeader(aproUserId);
+                this.createApprovalRequestLine(aproUserId, wddCode);
             }
 
             Util.showMessage("Documentos generados exitosamente, aguarde las autorizaciones correspondientes.");
             this.limpiar();
+        }
+
+        private void createApprovalRequestLine(int aproUserId, int wddCode)
+        {
+            String sql = "insert into WDD1 (WddCode, StepCode, UserID, Status, UserSign, CreateDate)"
+                + "values(@WddCode, @StepCode, @UserID, @Status, @UserSign, @CreateDate)";
+            //int code = Util.getValueFromQuery<int>("select max(Code) + 1 value from OALR");
+
+            //int docNumDraft = Util.getValueFromQuery<int>("select DocNum from ODRF where DocEntry = " + wddCode);
+
+
+           // string msg = "Pedido de cliente basado en núm.documento preliminar " + idDraft + "	122	" + wddCode + "      " + aproUserId + "          " + GlobalVar.usuarioId + "         ";
+            List<SqlParameter> sp = new List<SqlParameter>()
+            {
+                new SqlParameter() {ParameterName = "@WddCode", SqlDbType = SqlDbType.Int, Value= wddCode},
+                new SqlParameter() {ParameterName = "@StepCode", SqlDbType = SqlDbType.Int, Value= 1},
+                new SqlParameter() {ParameterName = "@UserID", SqlDbType = SqlDbType.Int, Value= aproUserId},
+                new SqlParameter() {ParameterName = "@Status", SqlDbType = SqlDbType.NVarChar, Value= "W"},
+                new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.Int, Value= GlobalVar.usuarioId},
+                new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.DateTime, Value= DateTime.Now}
+            };
+
+            Util.createUpdateFromQuery(sql, sp);
+
+
+            this.createApprovalAlertsHeader(aproUserId);
         }
 
         private void createApprovalAlertsHeader(int aproUserId)
@@ -527,14 +553,14 @@ namespace SAP.forms.movimientos
                 res = ofertaVentaDoc.GetByKey(Convert.ToInt32(this.txtId.Text));
                 if (res)
                 {
-                    this.setOfertaVentaFromOtherDocs();
+                    this.setOfertaVentaFromOtherDocs(0);
                 }
             }
         }
 
-        private void setOfertaVentaFromOtherDocs()
+        private void setOfertaVentaFromOtherDocs(int tipo)
         {
-            Documents doc = vDrafts ?? ofertaVentaDoc;
+            Documents doc = tipo == 1 ? vDrafts : ofertaVentaDoc;
 
             this.cmbCliente.EditValue = doc.CardCode; 
             this.txtFechaDocumento.Value = doc.DocDate;
@@ -572,7 +598,7 @@ namespace SAP.forms.movimientos
             bool res = vDrafts.GetByKey(docEntry);
             if (res)
             {
-                this.setOfertaVentaFromOtherDocs();
+                this.setOfertaVentaFromOtherDocs(1);
             }
         }
 

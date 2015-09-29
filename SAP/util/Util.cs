@@ -208,7 +208,7 @@ namespace SAP.util
             Recordset oRecordSet = (SAPbobsCOM.Recordset)GlobalVar.Empresa.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset);
 
             oRecordSet = oSBObob.GetItemPrice(cardCode, itemCode, 1, dateTime);
-            System.Console.WriteLine(oRecordSet.Fields.Item(0).Value + " " + oRecordSet.Fields.Item(1).Value);
+            //System.Console.WriteLine(oRecordSet.Fields.Item(0).Value + " " + oRecordSet.Fields.Item(1).Value);
             return oRecordSet.Fields.Item(0).Value;
         }
 

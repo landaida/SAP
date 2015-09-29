@@ -19,8 +19,8 @@ namespace SAP.model
         private Double descuento;
         private String indicadorImpuesto;
         private Double total;
-        private Almacen almacen;
-        private Sucursal sucursal;
+        //private Almacen almacen;
+        //private Sucursal sucursal;
 
         public OfertaVentaLine() { }
 

@@ -180,7 +180,7 @@
             // 
             // btnSearchQuotation
             // 
-            this.btnSearchQuotation.Image = global::SAP.Properties.Resources._1442556929_Find;
+            this.btnSearchQuotation.Image = global::SAP.Properties.Resources.imgFind;
             this.btnSearchQuotation.Location = new System.Drawing.Point(182, 2);
             this.btnSearchQuotation.Name = "btnSearchQuotation";
             this.btnSearchQuotation.Size = new System.Drawing.Size(25, 23);
@@ -191,7 +191,7 @@
             // btnCopyToSalesOrders
             // 
             this.btnCopyToSalesOrders.Enabled = false;
-            this.btnCopyToSalesOrders.Image = global::SAP.Properties.Resources._1442554339_back;
+            this.btnCopyToSalesOrders.Image = global::SAP.Properties.Resources.imgBack;
             this.btnCopyToSalesOrders.Location = new System.Drawing.Point(559, 85);
             this.btnCopyToSalesOrders.Name = "btnCopyToSalesOrders";
             this.btnCopyToSalesOrders.Size = new System.Drawing.Size(162, 23);

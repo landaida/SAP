@@ -301,13 +301,21 @@ namespace SAP.forms.movimientos
                 // Show testDialog as a modal dialog and determine if DialogResult = OK.
                 if (dialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    // Read the contents of testDialog's TextBox.
+
+                    List<AuthorizationTemplate> listAuth = new List<AuthorizationTemplate>();
+
                     if (existeDescuento)
-                        this.saveDocumentDrafts(AuthorizationTemplate.Porcentagem_Desc_02, dialog.getComentarioDescuento);
+                        listAuth.Add(AuthorizationTemplate.Porcentagem_Desc_02);                        
                     if (superaLimiteCredito)
-                        this.saveDocumentDrafts(AuthorizationTemplate.Limite_de_Credito_03, dialog.getComentarioLimiteCredito);
+                        listAuth.Add(AuthorizationTemplate.Limite_de_Credito_03);
                     if (titulosVencidos)
-                        this.saveDocumentDrafts(AuthorizationTemplate.Titulos_Vencidos_03, dialog.getComentarioTituloVencido);
+                        listAuth.Add(AuthorizationTemplate.Titulos_Vencidos_03);
+                    if(listAuth.Count > 0)
+                    this.saveDocumentDrafts(listAuth, dialog.getComentarioTituloVencido);
+
+                    Util.showMessage("Documentos generados exitosamente, aguarde las autorizaciones correspondientes.");
+                    this.limpiar();
+
                 }
                 dialog.Dispose();               
             }
@@ -345,7 +353,7 @@ namespace SAP.forms.movimientos
             }
             catch(Exception e)
             {
-                System.Console.WriteLine(e.Message);
+                Util.showMessage(e.Message);
             }
             
 
@@ -359,7 +367,7 @@ namespace SAP.forms.movimientos
             return retorno;
         }
 
-        private void saveDocumentDrafts(AuthorizationTemplate authTemplate, String remarks)
+        private void saveDocumentDrafts(List<AuthorizationTemplate> listAuthTemplate, String remarks)
         {
             //Create the Documents object
             vDrafts = GlobalVar.Empresa.GetBusinessObject(BoObjectTypes.oDrafts);
@@ -373,7 +381,8 @@ namespace SAP.forms.movimientos
             vDrafts.DocTotal = ofertaVentaDoc.DocTotal;
             vDrafts.GroupNumber = ofertaVentaDoc.GroupNumber;
             vDrafts.OpeningRemarks = remarks;
-            vDrafts.SalesPersonCode = (int)this.cmbVendedor.EditValue;
+            if(this.cmbVendedor.EditValue != null)
+                vDrafts.SalesPersonCode = (int)this.cmbVendedor.EditValue;
             if (this.txtObservacion.Text.Trim().Length == 0)
                 vDrafts.Comments = "Basado en la oferta de venta " + this.txtId.Text;
             else
@@ -400,7 +409,7 @@ namespace SAP.forms.movimientos
                 String docNum = "";
                 GlobalVar.Empresa.GetNewObjectCode(out docNum);
                 Util.showMessage("Preliminar de venta nr: " + docNum + " generada con éxito");
-                this.createApprovalRequest(vDrafts, authTemplate, Convert.ToInt32(docNum));
+                this.createApprovalRequest(vDrafts, listAuthTemplate, Convert.ToInt32(docNum));
             }
             else
             {
@@ -409,33 +418,35 @@ namespace SAP.forms.movimientos
             }
         }
 
-        private void createApprovalRequest(Documents vDrafts, AuthorizationTemplate authTemplate, int idDraft)
+        private void createApprovalRequest(Documents vDrafts, List<AuthorizationTemplate> listAuthTemplate, int idDraft)
         {
             String sql = "insert into OWDD (WddCode, WtmCode, OwnerID, DocEntry, ObjType, DocDate, CurrStep, Remarks, UserSign, CreateDate, MaxRejReqr, MaxReqr)"
                 + "values(@WddCode, @WtmCode, @OwnerID, @DocEntry, @ObjType, @DocDate, @CurrStep, @Remarks, @UserSign, @CreateDate, @MaxRejReqr, @MaxReqr)";
             int wddCode = Util.getValueFromQuery<int>("select max(WddCode) + 1 value from owdd");
             ApprovalRequestsService oApprovalRequestsService = GlobalVar.Empresa.GetCompanyService().GetBusinessService(ServiceTypes.ApprovalRequestsService);
             ApprovalRequest oApprovalRequest = oApprovalRequestsService.GetDataInterface(ApprovalRequestsServiceDataInterfaces.arsApprovalRequest);
-            
-            List<SqlParameter> sp = new List<SqlParameter>()
-            {
-                new SqlParameter() {ParameterName = "@WddCode", SqlDbType = SqlDbType.Int, Value= wddCode},
-                new SqlParameter() {ParameterName = "@WtmCode", SqlDbType = SqlDbType.Int, Value= (int)authTemplate},
-                new SqlParameter() {ParameterName = "@OwnerID", SqlDbType = SqlDbType.NVarChar, Value = GlobalVar.usuarioId},
-                new SqlParameter() {ParameterName = "@DocEntry", SqlDbType = SqlDbType.Int, Value = idDraft},
-                new SqlParameter() {ParameterName = "@ObjType", SqlDbType = SqlDbType.NVarChar, Value = oApprovalRequest.ObjectType},
-                new SqlParameter() {ParameterName = "@DocDate", SqlDbType = SqlDbType.DateTime, Value = vDrafts.DocDate},
-                new SqlParameter() {ParameterName = "@CurrStep", SqlDbType = SqlDbType.Int, Value = oApprovalRequest.CurrentStage},
-                new SqlParameter() {ParameterName = "@Remarks", SqlDbType = SqlDbType.NVarChar, Value = vDrafts.OpeningRemarks},
-                new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.NVarChar, Value = GlobalVar.usuarioId},
-                new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.DateTime, Value = DateTime.Now},
-                new SqlParameter() {ParameterName = "@MaxRejReqr", SqlDbType = SqlDbType.Int, Value = 1},
-                new SqlParameter() {ParameterName = "@MaxReqr", SqlDbType = SqlDbType.Int, Value = 1}
-            };
+            foreach(AuthorizationTemplate authTemplate in listAuthTemplate)
+            {            
+                List<SqlParameter> sp = new List<SqlParameter>()
+                {
+                    new SqlParameter() {ParameterName = "@WddCode", SqlDbType = SqlDbType.Int, Value= wddCode},
+                    new SqlParameter() {ParameterName = "@WtmCode", SqlDbType = SqlDbType.Int, Value= (int)authTemplate},
+                    new SqlParameter() {ParameterName = "@OwnerID", SqlDbType = SqlDbType.NVarChar, Value = GlobalVar.usuarioId},
+                    new SqlParameter() {ParameterName = "@DocEntry", SqlDbType = SqlDbType.Int, Value = idDraft},
+                    new SqlParameter() {ParameterName = "@ObjType", SqlDbType = SqlDbType.NVarChar, Value = oApprovalRequest.ObjectType},
+                    new SqlParameter() {ParameterName = "@DocDate", SqlDbType = SqlDbType.DateTime, Value = vDrafts.DocDate},
+                    new SqlParameter() {ParameterName = "@CurrStep", SqlDbType = SqlDbType.Int, Value = oApprovalRequest.CurrentStage},
+                    new SqlParameter() {ParameterName = "@Remarks", SqlDbType = SqlDbType.NVarChar, Value = vDrafts.OpeningRemarks},
+                    new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.NVarChar, Value = GlobalVar.usuarioId},
+                    new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.DateTime, Value = DateTime.Now},
+                    new SqlParameter() {ParameterName = "@MaxRejReqr", SqlDbType = SqlDbType.Int, Value = 1},
+                    new SqlParameter() {ParameterName = "@MaxReqr", SqlDbType = SqlDbType.Int, Value = 1}
+                };
 
-            Util.createUpdateFromQuery(sql, sp);
+                Util.createUpdateFromQuery(sql, sp);
 
-            this.createApprovalAlerts(vDrafts, authTemplate, idDraft, wddCode);
+                this.createApprovalAlerts(vDrafts, authTemplate, idDraft, wddCode);
+            }
         }
 
         private void createApprovalAlerts(Documents vDrafts, AuthorizationTemplate authTemplate, int idDraft, int wddCode)
@@ -481,9 +492,6 @@ namespace SAP.forms.movimientos
 
                 this.createApprovalRequestLine(aproUserId, wddCode);
             }
-
-            Util.showMessage("Documentos generados exitosamente, aguarde las autorizaciones correspondientes.");
-            this.limpiar();
         }
 
         private void createApprovalRequestLine(int aproUserId, int wddCode)

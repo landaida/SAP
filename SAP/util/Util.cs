@@ -145,12 +145,20 @@ namespace SAP.util
 
                 var value = sc.ExecuteScalar();
 
-                conn.Close();
+                T item = Activator.CreateInstance<T>();
+                if(item.GetType() == typeof(Double)){
+                    Double valor = Convert.ToDouble(value);
+                    value = valor;
+                }
+                
+
+                conn.Close();                
+
                 return value is DBNull ? default(T) : (T)value;
             }
             catch(Exception e)
             {
-                System.Console.WriteLine(e.Message);
+                Util.showMessage(e.Message);
             }
             return default(T);            
         }

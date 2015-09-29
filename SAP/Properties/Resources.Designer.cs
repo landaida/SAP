@@ -61,26 +61,6 @@ namespace SAP.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap _1442554339_back {
-            get {
-                object obj = ResourceManager.GetObject("1442554339_back", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap _1442556929_Find {
-            get {
-                object obj = ResourceManager.GetObject("1442556929_Find", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 0104452.
         /// </summary>
         public static string BOPassword {
@@ -150,6 +130,26 @@ namespace SAP.Properties {
         public static System.Drawing.Bitmap icommerce_logo {
             get {
                 object obj = ResourceManager.GetObject("icommerce_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap imgBack {
+            get {
+                object obj = ResourceManager.GetObject("imgBack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap imgFind {
+            get {
+                object obj = ResourceManager.GetObject("imgFind", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

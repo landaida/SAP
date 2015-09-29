@@ -8,14 +8,14 @@ namespace SAP.model
 {    
     class Draft
     {
-        private int docNum;
+        /*private int docNum;
         private int docEntry;
         private DateTime docDate;
         private string cardCode;
         private Double docTotal;
         private string comments;
         private string docStatus;
-        private string wddStatus;
+        private string wddStatus;*/
 
         public int DocNum{ get; set;}
         public int DocEntry { get; set; }

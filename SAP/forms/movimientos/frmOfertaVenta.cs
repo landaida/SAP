@@ -294,7 +294,14 @@ namespace SAP.forms.movimientos
 
             if(existeDescuento || superaLimiteCredito || titulosVencidos)
             {
-                this.aprobadores = Util.getGenericList<Aprobador>("WstCode", "UserId", "wst1").ToList<Aprobador>();
+                string wstCodes = "0";//el cero no hara nada solo me sirve para no tratar la coma(,) mas abajo
+                if (existeDescuento) wstCodes += ",1";
+                if (superaLimiteCredito) wstCodes += ",2";
+                if (titulosVencidos) wstCodes += ",3";
+                
+                //trae los aprobadores, si se repite en wst1 ya hace un distinct
+                string sql = "select distinct userid from wst1 where WstCode in ("+wstCodes+")";
+                this.aprobadores = Util.getGenericList<Aprobador>(null, null, null, null, null, sql).ToList<Aprobador>();
 
                 AprovalComments dialog = new AprovalComments();
                 dialog.setComponentes(!existeDescuento, !superaLimiteCredito, true);
@@ -313,6 +320,10 @@ namespace SAP.forms.movimientos
                     if(listAuth.Count > 0)
                     this.saveDocumentDrafts(listAuth, dialog.getComentarioTituloVencido);
 
+                    sql = "update onnm set AutoKey = (select max(wddcode) from OWDD) where ObjectCode = '122'";
+                    Util.createUpdateFromQuery(sql, null);
+                    sql = "update onnm set AutoKey = (select max(code) from OALR) where ObjectCode = '81'";
+                    Util.createUpdateFromQuery(sql, null);
                     Util.showMessage("Documentos generados exitosamente, aguarde las autorizaciones correspondientes.");
                     this.limpiar();
 
@@ -378,7 +389,7 @@ namespace SAP.forms.movimientos
             vDrafts.HandWritten = BoYesNoEnum.tNO;
             vDrafts.DocDate = this.txtFechaDocumento.Value;
             vDrafts.DocDueDate = this.txtFechaLanzamiento.Value;
-            vDrafts.DocTotal = ofertaVentaDoc.DocTotal;
+            vDrafts.DocTotal = Convert.ToDouble(this.txtTotal.EditValue);
             vDrafts.GroupNumber = ofertaVentaDoc.GroupNumber;
             vDrafts.OpeningRemarks = remarks;
             if(this.cmbVendedor.EditValue != null)
@@ -422,10 +433,10 @@ namespace SAP.forms.movimientos
         {
             String sql = "insert into OWDD (WddCode, WtmCode, OwnerID, DocEntry, ObjType, DocDate, CurrStep, Remarks, UserSign, CreateDate, CreateTime, MaxRejReqr, MaxReqr)"
                 + "values(@WddCode, @WtmCode, @OwnerID, @DocEntry, @ObjType, @DocDate, @CurrStep, @Remarks, @UserSign, @CreateDate, @CreateTime, @MaxRejReqr, @MaxReqr)";
-            int wddCode = Util.getValueFromQuery<int>("select max(WddCode) + 1 value from owdd");
+            
             foreach(AuthorizationTemplate authTemplate in listAuthTemplate)
             {
-                int time = Util.getNowTime();
+                int wddCode = Util.getValueFromQuery<int>("select max(WddCode) + 1 value from owdd");
                 List<SqlParameter> sp = new List<SqlParameter>()
                 {
                     new SqlParameter() {ParameterName = "@WddCode", SqlDbType = SqlDbType.Int, Value= wddCode},
@@ -438,7 +449,7 @@ namespace SAP.forms.movimientos
                     new SqlParameter() {ParameterName = "@Remarks", SqlDbType = SqlDbType.NVarChar, Value = vDrafts.OpeningRemarks},
                     new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.NVarChar, Value = GlobalVar.usuarioId},
                     new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.DateTime, Value = DateTime.Now},
-                    new SqlParameter() {ParameterName = "@CreateTime", SqlDbType = SqlDbType.SmallInt, Value = TimeSpan.FromTicks(DateTime.Now.Ticks).Hours},
+                    new SqlParameter() {ParameterName = "@CreateTime", SqlDbType = SqlDbType.SmallInt, Value = Util.getNowTime()},
                     new SqlParameter() {ParameterName = "@MaxRejReqr", SqlDbType = SqlDbType.Int, Value = 1},
                     new SqlParameter() {ParameterName = "@MaxReqr", SqlDbType = SqlDbType.Int, Value = 1}
                 };
@@ -450,27 +461,19 @@ namespace SAP.forms.movimientos
         }
 
         private void createApprovalAlerts(Documents vDrafts, AuthorizationTemplate authTemplate, int idDraft, int wddCode)
-        {
-            //obtiene solo los usuarioas aprobadores de la regla que se esta insertando
+        {            
             List<int> aproUsers = new List<int>();
             foreach(Aprobador apro in this.aprobadores)
-            {
-                if (authTemplate == AuthorizationTemplate.Limite_de_Credito_03 && apro.WstCode == 2)
-                    aproUsers.Add(apro.UserId);
-                else if (authTemplate == AuthorizationTemplate.Porcentagem_Desc_02 && apro.WstCode == 1)
-                    aproUsers.Add(apro.UserId);
-                else if (authTemplate == AuthorizationTemplate.Titulos_Vencidos_03 && apro.WstCode == 3)
-                    aproUsers.Add(apro.UserId);
+            {   
+                aproUsers.Add(apro.UserId);
             }
 
-            foreach(int aproUserId in aproUsers)
-            {
-                String sql = "insert into OALR (Code, Type, Priority, Subject, UserText, DataCols, DataParams, MsgData, UserSign, DataSource)"
+            //inserta un alerta para cada usuario que autoriza dicha regla
+            String sql = "insert into OALR (Code, Type, Priority, Subject, UserText, DataCols, DataParams, MsgData, UserSign, DataSource)"
                 + "values(@Code, @Type, @Priority, @Subject, @UserText, @DataCols, @DataParams, @MsgData, @UserSign, @DataSource)";
+            foreach (int aproUserId in aproUsers)
+            {                
                 int code = Util.getValueFromQuery<int>("select max(Code) + 1 value from OALR");
-
-                //int docNumDraft = Util.getValueFromQuery<int>("select DocNum from ODRF where DocEntry = " + wddCode);
-
 
                 string msg = "Pedido de cliente basado en núm.documento preliminar " + idDraft + "	122	" + wddCode + "      "+aproUserId+"          "+ GlobalVar.usuarioId + "         ";
                 List<SqlParameter> sp = new List<SqlParameter>()
@@ -522,8 +525,8 @@ namespace SAP.forms.movimientos
 
         private void createApprovalAlertsHeader(int aproUserId)
         {
-            String sql = "insert into OAIB (AlertCode, UserSign, Opened, RecDate, WasRead, Deleted)"
-            + "values(@AlertCode,@UserSign,@Opened,@RecDate,@WasRead,@Deleted)";
+            String sql = "insert into OAIB (AlertCode, UserSign, Opened, RecDate, RecTime, WasRead, Deleted)"
+            + "values(@AlertCode,@UserSign,@Opened,@RecDate, @RecTime,  @WasRead,@Deleted)";
             int code = Util.getValueFromQuery<int>("select max(AlertCode) + 1 value from OAIB");            
             
             List<SqlParameter> sp = new List<SqlParameter>()
@@ -532,7 +535,7 @@ namespace SAP.forms.movimientos
             new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.Int, Value= aproUserId},
             new SqlParameter() {ParameterName = "@Opened", SqlDbType = SqlDbType.NVarChar, Value= "N"},
             new SqlParameter() {ParameterName = "@RecDate", SqlDbType = SqlDbType.DateTime, Value= DateTime.Now},
-            //new SqlParameter() {ParameterName = "@RecTime", SqlDbType = SqlDbType.SmallInt, Value= Convert.ToInt16(DateTime.Now.Ticks)},
+            new SqlParameter() {ParameterName = "@RecTime", SqlDbType = SqlDbType.SmallInt, Value= Util.getNowTime()},
             new SqlParameter() {ParameterName = "@WasRead", SqlDbType = SqlDbType.NVarChar, Value= "N"},
             new SqlParameter() {ParameterName = "@Deleted", SqlDbType = SqlDbType.NVarChar, Value= "N"}
 

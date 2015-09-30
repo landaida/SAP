@@ -14,27 +14,34 @@ namespace SAP.util
     {
         public static readonly SplashScreen splashScreen = new SplashScreen();
 
-        public static IEnumerable<T> getGenericList<T>(String valueMember, String displayMember, String tableName, String where = "", List<String> otherColumns = null)
+        public static IEnumerable<T> getGenericList<T>(String valueMember, String displayMember, String tableName, String where = "", List<String> otherColumns = null, String sql = "")
         {
-
-            String moreColumns = "";
-            if (otherColumns != null && otherColumns.Count > 0)
-            {
-                foreach (String column in otherColumns)
-                {
-                    if (moreColumns.Length == 0)
-                        moreColumns = " " + column;
-                    moreColumns += ", "+column;
-                }
-            }
-
-            if(where != null && where.Trim().Length != 0)
-            {
-                where = " where 1 = 1 " + where;
-            }
             SqlConnection conn = ConexaoFactory.Connection;
             conn.Open();
-            SqlCommand sc = new SqlCommand("select " + valueMember + "," + displayMember + moreColumns + " from [" + tableName + "] " + where, conn);
+            if (sql != null && sql.Trim().Length > 0)
+            {
+
+            }
+            else
+            {
+                String moreColumns = "";
+                if (otherColumns != null && otherColumns.Count > 0)
+                {
+                    foreach (String column in otherColumns)
+                    {
+                        if (moreColumns.Length == 0)
+                            moreColumns = " " + column;
+                        moreColumns += ", " + column;
+                    }
+                }
+
+                if (where != null && where.Trim().Length != 0)
+                {
+                    where = " where 1 = 1 " + where;
+                }
+                sql = "select " + valueMember + "," + displayMember + moreColumns + " from [" + tableName + "] " + where;
+            }
+            SqlCommand sc = new SqlCommand(sql, conn);
             SqlDataReader reader;
 
             reader = sc.ExecuteReader();
@@ -47,8 +54,16 @@ namespace SAP.util
                 
 
                 foreach (var property in typeof(T).GetProperties())
-                {   
-                    
+                {
+                    try
+                    {   //Si da error es porque no existe esta propiedad en la query
+                        reader[property.Name].ToString();
+                    }
+                    catch(Exception e)
+                    {
+                        continue;
+                    }
+
                     if (string.CompareOrdinal(property.PropertyType.FullName, "System.String") == 0)
                     {
                         item.GetType().GetProperty(property.Name).SetValue(item, reader[property.Name].ToString(), null);
@@ -176,7 +191,8 @@ namespace SAP.util
                     command.Connection.Open();
                     command.CommandType = CommandType.Text;
                     command.CommandText = query;
-                    command.Parameters.AddRange(parameters.ToArray());
+                    if(parameters != null)
+                        command.Parameters.AddRange(parameters.ToArray());
 
                     recordsAffected = command.ExecuteNonQuery();
                 }
@@ -222,7 +238,7 @@ namespace SAP.util
 
         public static int getNowTime()
         {
-            return Convert.ToInt16(TimeSpan.FromTicks(DateTime.Now.Ticks).Hours.ToString() + TimeSpan.FromTicks(DateTime.Now.Ticks).Minutes.ToString());
+            return Convert.ToInt16(TimeSpan.FromTicks(DateTime.Now.Ticks).Hours.ToString() + (TimeSpan.FromTicks(DateTime.Now.Ticks).Minutes < 10 ? ("0" + TimeSpan.FromTicks(DateTime.Now.Ticks).Minutes.ToString()) : TimeSpan.FromTicks(DateTime.Now.Ticks).Minutes.ToString()));
         }
     }
 

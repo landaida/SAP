@@ -220,9 +220,11 @@ namespace SAP.util
             return oRecordSet.Fields.Item(0).Value;
         }
 
-
-
-}
+        public static int getNowTime()
+        {
+            return Convert.ToInt16(TimeSpan.FromTicks(DateTime.Now.Ticks).Hours.ToString() + TimeSpan.FromTicks(DateTime.Now.Ticks).Minutes.ToString());
+        }
+    }
 
 
 }

@@ -420,25 +420,25 @@ namespace SAP.forms.movimientos
 
         private void createApprovalRequest(Documents vDrafts, List<AuthorizationTemplate> listAuthTemplate, int idDraft)
         {
-            String sql = "insert into OWDD (WddCode, WtmCode, OwnerID, DocEntry, ObjType, DocDate, CurrStep, Remarks, UserSign, CreateDate, MaxRejReqr, MaxReqr)"
-                + "values(@WddCode, @WtmCode, @OwnerID, @DocEntry, @ObjType, @DocDate, @CurrStep, @Remarks, @UserSign, @CreateDate, @MaxRejReqr, @MaxReqr)";
+            String sql = "insert into OWDD (WddCode, WtmCode, OwnerID, DocEntry, ObjType, DocDate, CurrStep, Remarks, UserSign, CreateDate, CreateTime, MaxRejReqr, MaxReqr)"
+                + "values(@WddCode, @WtmCode, @OwnerID, @DocEntry, @ObjType, @DocDate, @CurrStep, @Remarks, @UserSign, @CreateDate, @CreateTime, @MaxRejReqr, @MaxReqr)";
             int wddCode = Util.getValueFromQuery<int>("select max(WddCode) + 1 value from owdd");
-            ApprovalRequestsService oApprovalRequestsService = GlobalVar.Empresa.GetCompanyService().GetBusinessService(ServiceTypes.ApprovalRequestsService);
-            ApprovalRequest oApprovalRequest = oApprovalRequestsService.GetDataInterface(ApprovalRequestsServiceDataInterfaces.arsApprovalRequest);
             foreach(AuthorizationTemplate authTemplate in listAuthTemplate)
-            {            
+            {
+                int time = Util.getNowTime();
                 List<SqlParameter> sp = new List<SqlParameter>()
                 {
                     new SqlParameter() {ParameterName = "@WddCode", SqlDbType = SqlDbType.Int, Value= wddCode},
                     new SqlParameter() {ParameterName = "@WtmCode", SqlDbType = SqlDbType.Int, Value= (int)authTemplate},
                     new SqlParameter() {ParameterName = "@OwnerID", SqlDbType = SqlDbType.NVarChar, Value = GlobalVar.usuarioId},
                     new SqlParameter() {ParameterName = "@DocEntry", SqlDbType = SqlDbType.Int, Value = idDraft},
-                    new SqlParameter() {ParameterName = "@ObjType", SqlDbType = SqlDbType.NVarChar, Value = oApprovalRequest.ObjectType},
+                    new SqlParameter() {ParameterName = "@ObjType", SqlDbType = SqlDbType.NVarChar, Value = 17},
                     new SqlParameter() {ParameterName = "@DocDate", SqlDbType = SqlDbType.DateTime, Value = vDrafts.DocDate},
-                    new SqlParameter() {ParameterName = "@CurrStep", SqlDbType = SqlDbType.Int, Value = oApprovalRequest.CurrentStage},
+                    new SqlParameter() {ParameterName = "@CurrStep", SqlDbType = SqlDbType.Int, Value = 1},
                     new SqlParameter() {ParameterName = "@Remarks", SqlDbType = SqlDbType.NVarChar, Value = vDrafts.OpeningRemarks},
                     new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.NVarChar, Value = GlobalVar.usuarioId},
                     new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.DateTime, Value = DateTime.Now},
+                    new SqlParameter() {ParameterName = "@CreateTime", SqlDbType = SqlDbType.SmallInt, Value = TimeSpan.FromTicks(DateTime.Now.Ticks).Hours},
                     new SqlParameter() {ParameterName = "@MaxRejReqr", SqlDbType = SqlDbType.Int, Value = 1},
                     new SqlParameter() {ParameterName = "@MaxReqr", SqlDbType = SqlDbType.Int, Value = 1}
                 };

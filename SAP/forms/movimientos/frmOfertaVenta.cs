@@ -448,7 +448,7 @@ namespace SAP.forms.movimientos
                     new SqlParameter() {ParameterName = "@CurrStep", SqlDbType = SqlDbType.Int, Value = 1},
                     new SqlParameter() {ParameterName = "@Remarks", SqlDbType = SqlDbType.NVarChar, Value = vDrafts.OpeningRemarks},
                     new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.NVarChar, Value = GlobalVar.usuarioId},
-                    new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.DateTime, Value = DateTime.Now},
+                    new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.DateTime, Value = DateTime.Today},
                     new SqlParameter() {ParameterName = "@CreateTime", SqlDbType = SqlDbType.SmallInt, Value = Util.getNowTime()},
                     new SqlParameter() {ParameterName = "@MaxRejReqr", SqlDbType = SqlDbType.Int, Value = 1},
                     new SqlParameter() {ParameterName = "@MaxReqr", SqlDbType = SqlDbType.Int, Value = 1}
@@ -499,8 +499,8 @@ namespace SAP.forms.movimientos
 
         private void createApprovalRequestLine(int aproUserId, int wddCode)
         {
-            String sql = "insert into WDD1 (WddCode, StepCode, UserID, Status, UserSign, CreateDate)"
-                + "values(@WddCode, @StepCode, @UserID, @Status, @UserSign, @CreateDate)";
+            String sql = "insert into WDD1 (WddCode, StepCode, UserID, Status, UserSign, CreateDate, CreateTime)"
+                + "values(@WddCode, @StepCode, @UserID, @Status, @UserSign, @CreateDate, @CreateTime)";
             //int code = Util.getValueFromQuery<int>("select max(Code) + 1 value from OALR");
 
             //int docNumDraft = Util.getValueFromQuery<int>("select DocNum from ODRF where DocEntry = " + wddCode);
@@ -514,7 +514,8 @@ namespace SAP.forms.movimientos
                 new SqlParameter() {ParameterName = "@UserID", SqlDbType = SqlDbType.Int, Value= aproUserId},
                 new SqlParameter() {ParameterName = "@Status", SqlDbType = SqlDbType.NVarChar, Value= "W"},
                 new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.Int, Value= GlobalVar.usuarioId},
-                new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.DateTime, Value= DateTime.Now}
+                new SqlParameter() {ParameterName = "@CreateDate", SqlDbType = SqlDbType.DateTime, Value= DateTime.Today},
+                new SqlParameter() {ParameterName = "@CreateTime", SqlDbType = SqlDbType.SmallInt, Value= Util.getNowTime()}
             };
 
             Util.createUpdateFromQuery(sql, sp);
@@ -534,7 +535,7 @@ namespace SAP.forms.movimientos
             new SqlParameter() {ParameterName = "@AlertCode", SqlDbType = SqlDbType.Int, Value= code},
             new SqlParameter() {ParameterName = "@UserSign", SqlDbType = SqlDbType.Int, Value= aproUserId},
             new SqlParameter() {ParameterName = "@Opened", SqlDbType = SqlDbType.NVarChar, Value= "N"},
-            new SqlParameter() {ParameterName = "@RecDate", SqlDbType = SqlDbType.DateTime, Value= DateTime.Now},
+            new SqlParameter() {ParameterName = "@RecDate", SqlDbType = SqlDbType.DateTime, Value= DateTime.Today},
             new SqlParameter() {ParameterName = "@RecTime", SqlDbType = SqlDbType.SmallInt, Value= Util.getNowTime()},
             new SqlParameter() {ParameterName = "@WasRead", SqlDbType = SqlDbType.NVarChar, Value= "N"},
             new SqlParameter() {ParameterName = "@Deleted", SqlDbType = SqlDbType.NVarChar, Value= "N"}

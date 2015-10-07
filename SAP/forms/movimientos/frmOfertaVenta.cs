@@ -206,7 +206,8 @@ namespace SAP.forms.movimientos
                     {
                         String docNum = "";
                         GlobalVar.Empresa.GetNewObjectCode(out docNum);
-                        this.txtId.Text = docNum;                        
+                        this.txtId.Text = docNum;
+                        ReportUtils.reportLoad("Pedido.rpt", docNum);
                         Util.showMessage("Oferta de venta nr: " + docNum + " generada con éxito");
                         this.enableCopyToSalesOrder(true);
                     }

@@ -11,7 +11,7 @@ namespace SAP.util
 
         public static readonly String reportPath = AppDomain.CurrentDomain.BaseDirectory + Properties.Settings.Default.reportPath;
 
-        public static void reportLoad(string reportName)
+        public static void reportLoad(string reportName, string docEntry)
         {
             string filePath = reportPath + reportName;
             ReportDocument crReport = new ReportDocument();
@@ -19,7 +19,7 @@ namespace SAP.util
             {
                 crReport.Load(filePath);
                 //set parameters for your report  
-                crReport.SetParameterValue("@DocKey", "123");
+                crReport.SetParameterValue("DocKey@", docEntry);
                 crReport.PrintOptions.PrinterName = "";
                 crReport.DataSourceConnections[0].SetConnection(GlobalVar.Empresa.Server, GlobalVar.Empresa.CompanyDB, false);
                 crReport.DataSourceConnections[0].SetLogon(GlobalVar.Empresa.DbUserName, DBConfig.DBPassword);

@@ -416,7 +416,7 @@ namespace SAP.forms.movimientos
             if(retVal == 0){
                 String docNum = "";
                 GlobalVar.Empresa.GetNewObjectCode(out docNum);
-                ReportUtils.reportLoad("Separacion.rpt");
+                ReportUtils.reportLoad("Separacion.rpt", docNum);
                 Util.showMessage("Preliminar de venta nr: " + docNum + " generada con éxito");
                 this.createApprovalRequest(vDrafts, listAuthTemplate, Convert.ToInt32(docNum));
             }

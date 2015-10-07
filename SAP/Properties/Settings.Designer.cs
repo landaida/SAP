@@ -85,5 +85,14 @@ namespace SAP.Properties {
                 return ((string)(this["BOPassword"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("reports\\")]
+        public string reportPath {
+            get {
+                return ((string)(this["reportPath"]));
+            }
+        }
     }
 }

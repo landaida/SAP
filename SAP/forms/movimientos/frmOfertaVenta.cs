@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using SAP.model;
 using SAPbobsCOM;
 using SAP.util;
-using System.Threading;
+
 namespace SAP.forms.movimientos
 {
     public partial class frmOfertaVenta : Form
@@ -419,6 +416,7 @@ namespace SAP.forms.movimientos
             if(retVal == 0){
                 String docNum = "";
                 GlobalVar.Empresa.GetNewObjectCode(out docNum);
+                ReportUtils.reportLoad("Separacion.rpt");
                 Util.showMessage("Preliminar de venta nr: " + docNum + " generada con éxito");
                 this.createApprovalRequest(vDrafts, listAuthTemplate, Convert.ToInt32(docNum));
             }

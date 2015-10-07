@@ -23,5 +23,8 @@
     <Setting Name="BOPassword" Type="System.String" Scope="Application">
       <Value Profile="(Default)">0104452</Value>
     </Setting>
+    <Setting Name="reportPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">reports\</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

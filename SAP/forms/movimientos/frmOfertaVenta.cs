@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using SAP.model;
 using SAPbobsCOM;
-using SAP.util;
+using SAPLibraryParaguay;
 
 namespace SAP.forms.movimientos
 {

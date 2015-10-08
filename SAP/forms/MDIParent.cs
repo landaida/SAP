@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using SAP.util;
+using SAPLibraryParaguay;
 using SAP.forms.movimientos;
+using SAP.forms.util;
 namespace SAP.forms
 {
     public partial class MDIParent : Form
     {
+        private SplashScreen splashScreen = new SplashScreen();
         public MDIParent()
         {
             InitializeComponent();            
@@ -27,7 +22,7 @@ namespace SAP.forms
         {
             if (GlobalVar.isReady)
             {
-                Util.hideSplashScreen(this);
+                this.hideSplashScreen(this);
                 this.timerVerificaConexao.Enabled = false;
                 toolStripStatusLabel.Image = imageList1.Images[0];
                 frmLogin dialog = new frmLogin();
@@ -52,7 +47,7 @@ namespace SAP.forms
         {
             GlobalVar.mdiParent = this;
             toolStripStatusLabel.Image = imageList1.Images[1];
-            Util.showSplashScreen(this);
+            this.showSplashScreen(this);
         }
 
         private void documentosPreliminaresToolStripMenuItem_Click(object sender, EventArgs e)
@@ -63,6 +58,18 @@ namespace SAP.forms
         private void abriDocumentosPreliminares()
         {
             Util.showForm(new frmListDraftSalesOrder(), this);
+        }
+
+        private void showSplashScreen(Form parentForm, String label = "")
+        {
+            if (label.Trim().Length > 0)
+                this.splashScreen.setLabel(label);
+            parentForm.BeginInvoke(new Action(() => this.splashScreen.ShowDialog()));
+        }
+
+        private void hideSplashScreen(Form parentForm)
+        {
+            parentForm.Invoke(new Action(this.splashScreen.Hide));
         }
     }
 }

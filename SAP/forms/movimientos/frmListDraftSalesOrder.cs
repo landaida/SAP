@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.XtraEditors;
 using SAP.model;
-using SAP.util;
+using SAPLibraryParaguay;
 namespace SAP.forms.movimientos
 {
     public partial class frmListDraftSalesOrder : DevExpress.XtraEditors.XtraForm

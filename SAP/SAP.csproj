@@ -54,6 +54,9 @@
     <Reference Include="DevExpress.XtraLayout.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraPrinting.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraWizard.v15.1, Version=15.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="SAPLibraryParaguay">
+      <HintPath>..\..\SAPLibraryParaguay\SAPLibraryParaguay\bin\Debug\SAPLibraryParaguay.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -93,12 +96,6 @@
     <Compile Include="forms\movimientos\frmListDraftSalesOrder.Designer.cs">
       <DependentUpon>frmListDraftSalesOrder.cs</DependentUpon>
     </Compile>
-    <Compile Include="forms\report\ReportViewer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="forms\report\ReportViewer.Designer.cs">
-      <DependentUpon>ReportViewer.cs</DependentUpon>
-    </Compile>
     <Compile Include="forms\util\SplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,7 +107,6 @@
     <Compile Include="model\Draft.cs" />
     <Compile Include="model\Sucursal.cs" />
     <Compile Include="model\Condicion.cs" />
-    <Compile Include="model\DocumentStatus.cs" />
     <Compile Include="forms\movimientos\frmOfertaVenta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,16 +121,6 @@
     <Compile Include="model\Producto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="util\AuthorizationTemplate.cs" />
-    <Compile Include="util\ComboUtil.cs" />
-    <Compile Include="util\ConexaoFactory.cs" />
-    <Compile Include="util\DBConfig.cs" />
-    <Compile Include="util\EqualsBuilder.cs" />
-    <Compile Include="util\ReportUtils.cs" />
-    <Compile Include="util\GlobalVar.cs" />
-    <Compile Include="util\HashCodeBuilder.cs" />
-    <Compile Include="util\ToStringBuilder.cs" />
-    <Compile Include="util\Util.cs" />
     <EmbeddedResource Include="forms\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -201,69 +187,6 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
-    <COMReference Include="CrystalAnalysisCommLayerLib">
-      <Guid>{AAA3345B-2177-4D19-8D75-21688FE36251}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="CrystalAnalysisCommonControlsLib">
-      <Guid>{E377F909-BCFE-4E8E-B17C-8B1CBC7C7243}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="CrystalClientDocLib">
-      <Guid>{A8E20FDA-4A89-4545-8DFF-EBFA68E8C0F9}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="CrystalReportsCommonObjectModelLib">
-      <Guid>{FDB9B69E-BA79-4B13-9E96-8373AF162AEA}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="CrystalReportsControllersLib">
-      <Guid>{FA810FF5-70DA-4F98-A5E3-387D9577EF24}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="CrystalReportsCubeDefModelLib">
-      <Guid>{44AD71D4-4905-491D-B179-B5D91EB57374}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="CrystalReportsDataDefModelLib">
-      <Guid>{9B2F3E7B-8D45-47E8-95D3-3A9C1B22437F}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
     <COMReference Include="CrystalReportsDTSAgentLib">
       <Guid>{3D5D05F6-E97D-43A0-90DC-5D8A6C6C6DB1}</Guid>
       <VersionMajor>13</VersionMajor>
@@ -276,15 +199,6 @@
     <COMReference Include="CrystalReportsLocalConnectionMgrLib">
       <Guid>{EC39F6C4-A9F2-4341-806B-1529E049A945}</Guid>
       <VersionMajor>13</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="CrystalReportsReportDefModelLib">
-      <Guid>{BF40B97D-06EA-4AB1-91DE-18CB29A2B25A}</Guid>
-      <VersionMajor>1</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
